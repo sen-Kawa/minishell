@@ -3,7 +3,6 @@
 *
 *@param count Number of Objects.
 *@param size Size of the objects.
-*@return Pointer to allocated memory
-* Null if error occurs
+*@return ERR upon failure OK upon success
 */
 int tputs(const char *str, int affcnt, int (*putc)(int));
