@@ -1,3 +1,7 @@
+readline:
+rl_clear_history:
+rl_on_new_line:
+
 /**
 *@brief allocates spave and wipes it
 *
@@ -7,3 +11,5 @@
 * Null if error occurs
 */
 int tputs(const char *str, int affcnt, int (*putc)(int));
+
+
