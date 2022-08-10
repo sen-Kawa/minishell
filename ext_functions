@@ -1,6 +1,35 @@
-readline:
-rl_clear_history:
-rl_on_new_line:
+-- readline: 
+	#include <stdio.h>
+	#include <readline/readline.h>
+	#include <readline/history.h>
+
+	char *readline (const char *prompt);
+
+	Reads a line from the terminal with editing capabilities. Uses prompt param as prompt, if prompt is NULL or empty string, no prompt is issued. Removes final newline.
+	Return: Text of line read. Line returned is allocated. Caller frees.
+
+	Brief manual: https://www.man7.org/linux/man-pages/man3/readline.3.html
+	Extensive manual: https://tiswww.cwru.edu/php/chet/readline/readline.html
+
+-- rl_clear_history:
+	void rl_clear_history (void);
+	
+	Clears the history list by deleting all of the entries. It frees private data readline saves in the history list. Similar behaviour as in clear_history().
+
+-- rl_on_new_line:
+	int rl_on_new_line (void);
+	
+	Tell the update functions that we have moved onto a new (empty) line, usually after outputting a newline. 
+
+-- rl_replace_line:
+	void rl_replace_line (const char *text, int clear_undo);
+	
+	Replace the contents of rl_line_buffer with text. The point and mark are preserved, if possible. If clear_undo is non-zero, the undo list associated with the current line is cleared. 
+
+-- rl_redisplay:
+	void rl_redisplay (void);
+
+	Change what's displayed on the screen to reflect the current contents of rl_line_buffer.
 
 /**
 *@brief allocates spave and wipes it
