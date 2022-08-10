@@ -3,12 +3,75 @@ rl_clear_history:
 rl_on_new_line:
 
 /**
-*@brief allocates spave and wipes it
+*@brief The  tputs  routine  applies  padding information to the
+       string str
 *
-*@param count Number of Objects.
-*@param size Size of the objects.
-*@return ERR upon failure OK upon success
+*@param str must be a terminfo string variable
+           or  the return value from tparm, tiparm, tgetstr, or
+           tgoto
+*@param affcnt is the number of lines affected, or 1 if  not
+           applicable.
+*@param putc is a putchar-like routine to which the charac‐
+           ters are passed, one at a time		   
+*@return ERR upon failure, OK upon success
 */
 int tputs(const char *str, int affcnt, int (*putc)(int));
 
+/**
+*@brief The tgoto routine expands the given capability using the
+       parameters.
 
+       •   Because  the capability may have padding characters,
+           the output of tgoto should be passed to tputs rather
+           than some other output function such as printf.
+
+       •   While tgoto is assumed to be used for the two-param‐
+           eter cursor positioning capability, termcap applica‐
+           tions also use it for single-parameter capabilities.
+		   Doing  this  shows  a  quirk in tgoto: most hardware
+           terminals use cursor addressing with row first,  but
+           the  original  developers  of  the termcap interface
+           chose to put the column parameter first.  The  tgoto
+           function  swaps  the  order  of parameters.  It does
+           this also for calls requiring only a single  parame‐
+           ter.   In that case, the first parameter is merely a
+           placeholder.
+
+		•  Normally the ncurses library is compiled  with  ter‐
+           minfo  support.   In that case, tgoto uses tparm(3X)
+           (a more capable formatter).
+
+           However, tparm is not a termcap feature, and  porta‐
+           ble  termcap  applications  should not rely upon its
+           availability.
+*/
+char *tgoto(const char *cap, int col, int row);
+
+/**
+	The tgetstr routine returns the string entry for id, or zero if it is  not  avail‐
+    able.   Use  tputs  to  output the returned string.  The area parameter is used as
+    follows:
+
+      •   It is assumed to be the address of a pointer to a  buffer  managed  by  the
+          calling application.
+
+      •   However,  ncurses checks to ensure that area is not NULL, and also that the
+          resulting buffer pointer is not NULL.  If either check fails, the area  pa‐
+          rameter is ignored.
+
+      •   If  the  checks succeed, ncurses also copies the return value to the buffer
+          pointed to by area, and the area value will be updated to  point  past  the
+          null ending this value.
+
+      •   The  return value itself is an address in the terminal description which is
+          loaded into memory.
+
+   Only the first two characters of the id parameter of tgetflag, tgetnum and tgetstr
+   are compared in lookups.
+*/
+char *tgetstr(const char *id, char **area);
+
+/**
+*@brief The tgetnum routine gets the numeric entry for id, or -1 if it is not available.
+*/
+int tgetnum(const char *id);
