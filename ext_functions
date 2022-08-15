@@ -81,3 +81,105 @@ int tgetnum(const char *id);
        available.
 */
 int tgetflag(const char *id);
+
+/**
+*@brief The tgetent routine loads the entry for name.  It returns:
+
+          1  on success,
+
+          0  if there is no such entry (or that it is a generic type, having too
+             little information for curses applications to run), and
+
+          -1 if the terminfo database could not be found.
+*/
+int tgetent(char *bp, const char *name);
+
+/**
+*@brief tcgetattr() gets the parameters associated with the object referred by fd
+       and  stores  them in the termios structure referenced by termios_p.  This
+       function may be invoked from a background process; however, the  terminal
+       attributes may be subsequently changed by a foreground process.
+*/
+int tcgetattr(int fd, struct termios *termios_p);
+
+/**
+*@brief tcsetattr() sets the parameters associated with the terminal (unless sup‐
+       port is required from the underlying hardware that is not available) from
+       the  termios structure referred to by termios_p.  optional_actions speci‐
+       fies when the changes take effect:
+       TCSANOW
+              the change occurs immediately.
+
+       TCSADRAIN
+              the change occurs after all output written to fd has  been  trans‐
+              mitted.   This option should be used when changing parameters that
+              affect output.
+
+       TCSAFLUSH
+              the change occurs after all output written to the object  referred
+              by  fd  has been transmitted, and all input that has been received
+              but not read will be discarded before the change is made.
+*/
+int tcsetattr(int fd, int optional_actions,
+                     const struct termios *termios_p);
+
+/**
+*@brief searches the environment list to find the environ‐
+       ment variable name, and returns a  pointer  to  the  corresponding  value
+       string.
+*@return a pointer to the value in the  environment,
+       or NULL if there is no match.
+*/
+char *getenv(const char *name);
+
+/**
+*@brief The  ioctl()  system call manipulates the underlying device parameters of
+       special files.  In particular, many operating characteristics of  charac‐
+       ter  special  files  (e.g., terminals) may be controlled with ioctl() re‐
+       quests.  The argument fd must be an open file descriptor.
+
+       The second argument is a device-dependent request code.  The third  argu‐
+       ment  is  an  untyped  pointer  to memory.  It's traditionally char *argp
+       (from the days before void * was valid C), and will be so named for  this
+       discussion.
+
+       An ioctl() request has encoded in it whether the argument is an in param‐
+       eter or out parameter, and the  size  of  the  argument  argp  in  bytes.
+       Macros  and  defines used in specifying an ioctl() request are located in
+       the file <sys/ioctl.h>.
+*@return Usually, on success zero is returned.  A few ioctl() requests use the re‐
+       turn  value as an output parameter and return a nonnegative value on suc‐
+       cess.  On error, -1 is returned, and errno is set appropriately.
+*/
+int ioctl(int fd, unsigned long request, ...);
+
+/**
+*@brief The legacy function ttyslot() returns the index of the current user's en‐
+       try in some file.
+*@return If successful, this function returns the slot number.  On error (e.g., if
+       none of the file descriptors 0, 1 or 2 is associated with a terminal that
+       occurs  in  this  data  base) it returns 0 on UNIX V6 and V7 and BSD-like
+       systems, but -1 on System V-like systems.
+*/
+int ttyslot(void);
+
+/**
+*@brief The  function ttyname() returns a pointer to the null-terminated pathname
+       of the terminal device that is open on the file descriptor fd, or NULL on
+       error  (for  example,  if fd is not connected to a terminal).  The return
+       value may point to static data, possibly overwritten by  the  next  call.
+       The function ttyname_r() stores this pathname in the buffer buf of length
+       buflen.
+*@return The function ttyname() returns a pointer to a pathname  on  success.   On
+       error,  NULL  is  returned, and errno is set appropriately.  The function
+       ttyname_r() returns 0 on success, and an error number upon error.
+*/
+char *ttyname(int fd);
+
+/**
+*@brief The  isatty() function tests whether fd is an open file descriptor refer‐
+       ring to a terminal.
+*@return isatty() returns 1 if fd is an open file descriptor referring to a termi‐
+       nal; otherwise 0 is returned, and errno is set to indicate the error.
+*/
+int isatty(int fd);
