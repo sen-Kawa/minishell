@@ -75,3 +75,9 @@ char *tgetstr(const char *id, char **area);
 *@brief The tgetnum routine gets the numeric entry for id, or -1 if it is not available.
 */
 int tgetnum(const char *id);
+
+/**
+*@brief The  tgetflag routine gets the boolean entry for id, or zero if it is not
+       available.
+*/
+int tgetflag(const char *id);
