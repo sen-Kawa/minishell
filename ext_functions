@@ -44,7 +44,7 @@
            ters are passed, one at a time		   
 *@return ERR upon failure, OK upon success
 */
-int tputs(const char *str, int affcnt, int (*putc)(int));
+int tputs(const char *str, int affcnt, int (*putc)(int))
 
 /**
 *@brief The tgoto routine expands the given capability using the
