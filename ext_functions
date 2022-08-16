@@ -265,3 +265,139 @@ char *strerror(int errnum);
        and errno is set appropriately.
 */
  int closedir(DIR *dirp);
+
+/**
+*@brief The readdir() function returns a pointer to a dirent structure representing
+       the next directory entry in the directory stream pointed to  by  dirp.   It
+       returns NULL on reaching the end of the directory stream or if an error oc‐
+       curred.
+*@return On success, readdir() returns a  pointer  to  a  dirent  structure.   (This
+       structure may be statically allocated; do not attempt to free(3) it.)
+
+       If  the  end of the directory stream is reached, NULL is returned and errno
+       is not changed.  If an error occurs, NULL is returned and errno is set  ap‐
+       propriately.   To distinguish end of stream and from an error, set errno to
+       zero before calling readdir() and then check the value of errno if NULL  is
+       returned.
+*/
+struct dirent *readdir(DIR *dirp);
+
+/**
+*@brief The opendir() function opens a directory stream corresponding to the direc‐
+       tory name, and returns a pointer to the directory stream.   The  stream  is
+       positioned at the first entry in the directory.
+*@return The opendir() and fdopendir() functions return a pointer to  the  directory
+       stream.  On error, NULL is returned, and errno is set appropriately.
+*/
+DIR *opendir(const char *name);
+
+/**
+*@brief  pipe()  creates  a pipe, a unidirectional data channel that can be used for
+       interprocess communication.  The array pipefd is used to  return  two  file
+       descriptors  referring  to  the  ends of the pipe.  pipefd[0] refers to the
+       read end of the pipe.  pipefd[1] refers to the write end of the pipe.  Data
+       written  to the write end of the pipe is buffered by the kernel until it is
+       read from the read end of the pipe.  For further details, see pipe(7).
+*@return  On success, zero is returned.  On error, -1 is returned, errno is  set  ap‐
+       propriately, and pipefd is left unchanged.
+
+       On  Linux (and other systems), pipe() does not modify pipefd on failure.  A
+       requirement standardizing this behavior was  added  in  POSIX.1-2016.   The
+       Linux-specific pipe2() system call likewise does not modify pipefd on fail‐
+       ure.
+*/
+int pipe(int pipefd[2]);
+
+/**
+*@brief The  dup()  system  call creates a copy of the file descriptor oldfd, using
+       the lowest-numbered unused file descriptor for the new descriptor.
+
+       After a successful return, the old and new file descriptors may be used in‐
+       terchangeably.   They refer to the same open file description (see open(2))
+       and thus share file offset and file status flags; for example, if the  file
+       offset  is  modified  by using lseek(2) on one of the file descriptors, the
+       offset is also changed for the other.
+
+       The two file descriptors do not share file descriptor flags (the  close-on-
+       exec  flag).  The close-on-exec flag (FD_CLOEXEC; see fcntl(2)) for the du‐
+       plicate descriptor is off.
+*@return On  success,  these system calls return the new file descriptor.  On error,
+       -1 is returned, and errno is set appropriately.
+*/
+int dup(int oldfd);
+
+/**
+*@brief The dup2() system call performs the same task as dup(), but instead of  us‐
+       ing the lowest-numbered unused file descriptor, it uses the file descriptor
+       number specified in newfd.  If the file  descriptor  newfd  was  previously
+       open, it is silently closed before being reused.
+
+       The  steps  of  closing and reusing the file descriptor newfd are performed
+       atomically.  This is important,  because  trying  to  implement  equivalent
+       functionality using close(2) and dup() would be subject to race conditions,
+       whereby newfd might be reused between the two steps.  Such reuse could hap‐
+       pen  because the main program is interrupted by a signal handler that allo‐
+       cates a file descriptor, or because a parallel thread allocates a file  de‐
+       scriptor.
+*@return On  success,  these system calls return the new file descriptor.  On error,
+       -1 is returned, and errno is set appropriately.
+*/
+int dup2(int oldfd, int newfd);
+
+/**
+*@brief execve()  executes  the  program  referred to by pathname.  This causes the
+       program that is currently being run by the calling process to  be  replaced
+       with  a  new  program, with newly initialized stack, heap, and (initialized
+       and uninitialized) data segments.
+*@return On success, execve() does not return, on error -1 is returned, and errno is
+       set appropriately.
+*/
+int execve(const char *pathname, char *const argv[],
+                  char *const envp[]);
+
+/**
+*@brief unlink()  deletes  a  name  from the filesystem.  If that name was the last
+       link to a file and no processes have the file open, the file is deleted and
+       the space it was using is made available for reuse.
+
+       If  the  name  was the last link to a file but any processes still have the
+       file open, the file will remain in existence until the last file descriptor
+       referring to it is closed.
+
+       If the name referred to a symbolic link, the link is removed.
+
+       If  the  name referred to a socket, FIFO, or device, the name for it is re‐
+       moved but processes which have the object open may continue to use it.
+*@return On  success,  zero is returned.  On error, -1 is returned, and errno is set
+       appropriately.
+*/
+int unlink(const char *pathname);
+
+/**
+*@brief These  functions  return information about a file, in the buffer pointed to
+       by statbuf.  No permissions are required on the  file  itself,  but—in  the
+       case  of  stat(), fstatat(), and lstat()—execute (search) permission is re‐
+       quired on all of the directories in pathname that lead to the file.
+
+       stat() and fstatat() retrieve information about  the  file  pointed  to  by
+       pathname; the differences for fstatat() are described below.
+*@return On success, zero is returned.  On error, -1 is returned, and errno  is  set
+       appropriately.
+*/
+int stat(const char *pathname, struct stat *statbuf);
+
+/**
+*@brief These  functions  return information about a file, in the buffer pointed to
+       by statbuf.  No permissions are required on the  file  itself,  but—in  the
+       case  of  stat(), fstatat(), and lstat()—execute (search) permission is re‐
+       quired on all of the directories in pathname that lead to the file.
+
+       stat() and fstatat() retrieve information about  the  file  pointed  to  by
+       pathname; the differences for fstatat() are described below.
+
+       fstat()  is  identical to stat(), except that the file about which informa‐
+       tion is to be retrieved is specified by the file descriptor fd.
+*@return On success, zero is returned.  On error, -1 is returned, and errno  is  set
+       appropriately.
+*/
+int fstat(int fd, struct stat *statbuf);
