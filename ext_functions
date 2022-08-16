@@ -666,3 +666,13 @@ pid_t fork(void);
        some other error occurred), -1 is returned, and errno is set appropriately.
 */
 int access(const char *pathname, int mode);
+
+/**
+*@brief Place string at the end of the history list.  The associated data
+       field (if any) is set to NULL.  If the maximum number of history
+       entries has been set using stifle_history(), and the new number
+       of history entries would exceed that maximum, the oldest history
+       entry is removed.
+*/
+void add_history (const char *string)
+
