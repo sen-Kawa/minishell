@@ -31,13 +31,5 @@
 
 	Change what's displayed on the screen to reflect the current contents of rl_line_buffer.
 
-/**
-*@brief allocates spave and wipes it
-*
-*@param count Number of Objects.
-*@param size Size of the objects.
-*@return ERR upon failure OK upon success
-*/
-int tputs(const char *str, int affcnt, int (*putc)(int));
 
 
