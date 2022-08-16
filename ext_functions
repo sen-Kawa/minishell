@@ -641,3 +641,28 @@ pid_t wait(int *wstatus);
        -1 is returned.
 */
 pid_t waitpid(pid_t pid, int *wstatus, int options);
+
+/**
+*@brief fork()  creates  a new process by duplicating the calling process.  The new
+       process is referred to as the child process.  The calling  process  is  re‐
+       ferred to as the parent process.
+
+       The child process and the parent process run in separate memory spaces.  At
+       the time of fork() both  memory  spaces  have  the  same  content.   Memory
+       writes,  file  mappings  (mmap(2)), and unmappings (munmap(2)) performed by
+       one of the processes do not affect the other.
+*@return On  success,  the PID of the child process is returned in the parent, and 0
+       is returned in the child.  On failure, -1 is returned  in  the  parent,  no
+       child process is created, and errno is set appropriately.
+*/
+pid_t fork(void);
+
+/**
+*@brief access()  checks  whether the calling process can access the file pathname.
+       If pathname is a symbolic link, it is dereferenced.
+*@return On success (all requested permissions granted, or mode is F_OK and the file
+       exists), zero is returned.  On error (at least one bit in mode asked for  a
+       permission  that is denied, or mode is F_OK and the file does not exist, or
+       some other error occurred), -1 is returned, and errno is set appropriately.
+*/
+int access(const char *pathname, int mode);
