@@ -5,7 +5,9 @@
 
 	char *readline (const char *prompt);
 
-	Reads a line from the terminal with editing capabilities. Uses prompt param as prompt, if prompt is NULL or empty string, no prompt is issued. Removes final newline.
+	Reads a line from the terminal with editing capabilities. Uses prompt param as prompt, if prompt is NULL or empty string, no prompt is issued. 
+	Removes final newline.
+	
 	Return: Text of line read. Line returned is allocated. Caller frees.
 
 	Brief manual: https://www.man7.org/linux/man-pages/man3/readline.3.html
@@ -14,7 +16,8 @@
 -- rl_clear_history:
 	void rl_clear_history (void);
 	
-	Clears the history list by deleting all of the entries. It frees private data readline saves in the history list. Similar behaviour as in clear_history().
+	Clears the history list by deleting all of the entries. It frees private data readline saves in the history list. 
+	Similar behaviour as in clear_history().
 
 -- rl_on_new_line:
 	int rl_on_new_line (void);
@@ -24,12 +27,24 @@
 -- rl_replace_line:
 	void rl_replace_line (const char *text, int clear_undo);
 	
-	Replace the contents of rl_line_buffer with text. The point and mark are preserved, if possible. If clear_undo is non-zero, the undo list associated with the current line is cleared. 
+	Replace the contents of rl_line_buffer with text. The point and mark are preserved, if possible. 
+	If clear_undo is non-zero, the undo list associated with the current line is cleared. 
 
 -- rl_redisplay:
 	void rl_redisplay (void);
 
 	Change what's displayed on the screen to reflect the current contents of rl_line_buffer.
+
+-- add_history:
+	void add_history (const char *string);
+	
+	From readline manual: If you want the user to be able to get at the line later, you must call add_history() to save the line away in a history list of such lines.
+	
+	From history(3) manual: The history library is able to keep track of lines read. 
+	Add_history() places the string at the end of the history list. Associated data field (if exists) is set to NULL.
+	Max number of history entries is set with stifle_history(), if reached, oldest entry is removed.
+
+	Manual History Library: https://www.man7.org/linux/man-pages/man3/history.3.html
 
 /**
 *@brief The  tputs  routine  applies  padding information to the
