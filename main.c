@@ -6,6 +6,10 @@ void	handler(int num)
 {
 	(void)num;
 	write(0, "\n", 1);
+	ft_putstr_fd("\b\b\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 int	main(void)
