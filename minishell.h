@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/09 11:51:07 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/09 12:09:14 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <stdio.h>
 # include "libft/libft.h"
-# include </Users/ksura/goinfre/.brew/opt/readline/include/readline/readline.h>
-# include </Users/ksura/goinfre/.brew/opt/readline/include/readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <unistd.h>
 
 #endif
