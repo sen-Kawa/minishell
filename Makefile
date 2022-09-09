@@ -6,7 +6,7 @@
 #    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/09/09 10:52:22 by ksura            ###   ########.fr        #
+#    Updated: 2022/09/09 12:07:01 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,18 +19,20 @@ LIBFT = libft/libft.a
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
+CFLAGS = -Wall -Werror -Wextra -g
 
 OS = $(shell uname)
 ifeq ($(OS), Linux)
-	CFLAGS = -Werror -Wall -Wextra -lreadline 
+FLAGS_OS = -lreadline 
 endif
 ifeq ($(OS), Darwin)
-	CFLAGS = -Wall -Werror -Wextra -g -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
+FLAGS_OS = -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
 endif
+
 
 $(NAME): $(OBJS)
 	make -C libft/
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) 
+	$(CC) $(CFLAGS) $(FLAGS_OS) -o $(NAME) $(OBJS) $(LIBFT) 
 
 all: $(NAME)
 
