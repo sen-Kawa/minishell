@@ -6,7 +6,7 @@
 #    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/09/09 10:25:36 by ksura            ###   ########.fr        #
+#    Updated: 2022/09/09 10:52:22 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ ifeq ($(OS), Linux)
 	CFLAGS = -Werror -Wall -Wextra -lreadline 
 endif
 ifeq ($(OS), Darwin)
-	CFLAGS = -Wall -Werror -Wextra -g -I $(HOME)/goinfre/.brew/opt/readline/include/
+	CFLAGS = -Wall -Werror -Wextra -g -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
 endif
 
 $(NAME): $(OBJS)
