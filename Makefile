@@ -6,13 +6,13 @@
 #    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/09/09 12:07:01 by ksura            ###   ########.fr        #
+#    Updated: 2022/09/09 17:52:39 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = main.c
+SRCS = main.c cmd_paths.c
 
 LIBFT = libft/libft.a
 

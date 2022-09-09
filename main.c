@@ -13,11 +13,15 @@ void	handler_quit(int sig)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
+	
 	struct	sigaction sa;
 	pid_t	pid;
+	char	*cmd_path;
 
+	(void) argc;
+	(void) argv;
 	pid = getpid();
 	ft_printf("pid is %d\n", pid);
 	while (1)
@@ -33,6 +37,7 @@ int	main(void)
 		}			
 		else if (command && *command)
 			add_history(command);
+		cmd_path = get_cmd_path(command, envp);
 	}
 	return 0;
 }
