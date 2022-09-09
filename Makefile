@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kaheinz <kaheinz@student.42wolfsburg.de>   +#+  +:+       +#+         #
+#    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/09/09 08:38:33 by kaheinz          ###   ########.fr        #
+#    Updated: 2022/09/09 08:51:22 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,6 @@ OBJS = $(SRCS: .c=.o)
 CC = gcc
 
 CFLAGS = -Werror -Wall -Wextra
-
-#%.o: %.c 
- #       $(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	make -C libft/
