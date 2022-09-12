@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:53:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/05 10:25:02 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/09/12 11:41:16 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,18 @@ t_stack	*ft_stacklast(t_stack *stk)
 	if (!stk)
 		return (NULL);
 	last = stk;
+	while (last->next != NULL)
+		last = last->next;
+	return (last);
+}
+
+t_ms_list	*ft_tokenlast(t_ms_list *tokens)
+{
+	t_ms_list	*last;
+
+	if (!tokens)
+		return (NULL);
+	last = tokens;
 	while (last->next != NULL)
 		last = last->next;
 	return (last);

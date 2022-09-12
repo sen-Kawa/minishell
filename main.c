@@ -18,12 +18,18 @@ int	main(int argc, char **argv, char **envp)
 	
 	struct	sigaction sa;
 	pid_t	pid;
-	char	*cmd_path;
+	t_ms_list	*tokens;
+	// char	*cmd_path;
 
 	(void) argc;
 	(void) argv;
 	pid = getpid();
 	ft_printf("pid is %d\n", pid);
+	tokens = (t_ms_list *)malloc(sizeof(t_ms_list));
+		if (!tokens)
+			exit(EXIT_FAILURE);
+	tokens->next = NULL;
+	tokens->token = "something";
 	while (1)
 	{
 		sa.sa_handler = &handler_quit;
@@ -36,8 +42,15 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}			
 		else if (command && *command)
+		{
 			add_history(command);
-		cmd_path = get_cmd_path(command, envp);
+			tokenice(command, tokens);
+
+		}
+		(void)envp;
+		
+		// cmd_path = get_cmd_path(command, envp);
 	}
+	printing_list_a(tokens);
 	return 0;
 }

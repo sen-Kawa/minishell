@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 08:29:51 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/05 11:01:09 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/09/12 10:00:50 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,19 @@ t_stack	*ft_stacknew(int value)
 		return (NULL);
 	new_list->value = value;
 	new_list->next = NULL;
+	return (new_list);
+}
+
+t_ms_list	*ft_tokennew(char *token, char *type)
+{
+	t_ms_list	*new_list;
+
+	new_list = (t_ms_list *)malloc(sizeof (t_ms_list));
+	if (!new_list)
+		return (NULL);
+	new_list->token = token;
+	new_list->type = type;
+	new_list->next = NULL;
+	new_list->section = 0;
 	return (new_list);
 }

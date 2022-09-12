@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 17:21:39 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/19 16:13:16 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/12 11:42:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ typedef struct s_list
 	struct s_list	*next;
 	int				chunk;
 }	t_list;
+
+typedef struct ms_list
+{
+	char			*token; // "string" / command
+	char			*type; // string / 
+	int				section; //default 0 / next section +1
+	struct ms_list	*next;
+}	t_ms_list;
 
 typedef struct s_stack
 {
@@ -100,5 +108,10 @@ int		print_char(va_list	list);
 int		print_num(va_list	list);
 int		print_unum(va_list	list);
 int		write_char(char c);
+
+//MINISHELL
+t_ms_list	*ft_tokennew(char *token, char *type);
+void	ft_tokenadd_back(t_ms_list **lst, t_ms_list *new);
+t_ms_list	*ft_tokenlast(t_ms_list *tokens);
 
 #endif
