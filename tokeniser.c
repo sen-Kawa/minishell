@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/12 20:36:24 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/12 20:53:43 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_lex_struct	double_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 			lex.i++;
 			while (command[lex.start + lex.i] && command[lex.start + lex.i] != '"')
 				lex.i++;
-			if(command[lex.start + lex.i - 1] != '"')
+			if(command[lex.start + lex.i] != '"')
 			{
 				lex.error = 1;
 				return (lex);
@@ -139,7 +139,7 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 					part = ft_substr(command,lex. start, lex.i);
 					newbe = ft_tokennew(part, "space");
 					ft_tokenadd_back(&tokens, newbe);
-					free(part);
+					// free(part);
 				}
 				while (command[lex.start + lex.i] == ' ')
 					lex.i++;
