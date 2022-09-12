@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/12 14:46:01 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/12 15:30:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	tokenice(char *command, t_ms_list *tokens)
 		{
 			if (command[start + i] == ' ')
 			{
+				
 				part = ft_substr(command, start, i);
 				newbe = ft_tokennew(part, NULL);
 				// free(part);
@@ -47,8 +48,12 @@ void	tokenice(char *command, t_ms_list *tokens)
 		}
 		i++;
 	}
-	part = ft_substr(command, start, i);
-	newbe = ft_tokennew(part, NULL);
-	// free(part);
-	ft_tokenadd_back(&tokens, newbe);
+	if (i > 0)
+	{
+		part = ft_substr(command, start, i);
+		newbe = ft_tokennew(part, NULL);
+		// free(part);
+		ft_tokenadd_back(&tokens, newbe);
+	}
+	
 }
