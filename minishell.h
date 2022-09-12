@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/12 11:32:54 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/12 18:32:09 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 # endif
 
 # include <unistd.h>
+
+typedef struct lex_struct
+{
+	int		start;
+	int		i;
+	int		length;
+}	t_lex_struct;
 
 char	*get_cmd_path(char *cmd, char **envp);
 void	tokenice(char *command, t_ms_list *tokens);
