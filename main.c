@@ -19,6 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	struct	sigaction sa;
 	pid_t	pid;
 	t_ms_list	*tokens;
+	t_lex_struct	lex;
 	// char	*cmd_path;
 
 	(void) argc;
@@ -44,13 +45,18 @@ int	main(int argc, char **argv, char **envp)
 		else if (command && *command)
 		{
 			add_history(command);
-			tokenice(command, tokens);
+			lex = tokenice(command, tokens);
 
 		}
 		(void)envp;
 		
 		// cmd_path = get_cmd_path(command, envp);
 	}
-	printing_list_a(tokens);
+
+	if (lex.error == 1)
+		freeing_tokens(tokens);
+	else
+		printing_tokens(tokens);
+	
 	return 0;
 }

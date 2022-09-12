@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/12 19:04:32 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/12 20:12:45 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,15 @@ t_lex_struct	double_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 	
 	if (command[lex.start + lex.i] == '"')
 		{
-			// write(1, "Quote\n", 7);
 			lex.i++;
-			while (command[lex.start + lex.i] != '"')
+			while (command[lex.start + lex.i] && command[lex.start + lex.i] != '"')
 				lex.i++;
-			
+			if(command[lex.start + lex.i - 1] != '"')
+			{
+				lex.error = 1;
+				return (lex);
+			}
+				
 			part = ft_substr(command, lex.start + 1, lex.i - 1);
 			newbe = ft_tokennew(part, "double quotes");
 			ft_tokenadd_back(&tokens, newbe);
@@ -86,6 +90,17 @@ t_lex_struct	single_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 		return (lex);
 }
 
+void	freeing_tokens(t_ms_list	*tokens)
+{
+	t_ms_list	*temp;
+
+	while (tokens != NULL)
+	{
+		temp = tokens;
+		tokens = tokens->next;
+		free(temp);
+	}
+}
 /*
 DESCRIPTION
 Makes Nodes out of Commandline returned by readline
@@ -98,7 +113,7 @@ PARAMETERS
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 */
-void	tokenice(char *command, t_ms_list *tokens)
+t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 {
 	char *part;
 	t_ms_list		*newbe;
@@ -135,6 +150,12 @@ void	tokenice(char *command, t_ms_list *tokens)
 		lex.i++;
 		lex = double_quotes(command, lex, tokens);
 		lex = single_quotes(command, lex, tokens);
+		if (lex.error == 1)
+		{
+			write(1, "bash: syntax error, quotes missing\n", 36);
+			return (lex);
+		}
+			
 	}
 	if (lex.i > 0)
 	{
@@ -144,5 +165,6 @@ void	tokenice(char *command, t_ms_list *tokens)
 		// free(part);
 		ft_tokenadd_back(&tokens, newbe);
 	}
+	return (lex);
 	
 }

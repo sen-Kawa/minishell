@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/12 18:32:09 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/12 20:11:47 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ typedef struct lex_struct
 	int		start;
 	int		i;
 	int		length;
+	int		error;
 }	t_lex_struct;
 
 char	*get_cmd_path(char *cmd, char **envp);
-void	tokenice(char *command, t_ms_list *tokens);
+t_lex_struct	tokenice(char *command, t_ms_list *tokens);
+void	freeing_tokens(t_ms_list	*tokens);
 
 
-void	printing_list_a(t_ms_list *tokens);
+void	printing_tokens(t_ms_list *tokens);
 #endif
