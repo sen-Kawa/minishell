@@ -26,11 +26,18 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	pid = getpid();
 	ft_printf("pid is %d\n", pid);
-	tokens = (t_ms_list *)malloc(sizeof(t_ms_list));
-		if (!tokens)
-			exit(EXIT_FAILURE);
-	tokens->next = NULL;
-	tokens->token = "something";
+	
+	tokens = ft_tokennew("something", "first", 0);
+	// tokens = (t_ms_list *)malloc(sizeof(t_ms_list));
+	// 	if (!tokens)
+	// 		exit(EXIT_FAILURE);
+	// // tokens = NULL;
+	// tokens->next = NULL;
+	// tokens->token = "something";
+	// tokens->type = "first empty";
+	// tokens->section = 0;
+	// ft_printf("Section is %d\n", tokens->section);
+
 	while (1)
 	{
 		sa.sa_handler = &handler_quit;
