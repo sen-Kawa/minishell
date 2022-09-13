@@ -53,12 +53,9 @@ int	main(int argc, char **argv, char **envp)
 		// cmd_path = get_cmd_path(command, envp);
 	}
 
-	if (lex.error == 1)
-	{
-		freeing_tokens(tokens);
-	}	
-	else
+	if (lex.error == 0)
 		printing_tokens(tokens);
+	freeing_tokens(tokens);
 	free(command);
 	return 0;
 }
