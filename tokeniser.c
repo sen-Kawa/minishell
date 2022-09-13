@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 08:45:51 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/13 11:10:36 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,29 @@ t_lex_struct	double_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 {
 	t_ms_list	*newbe;
 	char		*part;
-	
+	int			dlr;
+
+	dlr = 0;
 	if (command[lex.start + lex.i] == '"')
 		{
 			lex.i++;
 			while (command[lex.start + lex.i] && command[lex.start + lex.i] != '"')
+			{
 				lex.i++;
+				if (command[lex.start + lex.i] == '$')
+					dlr = 1;
+			}
+				
 			if(command[lex.start + lex.i] != '"')
 			{
 				lex.error = 1;
 				return (lex);
 			}
 			part = ft_substr(command, lex.start + 1, lex.i - 1);
-			newbe = ft_tokennew(part, "double quotes");
+			if (dlr == 0)
+				newbe = ft_tokennew(part, "double quotes");
+			else
+				newbe = ft_tokennew(part, "$double$quote$");
 			ft_tokenadd_back(&tokens, newbe);
 			lex.i++;
 			lex.start = lex.start + lex.i;
@@ -130,8 +140,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 		lex.start++;
 	while(command[lex.start + lex.i] && *command)
 	{
-	
-		// space_lex(command, lex, tokens)
 		if (lex.start + lex.i <= lex.length)
 		{
 			if (command[lex.start +lex.i] == ' ')
@@ -150,7 +158,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 				lex.i = -1;
 			}
 		}
-		
 		lex.i++;
 		lex = double_quotes(command, lex, tokens);
 		lex = single_quotes(command, lex, tokens);
@@ -159,7 +166,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 			write(1, "bash: syntax error, quotes missing\n", 36);
 			return (lex);
 		}
-			
 	}
 	if (lex.i > 0)
 	{
