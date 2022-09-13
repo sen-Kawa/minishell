@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 12:38:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/13 13:01:12 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,21 @@ void	freeing_tokens(t_ms_list	*tokens)
 		free(temp);
 	}
 }
+
+int	pipe_check(char *command, t_lex_struct lex, t_ms_list *tokens)
+{
+	if (command[lex.start + lex.i - 1] == '|' && command[lex.start + lex.i - 2] == ' ')
+	{
+		tokens->section++;
+		return (1);
+	}
+	else if (command[lex.start + lex.i - 1] == '|' && command[lex.start + lex.i - 2] != ' ')
+	{
+		lex.error = 2;
+		return (1);
+	}
+	return (0);
+}
 /*
 DESCRIPTION
 Makes Nodes out of Commandline returned by readline
@@ -147,16 +162,7 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 				// write(1, "inside 1\n", 10);
 				if (lex.i > 0)
 				{
-					if (command[lex.start + lex.i - 1] == '|' && command[lex.start + lex.i - 2] == ' ')
-					{
-						tokens->section++;
-					}
-					else if (command[lex.start + lex.i - 1] == '|' && command[lex.start + lex.i - 2] != ' ')
-					{
-						lex.error = 2;
-						return (lex);
-					}
-					else
+					if (!pipe_check(command, lex, tokens))
 					{
 						part = ft_substr(command,lex. start, lex.i);
 						newbe = ft_tokennew(part, "space", tokens->section);
@@ -179,7 +185,7 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 			return (lex);
 		}
 		if (lex.error == 2)
-			write(1, "bash: syntax error, space missing\n", 36);
+			write(1, "bash: syntax error, space missing\n", 35);
 	}
 	if (lex.i > 0)
 	{
