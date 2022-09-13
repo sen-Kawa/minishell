@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 08:37:35 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/13 08:45:51 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_lex_struct	double_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 				lex.error = 1;
 				return (lex);
 			}
-				
 			part = ft_substr(command, lex.start + 1, lex.i - 1);
 			newbe = ft_tokennew(part, "double quotes");
 			ft_tokenadd_back(&tokens, newbe);
@@ -75,11 +74,14 @@ t_lex_struct	single_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 	
 	if (command[lex.start + lex.i] == 39)
 		{
-			// write(1, "Quote\n", 7);
 			lex.i++;
-			while (command[lex.start + lex.i] != 39)
+			while (command[lex.start + lex.i] && command[lex.start + lex.i] != 39)
 				lex.i++;
-			
+			if(command[lex.start + lex.i] != 39)
+			{
+				lex.error = 1;
+				return (lex);
+			}
 			part = ft_substr(command, lex.start + 1, lex.i - 1);
 			newbe = ft_tokennew(part, "single quotes");
 			ft_tokenadd_back(&tokens, newbe);
@@ -168,5 +170,4 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 		ft_tokenadd_back(&tokens, newbe);
 	}
 	return (lex);
-	
 }
