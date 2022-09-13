@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 18:01:37 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/13 19:28:58 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,5 +238,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 		// free(part);
 		ft_tokenadd_back(&tokens, newbe);
 	}
+	redirecting(tokens);
 	return (lex);
 }

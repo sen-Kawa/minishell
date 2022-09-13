@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 17:56:25 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/13 19:10:26 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ void	printing_tokens(t_ms_list *tokens);
 void	freeing_tokens(t_ms_list	*tokens);
 t_lex_struct    afterquotes(char *command, t_lex_struct lex, t_ms_list *tokens);
 t_lex_struct    beforequotes(char *command, t_lex_struct lex, t_ms_list *tokens);
-
+void	redirecting(t_ms_list *tokens);
 #endif

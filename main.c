@@ -61,7 +61,9 @@ int	main(int argc, char **argv, char **envp)
 	}
 
 	if (lex.error == 0)
+	{
 		printing_tokens(tokens);
+	}
 	freeing_tokens(tokens);
 	free(command);
 	return 0;
