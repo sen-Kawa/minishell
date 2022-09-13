@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 16:11:30 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/13 17:33:57 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ t_lex_struct	double_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 			newbe = ft_tokennew(part, "$double$quote$", tokens->section);
 		ft_tokenadd_back(&tokens, newbe);
 		lex.i++;
+		if (command[lex.start + lex.i] != ' ' && command[lex.start + lex.i])
+		{
+			lex.start = lex.start + lex.i;
+			lex.i = 0;
+			while(command[lex.start + lex.i] && *command && command[lex.i + lex.start] != ' ')
+				lex.i++;
+			part = ft_substr(command, lex.start, lex.i);
+			newbe = ft_tokennew(part, "afterquotes_nospace", tokens->section);
+			ft_tokenadd_back(&tokens, newbe);
+		}
 		lex.start = lex.start + lex.i;
 		lex.i = -1;
 	}
