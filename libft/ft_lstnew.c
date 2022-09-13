@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 08:29:51 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 12:27:40 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/13 19:40:18 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_ms_list	*ft_tokennew(char *token, char *type, int section)
 		return (NULL);
 	new_list->token = token;
 	new_list->type = type;
+	new_list->dollar = 0;
 	new_list->next = NULL;
 	new_list->section = section;
 	return (new_list);

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 17:21:39 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 11:51:28 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/13 19:47:32 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct ms_list
 	char			*token; // "string" / command
 	char			*type; // string / 
 	int				section; //default 0 / next section +1
+	int				dollar;
 	struct ms_list	*next;
 }	t_ms_list;
 
