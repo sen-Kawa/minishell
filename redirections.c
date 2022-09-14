@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/14 13:50:46 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/14 16:35:04 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,16 @@ EXTERNAL FUNCTIONS
 void	redir2(t_ms_list *tmp)
 {
 	if (tmp->token[0] == '<' && tmp->token[1] == '<')
-		tmp->type = "heredoc";
+	{
+		if (tmp->token[2] != '\0')
+			tmp->type = "sym+delim";
+		else if (tmp->token[2] == '\0')
+		{
+			tmp->type = "heredoc_sym";
+			if (tmp->next)
+				tmp->next->type = "delim";
+		}
+	}
 	if (tmp->token[0] && tmp->token[1] && !tmp->token[2])
 	{
 		if (tmp->token[0] == '>' && tmp->token[1] == '>')
