@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 19:59:33 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/14 13:30:13 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,33 @@ void	redirecting(t_ms_list *tokens)
 	{
 		while(tmp)
 		{
-			if (*tmp->token == '<')
+			if (tmp->token[0] && !tmp->token[1])
 			{
-				tmp->type = "red_in";
-				tmp->next->type = "infile";
+				if (tmp->token[0] == '<')
+				{
+					tmp->type = "red_in";
+					if (tmp->next)
+						tmp->next->type = "infile";
+				}
+				else if (tmp->token[0] == '>')
+				{
+					tmp->type = "red_out";
+					if (tmp->next)
+						tmp->next->type = "outfile";
+				}
 			}
-			else if (*tmp->token == '>')
+			else if (tmp->token[0] == '<' && tmp->token[1] == '<')
 			{
-				tmp->type = "red_out";
-				tmp->next->type = "outfile";
+				tmp->type = "heredoc";
+			}
+			else if (tmp->token[0] && tmp->token[1] && !tmp->token[2])
+			{
+				if (tmp->token[0] == '>' && tmp->token[1] == '>')
+				{
+					tmp->type = "red_out_app";
+					if (tmp->next)
+						tmp->next->type = "app_outfile";
+				}
 			}
 			tmp = tmp->next;
 		}
