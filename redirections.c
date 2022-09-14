@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/14 16:35:04 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/14 16:41:19 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	dollarizing(t_ms_list *tokens);
 DESCRIPTION
 PartII of redirecting().
 Alters types of tokens for redirection purposes.
+In case of << it gives types to the symbol and
+the delimiter but doesn't split them if they are together
 
 RETURN
 -
