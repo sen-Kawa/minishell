@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 17:51:29 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/15 18:14:24 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,12 +186,14 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 						if (space_split[i][a] == '$')
 						{
 							printf("dollar found in string %i in character %i\n", i, a);
-							dollar_split = ft_split(tmp->token, '$');
-							ds = 1;
+							dollar_split = ft_split(space_split[i], '$');
+							ds = 0;
 							while(dollar_split[ds])
 							{
 								var = get_vars(envp, dollar_split[ds]);
+								printf("dstring %i.%i: %s\n", i, ds, dollar_split[ds]);
 								printf("variable %i is %s\n", ds, var);
+								
 								ds++;
 							}
 						}
