@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 19:40:49 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/15 20:01:43 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 {
 	t_ms_list	*tmp;
 	char		*new_dollar;
+	char		*new_space;
 	char		**space_split;
 	char		**dollar_split;
 	char		*var;
@@ -179,6 +180,7 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 			{
 				space_split = ft_split_ssp(tmp->token, ' ');
 				i = 0;
+				new_space = "";
 				while (space_split[i])
 				{
 					a = 0;
@@ -195,6 +197,8 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 								while(dollar_split[ds])
 								{
 									var = get_vars(envp, dollar_split[ds]);
+									if (var == NULL)
+										var = "";
 									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
 									free (dollar_split[ds]);
 									dollar_split[ds] = var;
@@ -210,6 +214,8 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 								while(dollar_split[ds])
 								{
 									var = get_vars(envp, dollar_split[ds]);
+									if (var == NULL)
+										var = "";
 									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
 									free (dollar_split[ds]);
 									dollar_split[ds] = var;
@@ -229,9 +235,12 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 						a++;
 					}
 					printf("string %i: %s\n", i, space_split[i]);
+					new_space = ft_strjoin(new_space, space_split[i]);
 					i++;
 				}
+				printf("new_space: %s\n",new_space);
 			}
+			tmp->token = new_space;
 			tmp = tmp->next;
 		}
 	}
