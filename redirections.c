@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 18:14:24 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/15 19:40:49 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ static char	*get_vars(char **envp, char *var)
 void	dollar_double(t_ms_list *tokens, char **envp)
 {
 	t_ms_list	*tmp;
+	char		*new_dollar;
 	char		**space_split;
 	char		**dollar_split;
 	char		*var;
@@ -187,15 +188,43 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 						{
 							printf("dollar found in string %i in character %i\n", i, a);
 							dollar_split = ft_split(space_split[i], '$');
-							ds = 0;
-							while(dollar_split[ds])
+							new_dollar = "";
+							if (a == 0)
 							{
-								var = get_vars(envp, dollar_split[ds]);
-								printf("dstring %i.%i: %s\n", i, ds, dollar_split[ds]);
-								printf("variable %i is %s\n", ds, var);
-								
-								ds++;
+								ds = 0;
+								while(dollar_split[ds])
+								{
+									var = get_vars(envp, dollar_split[ds]);
+									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
+									free (dollar_split[ds]);
+									dollar_split[ds] = var;
+									// space_split[i] = var;
+									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
+									new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
+									ds++;
+								}
 							}
+							else if (a != 0)
+							{
+								ds = 1;
+								while(dollar_split[ds])
+								{
+									var = get_vars(envp, dollar_split[ds]);
+									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
+									free (dollar_split[ds]);
+									dollar_split[ds] = var;
+									// space_split[i] = var;
+									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
+									if (ds == 1)
+										new_dollar = ft_strjoin(dollar_split[0], dollar_split[1]);
+									else
+										new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
+									ds++;
+								}
+							}
+							// free (space_split[i]);
+							if (new_dollar)
+								space_split[i] = new_dollar;
 						}
 						a++;
 					}
