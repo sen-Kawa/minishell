@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 15:19:05 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/15 16:25:21 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ t_lex_struct	beforequotes(char *command, t_lex_struct lex, t_ms_list *tokens);
 void			redirecting(t_ms_list *tokens);
 void			dollarizing(t_ms_list *tokens);
 void			dollar_double(t_ms_list *tokens, char **envp);
+char	**ft_split_sp(char const *s, char c);
 
 #endif
