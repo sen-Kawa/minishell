@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 18:06:14 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/15 22:17:47 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static size_t	word_count(char const	*s, char c)
 		{
 			while (*s != c && *s != '\0')
 				s++;
-
 		indexw++;
 		}
 		if (*s == c && *s != '\0')
