@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 19:58:00 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/15 13:23:06 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,19 @@ t_lex_struct	double_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 {
 	t_ms_list	*newbe;
 	char		*part;
-	int			dlr;
 
-	dlr = 0;
 	if (command[lex.start + lex.i] == '"')
 	{
 		lex.i++;
 		while (command[lex.start + lex.i] && command[lex.start + lex.i] != '"')
-		{
 			lex.i++;
-			if (command[lex.start + lex.i] == '$')
-				dlr = 1;
-		}
-			
 		if(command[lex.start + lex.i] != '"')
 		{
 			lex.error = 1;
 			return (lex);
 		}
 		part = ft_substr(command, lex.start + 1, lex.i - 1);
-		if (dlr == 0)
-			newbe = ft_tokennew(part, "double quotes", tokens->section);
-		else
-			newbe = ft_tokennew(part, "$double$quote$", tokens->section);
+		newbe = ft_tokennew(part, "double quotes", tokens->section);
 		ft_tokenadd_back(&tokens, newbe);
 		lex.i++;
 		lex = afterquotes(command, lex, tokens);
@@ -240,5 +230,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 	}
 	redirecting(tokens);
 	dollarizing(tokens);
+	dollar_double(tokens);
 	return (lex);
 }

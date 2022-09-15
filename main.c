@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kaheinz <kaheinz@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
+/*   Updated: 2022/09/15 13:31:30 by kaheinz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char *command;
@@ -42,7 +54,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(command);
 			lex = tokenice(command, tokens);
-
 		}
 		(void)envp;
 		
