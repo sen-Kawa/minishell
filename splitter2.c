@@ -1,22 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   splitter.c                                         :+:      :+:    :+:   */
+/*   splitter2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 16:14:26 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 17:15:18 by kaheinz          ###   ########.fr       */
+/*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
+/*   Updated: 2022/09/15 18:06:14 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+/*
+DESCRIPTION
+Allocates (with malloc(3)) and returns an array
+of strings obtained by splitting ’s’ using the
+character ’c’ as a delimiter. The array must end
+with a NULL pointer.
 
+RETURN
+The array of new strings resulting from the split.
+NULL if the allocation fails.
+
+PARAMETERS
+s: The string to be split.
+c: The delimiter character.
+
+EXTERNAL FUNCTIONS
+malloc, free
+*/
 char			**ft_split(char const *s, char c);
 static size_t	word_count(char const *s, char c);
 static void		make_word(char const *s, char c, char **result, size_t wa);
 
-char	**ft_split_sp(char const *s, char c)
+char	**ft_split_ssp(char const *s, char c)
 {
 	char	**arr;
 	size_t	wc;
@@ -32,6 +49,7 @@ char	**ft_split_sp(char const *s, char c)
 		return (arr);
 	}
 	wc = word_count(s, c);
+	printf("word count is: %li\n", wc);
 	arr = (char **)malloc(sizeof(char *) * (wc + 1));
 	if (!arr)
 		return (NULL);
@@ -44,15 +62,21 @@ static size_t	word_count(char const	*s, char c)
 	size_t		indexw;
 
 	indexw = 0;
-	while (*s == c)
-		s++;
 	while (*s)
 	{
+		if (*s != c && *s != '\0')
+		{
+			while (*s != c && *s != '\0')
+				s++;
+
 		indexw++;
-		while (*s != c && *s != '\0')
-			s++;
-		while (*s == c && *s != '\0')
-			s++;
+		}
+		if (*s == c && *s != '\0')
+		{
+			while (*s == c && *s != '\0')
+				s++;
+		indexw++;
+		}
 	}
 	return (indexw);
 }
@@ -68,17 +92,24 @@ static void	make_word(char const	*s, char c, char **result, size_t wa)
 	wordsize = 0;
 	while (i2 < wa && *s)
 	{
-		while (s[i + wordsize] == c && s[i + wordsize] != '\0')
+		if (s[i + wordsize] == c && s[i + wordsize] != '\0')
 		{
-			wordsize++;
-		}
-		i = i + wordsize;
-		wordsize = 0;
-		while (s[i + wordsize] != c && s[i + wordsize] != '\0')
-			wordsize++;
-		result[i2] = ft_substr(s, i, wordsize);
-		i2++;
-		i = i + wordsize;
+			while (s[i + wordsize] == c && s[i + wordsize] != '\0')
+				wordsize++;
+			result[i2] = ft_substr(s, i, wordsize);
+			i2++;
+			i = i + wordsize;
+			wordsize = 0;
+		}	
+		else if (s[i + wordsize] != c && s[i + wordsize] != '\0')
+		{
+			while (s[i + wordsize] != c && s[i + wordsize] != '\0')
+				wordsize++;
+			result[i2] = ft_substr(s, i, wordsize);
+			i2++;
+			i = i + wordsize;
+			wordsize = 0;
+		}	
 	}
 	result[i2] = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 16:26:14 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/15 17:51:29 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 		{
 			if (ft_strncmp(tmp->type, "double quotes", 15) == 0 && tmp->dollar == 1)
 			{
-				space_split = ft_split_sp(tmp->token, ' ');
+				space_split = ft_split_ssp(tmp->token, ' ');
 				i = 0;
 				while (space_split[i])
 				{
