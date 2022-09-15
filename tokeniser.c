@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 13:23:06 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/15 15:18:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ PARAMETERS
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 */
-t_lex_struct	tokenice(char *command, t_ms_list *tokens)
+t_lex_struct	tokenice(char *command, t_ms_list *tokens, char **envp)
 {
 	char *part;
 	t_ms_list		*newbe;
@@ -230,6 +230,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens)
 	}
 	redirecting(tokens);
 	dollarizing(tokens);
-	dollar_double(tokens);
+	dollar_double(tokens, envp);
 	return (lex);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaheinz <kaheinz@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/15 13:31:30 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/15 15:18:33 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ int	main(int argc, char **argv, char **envp)
 		else if (command && *command)
 		{
 			add_history(command);
-			lex = tokenice(command, tokens);
+			lex = tokenice(command, tokens, envp);
 		}
-		(void)envp;
 		
 		// cmd_path = get_cmd_path(command, envp);
 	}

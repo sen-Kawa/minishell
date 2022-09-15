@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 13:35:17 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/15 15:53:34 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,36 @@ void	dollarizing(t_ms_list *tokens)
 	}
 }
 
+static char	*get_vars(char **envp, char *var)
+{
+	char	*envp_var;
+	int		i;
+	
+	i = 0;
+	while (envp[i])
+	{
+		envp_var = ft_strnstr(envp[i], ft_strjoin(var, "="), ft_strlen(var) + 1);
+		if (envp_var)
+		{
+			envp_var = ft_substr(envp[i], ft_strlen(var) + 1, 100);
+			if (!envp_var)
+				return (0);
+			break ;
+		}
+		i++;
+	}
+	return (envp_var);
+}
 
-void	dollar_double(t_ms_list *tokens)
+void	dollar_double(t_ms_list *tokens, char **envp)
 {
 	t_ms_list	*tmp;
-	char **dollar_split;
-	int	i;
-	int	a;
+	char		**space_split;
+	char		**dollar_split;
+	char		*var;
+	int			i;
+	int			a;
+	int			ds;
 
 	tmp = tokens;
 	if (tmp)
@@ -153,20 +176,30 @@ void	dollar_double(t_ms_list *tokens)
 		{
 			if (ft_strncmp(tmp->type, "double quotes", 15) == 0 && tmp->dollar == 1)
 			{
-				dollar_split = ft_split(tmp->token, ' ');
+				space_split = ft_split(tmp->token, ' ');
 				i = 0;
-				while (dollar_split[i])
+				while (space_split[i])
 				{
 					a = 0;
-					while (dollar_split[i][a])
+					while (space_split[i][a])
 					{
-						if (dollar_split[i][a] == '$')
+						if (space_split[i][a] == '$')
+						{
 							printf("dollar found in string %i in character %i\n", i, a);
+							dollar_split = ft_split(tmp->token, '$');
+							ds = 1;
+							while(dollar_split[ds])
+							{
+								var = get_vars(envp, dollar_split[ds]);
+								printf("variable %i is %s\n", ds, var);
+								ds++;
+							}
+						}
 						a++;
 					}
-					printf("string %i: %s\n", i, dollar_split[i]);
+					printf("string %i: %s\n", i, space_split[i]);
 					i++;
-				}	
+				}
 			}
 			tmp = tmp->next;
 		}
