@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 20:01:43 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/15 22:04:43 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ EXTERNAL FUNCTIONS
 -
 */
 void	dollarizing(t_ms_list *tokens);
+
+char	*replacing_vars(char **envp, int ds \
+, char **dollar_split, char *new_dollar);
+char	*replacing_vars_middle_dollar(char **envp, int ds \
+, char **dollar_split, char *new_dollar);
+char	*all_dollar_splitting(int a, char **envp \
+, char **dollar_split, char *new_dollar);
+char	*dollar_core(char **envp, char **space_split, int i);
 
 /*
 DESCRIPTION
@@ -142,11 +150,12 @@ static char	*get_vars(char **envp, char *var)
 {
 	char	*envp_var;
 	int		i;
-	
+
 	i = 0;
 	while (envp[i])
 	{
-		envp_var = ft_strnstr(envp[i], ft_strjoin(var, "="), ft_strlen(var) + 1);
+		envp_var = ft_strnstr(envp[i], ft_strjoin(var, "=") \
+		, ft_strlen(var) + 1);
 		if (envp_var)
 		{
 			envp_var = ft_substr(envp[i], ft_strlen(var) + 1, 100);
@@ -162,86 +171,116 @@ static char	*get_vars(char **envp, char *var)
 void	dollar_double(t_ms_list *tokens, char **envp)
 {
 	t_ms_list	*tmp;
-	char		*new_dollar;
-	char		*new_space;
 	char		**space_split;
-	char		**dollar_split;
-	char		*var;
+	char		*new_space;
 	int			i;
-	int			a;
-	int			ds;
 
 	tmp = tokens;
 	if (tmp)
 	{
 		while (tmp)
 		{
-			if (ft_strncmp(tmp->type, "double quotes", 15) == 0 && tmp->dollar == 1)
+			if (ft_strncmp(tmp->type, "double quotes", 15) 
+			== 0 && tmp->dollar == 1)
 			{
 				space_split = ft_split_ssp(tmp->token, ' ');
 				i = 0;
-				new_space = "";
-				while (space_split[i])
-				{
-					a = 0;
-					while (space_split[i][a])
-					{
-						if (space_split[i][a] == '$')
-						{
-							printf("dollar found in string %i in character %i\n", i, a);
-							dollar_split = ft_split(space_split[i], '$');
-							new_dollar = "";
-							if (a == 0)
-							{
-								ds = 0;
-								while(dollar_split[ds])
-								{
-									var = get_vars(envp, dollar_split[ds]);
-									if (var == NULL)
-										var = "";
-									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
-									free (dollar_split[ds]);
-									dollar_split[ds] = var;
-									// space_split[i] = var;
-									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
-									new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
-									ds++;
-								}
-							}
-							else if (a != 0)
-							{
-								ds = 1;
-								while(dollar_split[ds])
-								{
-									var = get_vars(envp, dollar_split[ds]);
-									if (var == NULL)
-										var = "";
-									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
-									free (dollar_split[ds]);
-									dollar_split[ds] = var;
-									// space_split[i] = var;
-									printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
-									if (ds == 1)
-										new_dollar = ft_strjoin(dollar_split[0], dollar_split[1]);
-									else
-										new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
-									ds++;
-								}
-							}
-							// free (space_split[i]);
-							if (new_dollar)
-								space_split[i] = new_dollar;
-						}
-						a++;
-					}
-					printf("string %i: %s\n", i, space_split[i]);
-					new_space = ft_strjoin(new_space, space_split[i]);
-					i++;
-				}
-				printf("new_space: %s\n",new_space);
+				new_space = dollar_core(envp, space_split, i);
 			}
 			tmp->token = new_space;
 			tmp = tmp->next;
 		}
 	}
+	free (tmp);
+}
+
+char	*replacing_vars(char **envp, int ds, char **dollar_split, char *new_dollar)
+{
+	char	*var;
+
+	//printf("Dollar split at ds %s\n", dollar_split[ds]);
+	var = get_vars(envp, dollar_split[ds]);
+	if (var == NULL)
+		var = "";
+	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
+	free (dollar_split[ds]);
+	dollar_split[ds] = var;
+	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
+	new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
+	return (new_dollar);
+}
+
+char	*replacing_vars_middle_dollar(char **envp, int ds, char **dollar_split, char *new_dollar)
+{
+	char	*var;
+	
+	var = get_vars(envp, dollar_split[ds]);
+	if (var == NULL)
+		var = "";
+	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
+	free (dollar_split[ds]);
+	dollar_split[ds] = var;
+	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
+	if (ds == 1)
+		new_dollar = ft_strjoin(dollar_split[0], dollar_split[1]);
+	else
+		new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
+	return (new_dollar);
+}
+
+char	*all_dollar_splitting(int a, char **envp, char **dollar_split, char *new_dollar)
+{
+	int ds;
+	
+	new_dollar = "";
+	if (a == 0)
+	{
+		ds = 0;
+		while(dollar_split[ds])
+		{
+			new_dollar = replacing_vars(envp, ds, dollar_split, new_dollar);
+			ds++;
+		}
+	}
+	else if (a != 0)
+	{
+		ds = 1;
+		while(dollar_split[ds])
+		{
+			new_dollar = replacing_vars_middle_dollar(envp, ds, dollar_split, new_dollar);
+			ds++;
+		}
+	}
+	return (new_dollar);
+}
+
+char	*dollar_core(char **envp, char **space_split, int i)
+{
+	char		*new_dollar;
+	char		**dollar_split;
+	char		*new_space;
+	int			a;
+
+	new_space = "";
+	while (space_split[i])
+	{
+		a = 0;
+		while (space_split[i][a])
+		{
+			if (space_split[i][a] == '$')
+			{
+				// printf("dollar found in string %i in character %i\n", i, a);
+				dollar_split = ft_split(space_split[i], '$');
+				// free (space_split[i]);
+				new_dollar = all_dollar_splitting(a, envp, dollar_split, new_dollar);
+				if (new_dollar)
+					space_split[i] = new_dollar;
+			}
+			a++;
+		}
+		// printf("string %i: %s\n", i, space_split[i]);
+		new_space = ft_strjoin(new_space, space_split[i]);
+		i++;
+	}
+	return (new_space);
 }
