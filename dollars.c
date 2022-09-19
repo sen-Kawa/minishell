@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/19 15:54:26 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/19 15:56:41 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 			tmp = tmp->next;
 		}
 	}
+	free (new_space);
 	free (space_split);
 }
 
