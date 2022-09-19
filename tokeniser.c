@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/19 17:20:14 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/19 17:46:13 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,14 +138,14 @@ t_lex_struct	afterquotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 void	freeing_tokens(t_ms_list	*tokens)
 {
 	t_ms_list	*temp;
-	char		*tmp2;
+	// char		*tmp2;
 
 	while (tokens != NULL)
 	{
 		temp = tokens;
-		tmp2 = tokens->token;
+		// tmp2 = tokens->token;
 		tokens = tokens->next;
-		free(tmp2);
+		// free(tmp2);
 		free(temp);
 	}
 }
@@ -234,6 +234,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens, char **envp)
 	redirecting(tokens);
 	dollarizing(tokens);
 	dollar_double(tokens, envp);
-	free (command);
+	// free (command);
 	return (lex);
 }
