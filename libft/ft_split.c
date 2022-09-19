@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/05/13 13:29:07 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/19 14:17:31 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	**ft_split(char const *s, char c)
 	if (!arr)
 		return (NULL);
 	make_word(s, c, arr, wc);
+//	free ((char *) s);
 	return (arr);
 }
 
@@ -93,5 +94,6 @@ static void	make_word(char const	*s, char c, char **result, size_t wa)
 		i2++;
 		i = i + wordsize;
 	}
+	free ((char *) s);
 	result[i2] = 0;
 }

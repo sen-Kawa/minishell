@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.c                                        :+:      :+:    :+:   */
+/*   directing_vars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/19 08:57:40 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/19 12:37:59 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ char	*replacing_vars(char **envp, int ds, char **dollar_split, char *new_dollar)
 	if (var == NULL)
 		var = "";
 	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
-	free (dollar_split[ds]);
+//	free (dollar_split[ds]);
 	dollar_split[ds] = var;
 	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
 	new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
+	free(dollar_split[ds]);
 	return (new_dollar);
 }
 
@@ -58,13 +59,22 @@ char	*replacing_vars_middle_dollar(char **envp, int ds, char **dollar_split, cha
 	if (var == NULL)
 		var = "";
 	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
-	free (dollar_split[ds]);
+//	free (dollar_split[ds]);
 	dollar_split[ds] = var;
 	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
 	if (ds == 1)
+	{
 		new_dollar = ft_strjoin(dollar_split[0], dollar_split[1]);
+		free (dollar_split[0]);
+		free (dollar_split[1]);
+		write(1, "here", 1);
+	}
 	else
+	{
 		new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
+		free (dollar_split[ds]);
+		write(1, "here", 1);
+	}
 	return (new_dollar);
 }
 /*

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/19 09:19:45 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/19 14:23:35 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 			tmp = tmp->next;
 		}
 	}
-	free (tmp);
+	free (space_split);
 }
 
 char	*all_dollar_splitting(int a, char **envp, char **dollar_split, char *new_dollar)
@@ -158,10 +158,11 @@ char	*dollar_core(char **envp, char **space_split, int i)
 			{
 				// printf("dollar found in string %i in character %i\n", i, a);
 				dollar_split = ft_split(space_split[i], '$');
-				// free (space_split[i]);
+			//	free (space_split[i]);
 				new_dollar = all_dollar_splitting(a, envp, dollar_split, new_dollar);
 				if (new_dollar)
 					space_split[i] = new_dollar;
+				free (dollar_split);
 			}
 			a++;
 		}
