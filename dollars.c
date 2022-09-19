@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/19 14:33:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/19 15:30:09 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 
 	tmp = tokens;
 	new_space = NULL;
+	space_split = NULL;
 	if (tmp)
 	{
 		while (tmp)
@@ -106,13 +107,13 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 			{
 				space_split = ft_split_ssp(tmp->token, ' ');
 				new_space = dollar_core(envp, space_split, 0);
-				free (space_split);
 			}
 			if(new_space != NULL)
 				tmp->token = new_space;
 			tmp = tmp->next;
 		}
 	}
+	free (space_split);
 }
 
 char	*all_dollar_splitting(int a, char **envp, char **dollar_split, char *new_dollar)
