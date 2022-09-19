@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 21:45:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/19 15:59:22 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,5 +231,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens, char **envp)
 	redirecting(tokens);
 	dollarizing(tokens);
 	dollar_double(tokens, envp);
+	free (command);
 	return (lex);
 }
