@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 22:17:21 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/19 08:53:59 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,11 @@ void			freeing_tokens(t_ms_list	*tokens);
 void			redirecting(t_ms_list *tokens);
 void			dollarizing(t_ms_list *tokens);
 void			dollar_double(t_ms_list *tokens, char **envp);
-
+char	*replacing_vars(char **envp, int ds \
+, char **dollar_split, char *new_dollar);
+char	*replacing_vars_middle_dollar(char **envp, int ds \
+, char **dollar_split, char *new_dollar);
+char	*all_dollar_splitting(int a, char **envp \
+, char **dollar_split, char *new_dollar);
+char	*dollar_core(char **envp, char **space_split, int i);
 #endif

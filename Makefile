@@ -6,14 +6,15 @@
 #    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/09/15 17:53:40 by kaheinz          ###   ########.fr        #
+#    Updated: 2022/09/19 09:01:53 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = main.c cmd_paths.c tokeniser.c printing.c redirections.c splitter2.c
-		
+SRCS = main.c cmd_paths.c tokeniser.c printing.c dollars.c splitter2.c \
+		directing_vars.c
+
 
 LIBFT = libft/libft.a
 
