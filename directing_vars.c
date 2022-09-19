@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/19 15:37:40 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/19 15:50:46 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 static char	*get_vars(char **envp, char *var)
 {
 	char	*envp_var;
+	char	*tmp;
 	int		i;
 
+	tmp = ft_strjoin(var, "=");
 	i = 0;
 	while (envp[i])
 	{
-		envp_var = ft_strnstr(envp[i], ft_strjoin(var, "=") \
-		, ft_strlen(var) + 1);
+		envp_var = ft_strnstr(envp[i], tmp, ft_strlen(var) + 1);
 		if (envp_var)
 		{
 			envp_var = ft_substr(envp[i], ft_strlen(var) + 1, 100);
@@ -31,6 +32,8 @@ static char	*get_vars(char **envp, char *var)
 		}
 		i++;
 	}
+	free (var);
+	free (tmp);
 	return (envp_var);
 }
 
