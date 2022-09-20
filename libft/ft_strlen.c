@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 17:47:44 by ksura             #+#    #+#             */
-/*   Updated: 2022/05/13 13:29:33 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/20 11:36:38 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_strlen(const char *str)
 	int	i;
 
 	i = 0;
-	while (*(str + i) != '\0')
+	while (str[i] != '\0')
 	{
 		i++;
 	}

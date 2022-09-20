@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/19 15:56:41 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/20 11:49:26 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 			if (tmp->dollar == 1)
 			{
 				space_split = ft_split_ssp(tmp->token, ' ');
+				printf("%s\n", space_split[0]);
+				printf("%s\n", envp[0]);
 				new_space = dollar_core(envp, space_split, 0);
 			}
 			if(new_space != NULL)
@@ -113,7 +115,7 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 			tmp = tmp->next;
 		}
 	}
-	free (new_space);
+	// free (new_space);
 	free (space_split);
 }
 
@@ -163,15 +165,19 @@ char	*dollar_core(char **envp, char **space_split, int i)
 			//	free (space_split[i]);
 				new_dollar = all_dollar_splitting(a, envp, dollar_split, new_dollar);
 				if (new_dollar)
+				{
 					space_split[i] = new_dollar;
+					
+				}
 				free (dollar_split);
+				break ;
 			}
 			a++;
 		}
 		// printf("string %i: %s\n", i, space_split[i]);
 		new_space = ft_strjoin(new_space, space_split[i]);
 		i++;
+		free (new_dollar);
 	}
-	free (new_dollar);
 	return (new_space);
 }

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/19 18:47:12 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/20 10:25:19 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*replacing_vars(char **envp, int ds, char **dollar_split, char *new_dollar)
 	dollar_split[ds] = var;
 	// printf("\tdstring %i.%i: %s is %s\n", i, ds, dollar_split[ds], var);
 	new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
-	free(dollar_split[ds]);
+	// free(dollar_split[ds]);
 	return (new_dollar);
 }
 
