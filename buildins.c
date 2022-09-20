@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/20 15:41:33 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/20 15:54:05 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 
 void	b_exit(char *command)
 {
-	size_t	len;
 	int		i;
 	char	*needle;
 
-	len = ft_strlen(command);
 	i = 0;
 	while (command[i] != 0 && (command[i] == ' ' || command[i] == '\t'))
 		i++;
