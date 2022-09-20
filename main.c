@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/20 16:49:09 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/20 18:39:22 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	main(int argc, char **argv, char **envp)
 	pid = getpid();
 	ft_printf("pid is %d\n", pid);
 	
-	tokens = ft_tokennew("something", "first", 0);
 	while (1)
 	{
+		tokens = ft_tokennew("something", "first", 0);
 		sa.sa_handler = &handler_quit;
 		sigaction(SIGINT, &sa, NULL);
 		signal(SIGQUIT, SIG_IGN);
@@ -59,14 +59,14 @@ int	main(int argc, char **argv, char **envp)
 		if (command)
 			free (command);
 		execute(tokens, envp);
+		if (lex.error == 0)
+		{
+			printing_tokens(tokens);
+		}
+		freeing_tokens(tokens);
 		// cmd_path = get_cmd_path(command, envp);
 	}
 
-	if (lex.error == 0)
-	{
-		printing_tokens(tokens);
-	}
-	
 	freeing_tokens(tokens);
 	free(command);
 	return 0;
