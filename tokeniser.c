@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/20 12:59:02 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/20 13:09:16 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,6 @@ t_lex_struct	tokenice(char *command, t_ms_list *tokens, char **envp)
 		// write(1, "inside 2\n", 10);
 		part = ft_substr(command, lex.start, lex.i);
 		newbe = ft_tokennew(part, "space_before", tokens->section);
-		// free(part);
 		ft_tokenadd_back(&tokens, newbe);
 	}
 	redirecting(tokens);

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/19 10:35:17 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/20 15:03:23 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int argc, char **argv, char **envp)
 		}			
 		else if (command && *command)
 		{
+			b_exit(command);
 			add_history(command);
 			lex = tokenice(command, tokens, envp);
 		}
