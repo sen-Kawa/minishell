@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/20 15:03:07 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/20 17:24:36 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,6 @@ char	*all_dollar_splitting(int a, char **envp \
 , char **dollar_split, char *new_dollar);
 char	*dollar_core(char **envp, char **space_split, int i);
 void	b_exit(char *command);
+int		b_env(char *token, char **envp);
+void	execute(t_ms_list *tokens, char **envp);
 #endif
