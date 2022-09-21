@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 15:47:51 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 16:34:31 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,6 @@ int		b_env(char *token, char **envp);
 void	execute(t_ms_list *tokens, char **envp);
 
 // void	initms(t_ms *ms);
+void print_env(t_ms	*ms);
+int	b_export(t_ms	*ms, char **envp);
 #endif

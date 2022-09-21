@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/21 15:42:32 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 16:26:40 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		freeing_tokens(ms->tokenlist);
 		// cmd_path = get_cmd_path(command, envp);
 	}
-
+	b_export(ms, envp);
 	freeing_tokens(ms->tokenlist);
 	free(command);
 	free (ms);

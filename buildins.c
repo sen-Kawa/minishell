@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 15:54:57 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 16:46:07 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,38 @@ void	ft_envvadd_back(t_env **env, t_env *new)
 	}
 }
 
-void	b_export(t_ms	*ms, char **envp)
+void print_env(t_ms	*ms)
+{
+	while(ms->env_list)
+	{
+		printf("%s\n", ms->env_list->content);
+		ms->env_list = ms->env_list->next;
+	}
+}
+
+int	b_export(t_ms	*ms, char **envp)
 {
 	int	i;
+	t_env	*new;
+	// int	result;
+	// t_ms_list	*actual;
 
+	// actual = ms->tokenlist->token;
+	// result = ft_strncmp(ms->tokenlist->token, "export\0", 7);
+	// if (result == 0 && actual->next == NULL)
+	// 	//print ordered list
+	// elseif (result == 0 && actual->next != NULL)
+	// {
+	// 	if (ft_strncmp(actual->next->token, "=" != NULL)
+	// }
 	i = 0;
 	while(envp[i])
 	{
-		ms->env_list = ft_envvnew(envp[i]);
-		
+		new = ft_envvnew(envp[i]);
+		ft_envvadd_back(&ms->env_list, new);
+		i++;
 	}
-	
+	print_env(ms);
+	return (i);
 }
+
