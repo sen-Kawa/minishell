@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 13:34:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:14:59 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,14 @@ int	b_env(char *token, char **envp)
 	return (0);
 }
 
-int	b_export(char *token, char **envp)
-{
-	int i;
-	
+// int	b_export(t_lex_struct	*lex, char **envp)
+// {
+// 	int	i;
 
-		i = 0;
-		while (envp[i])
-		{
-			
-			i++;
-		}
-		envp[i] = token;
-		envp[i+1] = NULL;
-		
-	 return (1);
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while(envp[i])
+// 	{
+// 		ms->lex->env_list->content
+// 	}
+	
+// }

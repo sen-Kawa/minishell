@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/20 16:49:06 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:24:40 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ tokens: linked list for tokens
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback()
 */
-t_lex_struct	double_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
+t_lex	double_quotes(char *command, t_lex lex, t_ms_list *tokens)
 {
 	t_ms_list	*newbe;
 	char		*part;
@@ -68,7 +68,7 @@ tokens: linked list for tokens
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback()
 */
-t_lex_struct	single_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
+t_lex	single_quotes(char *command, t_lex lex, t_ms_list *tokens)
 {
 	t_ms_list	*newbe;
 	char		*part;
@@ -95,7 +95,7 @@ t_lex_struct	single_quotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 }
 
 
-t_lex_struct	beforequotes(char *command, t_lex_struct lex, t_ms_list *tokens)
+t_lex	beforequotes(char *command, t_lex lex, t_ms_list *tokens)
 {
 	char *part;
 	t_ms_list		*newbe;
@@ -117,7 +117,7 @@ t_lex_struct	beforequotes(char *command, t_lex_struct lex, t_ms_list *tokens)
 	return (lex);
 }
 
-t_lex_struct	afterquotes(char *command, t_lex_struct lex, t_ms_list *tokens)
+t_lex	afterquotes(char *command, t_lex lex, t_ms_list *tokens)
 {
 	char *part;
 	t_ms_list		*newbe;
@@ -149,7 +149,7 @@ void	freeing_tokens(t_ms_list	*tokens)
 	}
 }
 
-int	pipe_check(char *command, t_lex_struct lex, t_ms_list *tokens)
+int	pipe_check(char *command, t_lex lex, t_ms_list *tokens)
 {
 	if (command[lex.start + lex.i - 1] == '|' && command[lex.start + lex.i - 2] == ' ')
 	{
@@ -175,11 +175,11 @@ PARAMETERS
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 */
-t_lex_struct	tokenice(char *command, t_ms_list *tokens, char **envp)
+t_lex	tokenice(char *command, t_ms_list *tokens, char **envp)
 {
 	char *part;
 	t_ms_list		*newbe;
-	t_lex_struct	lex;
+	t_lex	lex;
 	
 	lex.i = 0;
 	lex.start = 0;

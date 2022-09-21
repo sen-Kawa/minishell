@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 17:21:39 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/14 14:36:47 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:17:15 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-typedef struct s_list
-{
-	int				content;
-	struct s_list	*next;
-	int				chunk;
-}	t_list;
-
 typedef struct ms_list
 {
 	char			*token;
@@ -31,6 +24,13 @@ typedef struct ms_list
 	int				dollar;
 	struct ms_list	*next;
 }	t_ms_list;
+
+typedef struct s_list
+{
+	int				content;
+	struct s_list	*next;
+	int				chunk;
+}	t_list;
 
 typedef struct s_stack
 {

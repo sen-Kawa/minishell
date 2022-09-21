@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 14:51:21 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:25:50 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,36 @@
 
 # include <unistd.h>
 
-typedef struct lex_struct
+
+
+typedef struct s_lex
 {
 	int			start;
 	int			i;
 	int			length;
 	int			error;
-	t_env_list	*env_list;
-}	t_lex_struct;
+}	t_lex;
 
-typedef struct env_list
+typedef struct s_env
 {
 	char	*content;
-	t_env_list	*next;
-}	t_env_list;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_ms
+{
+	t_env		*env_list;
+	t_lex		*lex;
+	t_ms_list	*tokenlist;
+}	t_ms;
 
 char			*get_cmd_path(char *cmd, char **envp);
 char			**ft_split_ssp(char const *s, char c);
-t_lex_struct	tokenice(char *command, t_ms_list *tokens, char **envp);
-t_lex_struct	afterquotes(char *command, t_lex_struct lex, t_ms_list *tokens);
-t_lex_struct	beforequotes(char *command, t_lex_struct lex,
+t_lex	tokenice(char *command, t_ms_list *tokens, char **envp);
+t_lex	afterquotes(char *command, t_lex lex, t_ms_list *tokens);
+t_lex	beforequotes(char *command, t_lex lex,
 					t_ms_list *tokens);
-int				pipe_check(char *command, t_lex_struct lex, t_ms_list *tokens);
+int				pipe_check(char *command, t_lex lex, t_ms_list *tokens);
 void			printing_tokens(t_ms_list *tokens);
 void			freeing_tokens(t_ms_list	*tokens);
 void			redirecting(t_ms_list *tokens);
