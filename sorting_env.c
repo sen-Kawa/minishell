@@ -6,7 +6,7 @@
 /*   By: kaheinz <kaheinz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/21 19:38:00 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/21 20:06:30 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	make_array(t_ms *ms, int nlines)
 	int		i;
 	int		print_index;
 	int		len;
-	char		*env_array[nlines];
+	char		*env_array[nlines + 1];
 	char		*p;
 	t_env	*tmp;
 
@@ -28,15 +28,12 @@ void	make_array(t_ms *ms, int nlines)
 	while (i < nlines)
 	{
 		len = ft_strlen(tmp->content);
-		p = ft_calloc(len, sizeof(char));
-		ft_strlcpy(p, tmp->content, len);
+		p = ft_calloc(len + 1, sizeof(char));
+		ft_strlcpy(p, tmp->content, len + 1);
 		env_array[i] = p;
 		tmp = tmp->next;
 		i++;
 	}
-//	ft_printf("number of lines: %i", print_index);
-//	ft_printf("number of i: %i", i);
-	//sort here
 	int x = 0;
 	int y = 0;
 	char	*temp;
@@ -60,5 +57,4 @@ void	make_array(t_ms *ms, int nlines)
 		ft_printf("declare -x %s\n", env_array[print_index]);
 		print_index++;
 	}
-//	return (*env_array);
 }
