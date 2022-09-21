@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/20 18:39:22 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:39:23 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,20 @@ int	main(int argc, char **argv, char **envp)
 	
 	struct	sigaction sa;
 	pid_t	pid;
-	t_ms_list	*tokens;
-	t_lex_struct	lex;
+	// t_ms_list	*tokens;
+	// t_lex	lex;
+	t_ms	*ms;
 
 	(void) argc;
 	(void) argv;
 	pid = getpid();
 	ft_printf("pid is %d\n", pid);
 	
+	ms = malloc(sizeof(t_ms));
+	// initms(ms);
 	while (1)
 	{
-		tokens = ft_tokennew("something", "first", 0);
+		ms->tokenlist = ft_tokennew("something", "first", 0);
 		sa.sa_handler = &handler_quit;
 		sigaction(SIGINT, &sa, NULL);
 		signal(SIGQUIT, SIG_IGN);
@@ -54,20 +57,20 @@ int	main(int argc, char **argv, char **envp)
 		{
 			b_exit(command);
 			add_history(command);
-			lex = tokenice(command, tokens, envp);
+			ms->lex = tokenice(command, ms->tokenlist, envp);
 		}
 		if (command)
 			free (command);
-		execute(tokens, envp);
-		if (lex.error == 0)
+		execute(ms->tokenlist, envp);
+		if (ms->lex.error == 0)
 		{
-			printing_tokens(tokens);
+			printing_tokens(ms->tokenlist);
 		}
-		freeing_tokens(tokens);
+		freeing_tokens(ms->tokenlist);
 		// cmd_path = get_cmd_path(command, envp);
 	}
 
-	freeing_tokens(tokens);
+	freeing_tokens(ms->tokenlist);
 	free(command);
 	return 0;
 }

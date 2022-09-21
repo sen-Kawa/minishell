@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 15:14:59 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:39:27 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,9 @@ int	b_env(char *token, char **envp)
 // 		ms->lex->env_list->content
 // 	}
 	
+// }
+
+// void	initms(t_ms *ms)
+// {
+// 	ms = malloc(sizeof(t_ms));
 // }

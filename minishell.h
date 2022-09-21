@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 15:25:50 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:39:30 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_env
 typedef struct s_ms
 {
 	t_env		*env_list;
-	t_lex		*lex;
+	t_lex		lex;
 	t_ms_list	*tokenlist;
 }	t_ms;
 
@@ -73,4 +73,6 @@ char	*dollar_core(char **envp, char **space_split, int i);
 void	b_exit(char *command);
 int		b_env(char *token, char **envp);
 void	execute(t_ms_list *tokens, char **envp);
+
+// void	initms(t_ms *ms);
 #endif
