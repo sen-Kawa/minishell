@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/20 17:24:36 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 14:51:21 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,18 @@
 
 typedef struct lex_struct
 {
-	int		start;
-	int		i;
-	int		length;
-	int		error;
+	int			start;
+	int			i;
+	int			length;
+	int			error;
+	t_env_list	*env_list;
 }	t_lex_struct;
+
+typedef struct env_list
+{
+	char	*content;
+	t_env_list	*next;
+}	t_env_list;
 
 char			*get_cmd_path(char *cmd, char **envp);
 char			**ft_split_ssp(char const *s, char c);

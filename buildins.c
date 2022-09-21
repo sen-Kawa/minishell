@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/20 17:36:04 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 13:34:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,26 @@ int	b_env(char *token, char **envp)
 			ft_printf("%s\n", envp[i]);
 			i++;
 		}
+		
+	 return (1);
+	}
+	return (0);
+}
+
+int	b_export(char *token, char **envp)
+{
+	int i;
+	
+
+		i = 0;
+		while (envp[i])
+		{
+			
+			i++;
+		}
+		envp[i] = token;
+		envp[i+1] = NULL;
+		
 	 return (1);
 	}
 	return (0);
