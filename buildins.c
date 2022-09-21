@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 16:46:07 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 17:12:42 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,9 @@ int	b_export(t_ms	*ms, char **envp)
 {
 	int	i;
 	t_env	*new;
-	// int	result;
-	// t_ms_list	*actual;
-
-	// actual = ms->tokenlist->token;
-	// result = ft_strncmp(ms->tokenlist->token, "export\0", 7);
-	// if (result == 0 && actual->next == NULL)
-	// 	//print ordered list
-	// elseif (result == 0 && actual->next != NULL)
-	// {
-	// 	if (ft_strncmp(actual->next->token, "=" != NULL)
-	// }
+	int	result;
+	t_ms_list	*tmp;
+	
 	i = 0;
 	while(envp[i])
 	{
@@ -114,7 +106,30 @@ int	b_export(t_ms	*ms, char **envp)
 		ft_envvadd_back(&ms->env_list, new);
 		i++;
 	}
-	print_env(ms);
+	tmp = ms->tokenlist;
+	while(tmp)
+	{
+		result = ft_strncmp(tmp->token, "export\0", 7);
+		if (result == 0 && tmp->next == NULL)
+		{//print ordered list
+			print_env(ms);
+		}
+		else if (result == 0 && tmp->next != NULL)
+		{
+			if (ft_strchr(tmp->next->token, '='))
+			{
+				new = ft_envvnew(tmp->next->token);
+				ft_envvadd_back(&ms->env_list, new);
+				i++;
+				print_env(ms);
+			}
+			else
+				return (i);
+		}
+		tmp = tmp->next;
+	}
+	
+	// print_env(ms);
 	return (i);
 }
 
