@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 17:12:42 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 18:45:01 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,9 @@ int	b_export(t_ms	*ms, char **envp)
 		result = ft_strncmp(tmp->token, "export\0", 7);
 		if (result == 0 && tmp->next == NULL)
 		{//print ordered list
-			print_env(ms);
+	//		print_env(ms);
+//			ft_printf("length of list is: %i", i);
+			make_array(ms, i);
 		}
 		else if (result == 0 && tmp->next != NULL)
 		{
@@ -121,7 +123,7 @@ int	b_export(t_ms	*ms, char **envp)
 				new = ft_envvnew(tmp->next->token);
 				ft_envvadd_back(&ms->env_list, new);
 				i++;
-				print_env(ms);
+	//			print_env(ms);
 			}
 			else
 				return (i);
