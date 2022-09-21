@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/21 15:39:23 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:42:32 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	main(int argc, char **argv, char **envp)
 	
 	struct	sigaction sa;
 	pid_t	pid;
-	// t_ms_list	*tokens;
-	// t_lex	lex;
 	t_ms	*ms;
 
 	(void) argc;
@@ -40,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_printf("pid is %d\n", pid);
 	
 	ms = malloc(sizeof(t_ms));
-	// initms(ms);
 	while (1)
 	{
 		ms->tokenlist = ft_tokennew("something", "first", 0);
@@ -72,5 +69,6 @@ int	main(int argc, char **argv, char **envp)
 
 	freeing_tokens(ms->tokenlist);
 	free(command);
+	free (ms);
 	return 0;
 }

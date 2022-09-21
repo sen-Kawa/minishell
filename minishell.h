@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 15:39:30 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/21 15:47:51 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_lex
 
 typedef struct s_env
 {
-	char	*content;
+	char			*content;
 	struct s_env	*next;
 }	t_env;
 
