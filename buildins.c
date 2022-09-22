@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 18:53:13 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/23 00:32:43 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	b_exit(char *command)
 
 int	b_env(char *token, t_ms *ms)
 {
-	int	result;
+	int		result;
 	t_env	*tmp;
 
 	tmp = ms->env_list;
@@ -48,57 +48,14 @@ int	b_env(char *token, t_ms *ms)
 	return (0);
 }
 
-t_env	*ft_envvnew(char *content)
-{
-	t_env	*new_list;
-
-	new_list = malloc(sizeof (t_env));
-	if (!new_list)
-		return (NULL);
-	new_list->content= content;
-	new_list->next = NULL;
-	return (new_list);
-}
-
-t_env	*ft_envvlast(t_env *envv)
-{
-	t_env	*last;
-
-	if (!envv)
-		return (NULL);
-	last = envv;
-	while (last->next != NULL)
-		last = last->next;
-	return (last);
-}
-
-void	ft_envvadd_back(t_env **env, t_env *new)
-{
-	if (!*env)
-		*env = new;
-	else
-	{
-		ft_envvlast(*env)->next = new;
-	}
-}
-
-void print_env(t_ms	*ms)
-{
-	while(ms->env_list)
-	{
-		printf("%s\n", ms->env_list->content);
-		ms->env_list = ms->env_list->next;
-	}
-}
-
 int	b_export(t_ms	*ms, int i)
 {
-	int	result;
+	int			result;
 	t_ms_list	*tmp;
-	t_env	*new;
-	
+	t_env		*new;
+
 	tmp = ms->tokenlist;
-	while(tmp)
+	while (tmp)
 	{
 		result = ft_strncmp(tmp->token, "export\0", 7);
 		if (result == 0 && tmp->next != NULL)
@@ -119,25 +76,27 @@ int	b_export(t_ms	*ms, int i)
 
 int	b_unset(t_ms	*ms, int i)
 {
-	int	result;
 	t_ms_list	*tmp;
-	t_env	*envlst;
-	
+	t_env		*envlst;
+	t_env		*prev_envlst;
+
 	tmp = ms->tokenlist->next;
 	envlst = ms->env_list;
-	result = ft_strncmp(tmp->token, "unset", 5);
-	if (result == 0 && tmp->next != NULL)
+	if (ft_strncmp(tmp->token, "unset", 5) == 0 && tmp->next != NULL)
 	{
 		tmp = tmp->next;
-		while (envlst && envlst->next && ft_strncmp(tmp->token, envlst->content, ft_strlen(tmp->token)) != 0)
-			envlst = envlst->next;
-		if (ft_strncmp(tmp->token, envlst->content, ft_strlen(tmp->token)) == 0)
+		while (envlst && envlst->next && ft_strncmp(tmp->token,
+				envlst->content, ft_strlen(tmp->token)) != 0)
 		{
-			write(1, "UNSET MEEEE\n", 12);
-	/*		then delete
-			move pointer to the next one
-			free the node
-			i--;*/
+			prev_envlst = envlst;
+			envlst = envlst->next;
+		}
+		if (ft_strncmp(tmp->token, envlst->content,
+				ft_strlen(tmp->token)) == 0 && !ft_strchr(tmp->token, '='))
+		{
+			prev_envlst->next = envlst->next;
+			free (envlst);
+			i--;
 		}
 	}
 	return (i);
@@ -175,7 +134,7 @@ int	b_pwd(char *token, char **envp)
 				if (!pwd_path)
 					return (0);
 				ft_printf("%s\n", pwd_path);
-				return (1) ;
+				return (1);
 			}
 			i++;
 		}
@@ -189,7 +148,6 @@ int	b_pwd(char *token, char **envp)
 // 	int		result;
 // 	int		i;
 
-	
 // 	tmp = ms->tokenlist;
 // 	while(tmp)
 // 	{
@@ -198,7 +156,6 @@ int	b_pwd(char *token, char **envp)
 // 		{
 // 			if (ft_strncmp(tmp->next->token, "-n\0", 3) == 0)
 // 			{
-				
 // 			}
 // 			if (!chdir(tmp->next->token))
 // 				return ;
