@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 18:53:13 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 19:32:44 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,8 @@ int	b_pwd(char *token, char **envp)
 				if (!pwd_path)
 					return (0);
 				ft_printf("%s\n", pwd_path);
-				return (1) ;
+				free (pwd_path);
+				return (1);
 			}
 			i++;
 		}
