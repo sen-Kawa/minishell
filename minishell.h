@@ -6,10 +6,10 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 17:58:50 by kaheinz          ###   ########.fr       */
-/*   Updated: 2022/09/22 10:23:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 19:26:26 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -60,7 +60,8 @@ t_lex	beforequotes(char *command, t_lex lex,
 					t_ms_list *tokens);
 int				pipe_check(char *command, t_lex lex, t_ms_list *tokens);
 void			printing_tokens(t_ms_list *tokens);
-void			freeing_tokens(t_ms_list	*tokens);
+void			freeing_tokens(t_ms *ms);
+void			freeing_all(t_ms *ms);
 void			redirecting(t_ms_list *tokens);
 void			dollarizing(t_ms_list *tokens);
 void			dollar_double(t_ms_list *tokens, char **envp);
