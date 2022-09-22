@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 10:52:28 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 12:32:22 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ int	b_export(t_ms	*ms, char **envp)
 				new = ft_envvnew(tmp->next->token);
 				ft_envvadd_back(&ms->env_list, new);
 				i++;
-			make_array(ms, i);
 	//			print_env(ms);
 			}
 			else

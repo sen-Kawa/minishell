@@ -6,7 +6,7 @@
 /*   By: kaheinz <kaheinz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/22 12:02:51 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 12:30:50 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,28 @@
 void	make_array(t_ms *ms, int nlines)
 {
 	int		i;
-	int		len;
 	char	**env_array;
 	char	*p;
 	t_env	*tmp;
 
-	env_array = ft_calloc(nlines, sizeof(char));
+	env_array = ft_calloc(nlines, sizeof(char *));
 	tmp = ms->env_list;
-	i = 0;
-	len = 0;
-	while (i < nlines)
+	i = -1;
+	while (++i < nlines)
 	{
-		len = ft_strlen(tmp->content);
-		printf("CONTENT OF NODE : %s\n", tmp->content);
-		p = ft_calloc(len + 1, sizeof(char));
-		ft_strlcpy(p, tmp->content, len + 1);
-		printf("CONTENT OF P : %s\n", p);
+		p = ft_calloc(ft_strlen(tmp->content) + 1, sizeof(char));
+		ft_strlcpy(p, tmp->content, ft_strlen(tmp->content) + 1);
 		env_array[i] = p;
-		printf("CONTENT OF env array i %i : %s\n", i, env_array[i]);
 		tmp = tmp->next;
-		i++;
 	}
-	ft_printf("i is: %i\n", i);
-		ft_printf("TEST %s\n", env_array[0]);
 	bubblesorting(nlines, env_array);
-	i = 0;
-	while (i < nlines)
+	i = -1;
+	while (++i < nlines)
 	{
-		i++;
+		ft_printf("declare -x %s\n", env_array[i]);
+		free (env_array[i]);
 	}
+	free(env_array);
 }
 
 void	bubblesorting(int nlines, char *env_array[])
