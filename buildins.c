@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 16:19:56 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 16:30:54 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,22 @@ int	b_env(t_ms *ms, char **envp)
 	return (0);
 }
 
+/*
+DESCRIPTION
+The b_export() mimics the export builtin.
+In single use it returns an ordered list of the environment variables.
+If the env-llist does not exist, it creates it in the struckt t_ms->env_list.
+In use with are variable declaration like "VAR=smth" it creates the variable at the end of the linked list.
+
+
+RETURN
+i:
+1: pwd was found and written to standard out
+
+PARAMETER
+token: char pointer of the toekn value
+envp: char double pointer to environment variables
+*/
 int	b_export(t_ms	*ms, char **envp)
 {
 	int	i;

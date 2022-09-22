@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 10:26:33 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 17:32:37 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,16 +135,33 @@ t_lex	afterquotes(char *command, t_lex lex, t_ms_list *tokens)
 	return (lex);
 }
 
-void	freeing_tokens(t_ms_list	*tokens)
+void	freeing_all(t_ms	*ms)
+{
+	t_ms_list	*temp;
+	t_env	*tenv;
+
+	while (ms->tokenlist != NULL)
+	{
+		temp = ms->tokenlist;
+		ms->tokenlist = ms->tokenlist->next;
+		free(temp);
+	}
+	while (ms->env_list != NULL)
+	{
+		tenv = ms->env_list;
+		ms->env_list = ms->env_list->next;
+		free(tenv);
+	}
+}
+
+void	freeing_tokens(t_ms	*ms)
 {
 	t_ms_list	*temp;
 
-	while (tokens != NULL)
+	while (ms->tokenlist != NULL)
 	{
-		// if (tokens->token)
-		// 	free(tokens->token);
-		temp = tokens;
-		tokens = tokens->next;
+		temp = ms->tokenlist;
+		ms->tokenlist = ms->tokenlist->next;
 		free(temp);
 	}
 }
