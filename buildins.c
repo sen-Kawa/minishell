@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 18:06:07 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 18:53:13 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int	b_unset(t_ms	*ms, int i)
 		if (ft_strncmp(tmp->token, envlst->content, ft_strlen(tmp->token)) == 0)
 		{
 			write(1, "UNSET MEEEE\n", 12);
-
 	/*		then delete
 			move pointer to the next one
 			free the node
