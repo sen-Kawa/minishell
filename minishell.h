@@ -6,10 +6,10 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 12:13:19 by kaheinz          ###   ########.fr       */
-/*   Updated: 2022/09/22 10:23:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 16:04:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -72,13 +72,12 @@ char	*all_dollar_splitting(int a, char **envp \
 , char **dollar_split, char *new_dollar);
 char	*dollar_core(char **envp, char **space_split, int i);
 void	b_exit(char *command);
-int		b_env(char *token, char **envp);
 void	execute(t_ms_list *tokens, char **envp);
 void	make_array(t_ms *ms, int nlines);
 void	bubblesorting(int nlines, char *env_array[]);
 
 // void	initms(t_ms *ms);
-void print_env(t_ms	*ms);
-int	b_export(t_ms	*ms, char **envp);
-int	b_pwd(char *token, char **envp);
+int		b_export(t_ms	*ms, char **envp);
+int		b_pwd(char *token, char **envp);
+int		b_env(t_ms *ms, char **envp);
 #endif

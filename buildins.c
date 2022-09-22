@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 14:37:27 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 16:19:56 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,6 @@
 #include "minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-void	b_exit(char *command)
-{
-	int		i;
-	char	*needle;
-
-	i = 0;
-	while (command[i] != 0 && (command[i] == ' ' || command[i] == '\t'))
-		i++;
-	needle = ft_strnstr(&command[i], "exit", 5);
-	if (!needle)
-		return ;
-	else if (needle[4] == ' ' || needle[4] == '\0')
-		exit(EXIT_SUCCESS);
-}
-
-int	b_env(char *token, char **envp)
-{
-	int i;
-	int	result;
-
-	
-	result = ft_strncmp(token, "env\0", 4);
-	if (result == 0)
-	{
-		i = 0;
-		while (envp[i])
-		{
-			ft_printf("%s\n", envp[i]);
-			i++;
-		}
-		return (1);
-	}
-	return (0);
-}
 
 t_env	*ft_envvnew(char *content)
 {
@@ -84,13 +49,58 @@ void	ft_envvadd_back(t_env **env, t_env *new)
 	}
 }
 
-void print_env(t_ms	*ms)
+void	b_exit(char *command)
 {
-	while(ms->env_list)
+	int		i;
+	char	*needle;
+
+	i = 0;
+	while (command[i] != 0 && (command[i] == ' ' || command[i] == '\t'))
+		i++;
+	needle = ft_strnstr(&command[i], "exit", 5);
+	if (!needle)
+		return ;
+	else if (needle[4] == ' ' || needle[4] == '\0')
+		exit(EXIT_SUCCESS);
+}
+
+int	b_env(t_ms *ms, char **envp)
+{
+	int i;
+	int	result;
+	t_ms	*tmp;
+	t_env	*new;
+
+	i = 0;
+	if (!ms->env_list)
 	{
-		printf("%s\n", ms->env_list->content);
-		ms->env_list = ms->env_list->next;
+		while(envp[i])
+		{
+			new = ft_envvnew(envp[i]);
+			ft_envvadd_back(&ms->env_list, new);
+			i++;
+		}
 	}
+	tmp = ms;
+	new = ms->env_list;
+	while(tmp->tokenlist)
+	{
+		new = ms->env_list;
+		result = ft_strncmp(tmp->tokenlist->token, "env\0", 4);
+		if (result == 0)
+		{
+			i = 0;
+			while (new)
+			{
+				ft_printf("%s\n", new->content);
+				new = new->next;
+			}
+			return (1);
+		}
+		tmp->tokenlist = tmp->tokenlist->next;
+	}
+	
+	return (0);
 }
 
 int	b_export(t_ms	*ms, char **envp)
@@ -109,7 +119,6 @@ int	b_export(t_ms	*ms, char **envp)
 			ft_envvadd_back(&ms->env_list, new);
 			i++;
 		}
-		ft_printf("if condition\n");
 	}
 	i = 0;
 	new = ms->env_list;
@@ -125,7 +134,6 @@ int	b_export(t_ms	*ms, char **envp)
 		if (result == 0 && tmp->next == NULL)
 		{
 			make_array(ms, i);
-			ft_printf("export only\n");
 		}
 			
 		else if (result == 0 && tmp->next != NULL)
@@ -135,16 +143,12 @@ int	b_export(t_ms	*ms, char **envp)
 				new = ft_envvnew(tmp->next->token);
 				ft_envvadd_back(&ms->env_list, new);
 				i++;
-				ft_printf("export VAR\n");
-	//			print_env(ms);
 			}
 			else
 				return (i);
 		}
 		tmp = tmp->next;
 	}
-	
-	// print_env(ms);
 	return (i);
 }
 
