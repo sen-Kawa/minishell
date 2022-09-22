@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 18:34:19 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 11:46:19 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	b_exit(char *command);
 int		b_env(char *token, char **envp);
 void	execute(t_ms_list *tokens, char **envp);
 void	make_array(t_ms *ms, int nlines);
+void	bubblesorting(int nlines, char *env_array[]);
 
 // void	initms(t_ms *ms);
 void print_env(t_ms	*ms);
