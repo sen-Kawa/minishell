@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 15:24:40 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 10:26:33 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ t_lex	tokenice(char *command, t_ms_list *tokens, char **envp)
 	lex.start = 0;
 	lex.error = 0;
 	lex.length = ft_strlen(command);
-	printf("The Length is:%i\n", lex.length);
+	// printf("The Length is:%i\n", lex.length);
 	while (command[lex.start] == ' ')
 		lex.start++;
 	while(command[lex.start + lex.i] && *command)

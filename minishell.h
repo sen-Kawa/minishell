@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 18:34:19 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 10:23:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,5 @@ void	make_array(t_ms *ms, int nlines);
 // void	initms(t_ms *ms);
 void print_env(t_ms	*ms);
 int	b_export(t_ms	*ms, char **envp);
+int	b_pwd(char *token, char **envp);
 #endif

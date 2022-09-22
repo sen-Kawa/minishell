@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 19:41:32 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 10:23:05 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,3 +136,42 @@ int	b_export(t_ms	*ms, char **envp)
 	return (i);
 }
 
+/*
+DESCRIPTION
+The b_pwd() function returns the absolut working path to the standard output.
+
+
+RETURN
+0: no pwd was found
+1: pwd was found and written to standard out
+
+PARAMETER
+token: char pointer of the toekn value
+envp: char double pointer to environment variables
+*/
+int	b_pwd(char *token, char **envp)
+{
+	char	*pwd_path;
+	int		result;
+	int		i;
+
+	result = ft_strncmp(token, "pwd\0", 7);
+	if (result == 0)
+	{
+		i = 0;
+		while (envp[i])
+		{
+			pwd_path = ft_strnstr(envp[i], "PWD=", 5);
+			if (pwd_path)
+			{
+				pwd_path = ft_substr(envp[i], 5, 100);
+				if (!pwd_path)
+					return (0);
+				ft_printf("%s\n", pwd_path);
+				return (1) ;
+			}
+			i++;
+		}
+	}
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/21 17:01:49 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 10:25:11 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 		execute(ms->tokenlist, envp);
 		if (ms->lex.error == 0)
 		{
-			printing_tokens(ms->tokenlist);
+			// printing_tokens(ms->tokenlist);
 			b_export(ms, envp);
 		}
 		freeing_tokens(ms->tokenlist);
