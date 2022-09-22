@@ -6,9 +6,10 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 14:34:29 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 14:37:27 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 #include <stdlib.h>
@@ -44,8 +45,7 @@ int	b_env(char *token, char **envp)
 			ft_printf("%s\n", envp[i]);
 			i++;
 		}
-		
-	 return (1);
+		return (1);
 	}
 	return (0);
 }
