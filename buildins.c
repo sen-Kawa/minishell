@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 12:32:22 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 14:34:29 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	b_env(char *token, char **envp)
 	int i;
 	int	result;
 
+	
 	result = ft_strncmp(token, "env\0", 4);
 	if (result == 0)
 	{
@@ -100,22 +101,33 @@ int	b_export(t_ms	*ms, char **envp)
 	t_ms_list	*tmp;
 	
 	i = 0;
-	while(envp[i])
+	if (!ms->env_list)
 	{
-		new = ft_envvnew(envp[i]);
-		ft_envvadd_back(&ms->env_list, new);
-		i++;
+		while(envp[i])
+		{
+			new = ft_envvnew(envp[i]);
+			ft_envvadd_back(&ms->env_list, new);
+			i++;
+		}
+		ft_printf("if condition\n");
 	}
+	i = 0;
+	new = ms->env_list;
+	while(new)
+		{
+			i++;
+			new = new->next;
+		}
 	tmp = ms->tokenlist;
 	while(tmp)
 	{
 		result = ft_strncmp(tmp->token, "export\0", 7);
 		if (result == 0 && tmp->next == NULL)
-		{//print ordered list
-	//		print_env(ms);
-//			ft_printf("length of list is: %i", i);
+		{
 			make_array(ms, i);
+			ft_printf("export only\n");
 		}
+			
 		else if (result == 0 && tmp->next != NULL)
 		{
 			if (ft_strchr(tmp->next->token, '='))
@@ -123,6 +135,7 @@ int	b_export(t_ms	*ms, char **envp)
 				new = ft_envvnew(tmp->next->token);
 				ft_envvadd_back(&ms->env_list, new);
 				i++;
+				ft_printf("export VAR\n");
 	//			print_env(ms);
 			}
 			else
