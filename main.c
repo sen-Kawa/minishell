@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/22 12:57:00 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 17:58:11 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ int	main(int argc, char **argv, char **envp)
 	struct	sigaction sa;
 	pid_t	pid;
 	t_ms	*ms;
+	int	env_lst_size;
 
 	(void) argc;
 	(void) argv;
 	pid = getpid();
 	ft_printf("pid is %d\n", pid);
-	
 	ms = malloc(sizeof(t_ms));
+	env_lst_size = creating_env_list(envp, ms);
 	while (1)
 	{
 		ms->tokenlist = ft_tokennew("something", "first", 0);
@@ -58,12 +59,13 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (command)
 			free (command);
-		execute(ms->tokenlist, envp);
+		execute(ms->tokenlist, ms, envp);
 		if (ms->lex.error == 0)
 		{
-			// printing_tokens(ms->tokenlist);
-			b_export(ms, envp);
+			env_lst_size = b_export(ms, env_lst_size);
+			env_lst_size = b_unset(ms, env_lst_size);
 		}
+			printing_tokens(ms->tokenlist);
 		freeing_tokens(ms->tokenlist);
 		// cmd_path = get_cmd_path(command, envp);
 	}
@@ -71,4 +73,19 @@ int	main(int argc, char **argv, char **envp)
 	free(command);
 	free (ms);
 	return 0;
+}
+
+int	creating_env_list(char **envp, t_ms *ms)
+{
+	int	i;
+	t_env	*new;
+
+	i = 0;
+	while(envp[i])
+	{
+		new = ft_envvnew(envp[i]);
+		ft_envvadd_back(&ms->env_list, new);
+		i++;
+        }
+	return (i);
 }

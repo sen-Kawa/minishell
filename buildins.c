@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 12:57:26 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 18:06:07 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ void	b_exit(char *command)
 		exit(EXIT_SUCCESS);
 }
 
-int	b_env(char *token, char **envp)
+int	b_env(char *token, t_ms *ms)
 {
-	int i;
 	int	result;
+	t_env	*tmp;
 
+	tmp = ms->env_list;
 	result = ft_strncmp(token, "env\0", 4);
 	if (result == 0)
 	{
-		i = 0;
-		while (envp[i])
+		while (tmp)
 		{
-			ft_printf("%s\n", envp[i]);
-			i++;
+			ft_printf("%s\n", tmp->content);
+			tmp = tmp->next;
 		}
 		return (1);
 	}
@@ -91,29 +91,17 @@ void print_env(t_ms	*ms)
 	}
 }
 
-int	b_export(t_ms	*ms, char **envp)
+int	b_export(t_ms	*ms, int i)
 {
-	int	i;
-	t_env	*new;
 	int	result;
 	t_ms_list	*tmp;
+	t_env	*new;
 	
-	i = 0;
-	while(envp[i])
-	{
-		new = ft_envvnew(envp[i]);
-		ft_envvadd_back(&ms->env_list, new);
-		i++;
-	}
 	tmp = ms->tokenlist;
 	while(tmp)
 	{
 		result = ft_strncmp(tmp->token, "export\0", 7);
-		if (result == 0 && tmp->next == NULL)
-		{
-			make_array(ms, i);
-		}
-		else if (result == 0 && tmp->next != NULL)
+		if (result == 0 && tmp->next != NULL)
 		{
 			if (ft_strchr(tmp->next->token, '='))
 			{
@@ -121,13 +109,38 @@ int	b_export(t_ms	*ms, char **envp)
 				ft_envvadd_back(&ms->env_list, new);
 				i++;
 			}
-			else
-				return (i);
 		}
+		else if (result == 0 && tmp->next == NULL)
+			make_array(ms, i);
 		tmp = tmp->next;
 	}
+	return (i);
+}
+
+int	b_unset(t_ms	*ms, int i)
+{
+	int	result;
+	t_ms_list	*tmp;
+	t_env	*envlst;
 	
-	// print_env(ms);
+	tmp = ms->tokenlist->next;
+	envlst = ms->env_list;
+	result = ft_strncmp(tmp->token, "unset", 5);
+	if (result == 0 && tmp->next != NULL)
+	{
+		tmp = tmp->next;
+		while (envlst && envlst->next && ft_strncmp(tmp->token, envlst->content, ft_strlen(tmp->token)) != 0)
+			envlst = envlst->next;
+		if (ft_strncmp(tmp->token, envlst->content, ft_strlen(tmp->token)) == 0)
+		{
+			write(1, "UNSET MEEEE\n", 12);
+
+	/*		then delete
+			move pointer to the next one
+			free the node
+			i--;*/
+		}
+	}
 	return (i);
 }
 

@@ -6,13 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 12:56:55 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 16:25:03 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute(t_ms_list *tokens, char **envp)
+void	execute(t_ms_list *tokens, t_ms *ms, char **envp)
 {
 	t_ms_list	*tmp;
 	size_t	len;
@@ -24,7 +24,7 @@ void	execute(t_ms_list *tokens, char **envp)
 	while(tmp)
 	{
 		len = ft_strlen(tmp->token);
-		if (b_env(tmp->token, envp) && len < 3)
+		if (b_env(tmp->token, ms) && len < 3)
 		{
 			tmp = tmp->next;
 			break;
