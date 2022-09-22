@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 10:26:33 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/22 19:25:49 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_lex	single_quotes(char *command, t_lex lex, t_ms_list *tokens)
 {
 	t_ms_list	*newbe;
 	char		*part;
-	
+
 	if (command[lex.start + lex.i] == 39)
 	{
 		lex.i++;
@@ -135,17 +135,28 @@ t_lex	afterquotes(char *command, t_lex lex, t_ms_list *tokens)
 	return (lex);
 }
 
-void	freeing_tokens(t_ms_list	*tokens)
+void	freeing_tokens(t_ms *ms)
 {
 	t_ms_list	*temp;
 
-	while (tokens != NULL)
+	while (ms->tokenlist != NULL)
 	{
-		// if (tokens->token)
-		// 	free(tokens->token);
-		temp = tokens;
-		tokens = tokens->next;
+		temp = ms->tokenlist;
+		ms->tokenlist = ms->tokenlist->next;
 		free(temp);
+	}
+}
+
+void	freeing_all(t_ms *ms)
+{
+	t_env	*tenv;
+
+	freeing_tokens(ms);
+	while (ms->env_list != NULL)
+	{
+		tenv = ms->env_list;
+		ms->env_list = ms->env_list->next;
+		free(tenv);
 	}
 }
 
@@ -180,7 +191,7 @@ t_lex	tokenice(char *command, t_ms_list *tokens, char **envp)
 	char *part;
 	t_ms_list		*newbe;
 	t_lex	lex;
-	
+
 	lex.i = 0;
 	lex.start = 0;
 	lex.error = 0;
