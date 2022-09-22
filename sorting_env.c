@@ -6,7 +6,7 @@
 /*   By: kaheinz <kaheinz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/22 11:53:55 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/22 12:02:51 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@ void	make_array(t_ms *ms, int nlines)
 		ft_strlcpy(p, tmp->content, len + 1);
 		printf("CONTENT OF P : %s\n", p);
 		env_array[i] = p;
-		printf("CONTENT OF env array i : %s\n", env_array[i]);
+		printf("CONTENT OF env array i %i : %s\n", i, env_array[i]);
 		tmp = tmp->next;
 		i++;
 	}
+	ft_printf("i is: %i\n", i);
+		ft_printf("TEST %s\n", env_array[0]);
 	bubblesorting(nlines, env_array);
 	i = 0;
 	while (i < nlines)
 	{
-		ft_printf("declare -x %s\n", env_array[i]);
 		i++;
 	}
 }
