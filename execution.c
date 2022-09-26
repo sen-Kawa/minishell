@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 16:25:03 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/26 12:15:10 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	execute(t_ms_list *tokens, t_ms *ms, char **envp)
 	tmp = tokens;
 	if (b_pwd(tokens->next->token, envp))
 		return ;
+	b_export(ms);
+	b_unset(ms);
 	while(tmp)
 	{
 		len = ft_strlen(tmp->token);

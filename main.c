@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/26 12:07:25 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/26 12:15:19 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (command)
 			free (command);
-		printf("LENGTH OF LIST %i\n", ms->env_lst_size);
-		execute(ms->tokenlist, ms, envp);
 		if (ms->lex.error == 0)
-		{
-			b_export(ms);
-			b_unset(ms);
-		}
-			printing_tokens(ms->tokenlist);
+			execute(ms->tokenlist, ms, envp);
+		printing_tokens(ms->tokenlist);
 		freeing_tokens(ms);
 		// cmd_path = get_cmd_path(command, envp);
 	}
