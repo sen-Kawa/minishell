@@ -6,20 +6,20 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/26 12:15:10 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/26 14:32:38 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute(t_ms_list *tokens, t_ms *ms, char **envp)
+void	execute(t_ms *ms, char **envp)
 {
 	t_ms_list	*tmp;
 	size_t	len;
 	
 	len = 0;
-	tmp = tokens;
-	if (b_pwd(tokens->next->token, envp))
+	tmp = ms->tokenlist;
+	if (b_pwd(ms->tokenlist->token, envp))
 		return ;
 	b_export(ms);
 	b_unset(ms);

@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/26 13:13:05 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/26 14:26:27 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ int	main(int argc, char **argv, char **envp)
 	pid = getpid();
 	ft_printf("pid is %d\n", pid);
 	ms = malloc(sizeof(t_ms));
-	
 	creating_env_list(envp, ms);
 	while (1)
 	{
-		ms->tokenlist = ft_tokennew("something", "first", 0);
+	//	ms->tokenlist = ft_tokennew("something", "first", 0);
 		sa.sa_handler = &handler_quit;
 		sigaction(SIGINT, &sa, NULL);
 		signal(SIGQUIT, SIG_IGN);
@@ -55,14 +54,16 @@ int	main(int argc, char **argv, char **envp)
 		{
 			b_exit(command);
 			add_history(command);
-			ms->lex = tokenice(command, ms->tokenlist, envp);
+			ms->lex = tokenice(command, ms, envp);
+			printing_tokens(ms->tokenlist);
+			if (ms->lex.error == 0)
+				execute(ms, envp);
+			freeing_tokens(ms);
 		}
 		if (command)
 			free (command);
-		if (ms->lex.error == 0)
-			execute(ms->tokenlist, ms, envp);
-		printing_tokens(ms->tokenlist);
-		freeing_tokens(ms);
+//		printing_tokens(ms->tokenlist);
+//		freeing_tokens(ms);
 		// cmd_path = get_cmd_path(command, envp);
 	}
 	freeing_all(ms);

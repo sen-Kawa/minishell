@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/26 12:04:51 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/26 14:31:34 by kaheinz          ###   ########.fr       */
 /*   Updated: 2022/09/22 19:32:44 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -80,7 +80,7 @@ void	b_unset(t_ms	*ms)
 	t_env		*envlst;
 	t_env		*prev_envlst;
 
-	tmp = ms->tokenlist->next;
+	tmp = ms->tokenlist;
 	envlst = ms->env_list;
 	if (ft_strncmp(tmp->token, "unset", 5) == 0 && tmp->next != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/26 12:04:18 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/26 14:25:07 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_ms
 
 char			*get_cmd_path(char *cmd, char **envp);
 char			**ft_split_ssp(char const *s, char c);
-t_lex	tokenice(char *command, t_ms_list *tokens, char **envp);
+t_lex	tokenice(char *command, t_ms *ms, char **envp);
 t_lex	afterquotes(char *command, t_lex lex, t_ms_list *tokens);
 t_lex	beforequotes(char *command, t_lex lex,
 					t_ms_list *tokens);
@@ -75,7 +75,7 @@ char	*all_dollar_splitting(int a, char **envp \
 char	*dollar_core(char **envp, char **space_split, int i);
 void	b_exit(char *command);
 int		b_env(char *token, t_ms *ms);
-void	execute(t_ms_list *tokens, t_ms *ms, char **envp);
+void	execute(t_ms *ms, char **envp);
 void	make_array(t_ms *ms, int nlines);
 void	bubblesorting(int nlines, char *env_array[]);
 void	creating_env_list(char **envp, t_ms *ms);

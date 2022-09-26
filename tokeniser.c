@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/22 19:25:49 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/26 14:01:50 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,9 @@ PARAMETERS
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 */
-t_lex	tokenice(char *command, t_ms_list *tokens, char **envp)
+t_lex	tokenice(char *command, t_ms *ms, char **envp)
 {
+	(void) envp;
 	char *part;
 	t_ms_list		*newbe;
 	t_lex	lex;
@@ -203,27 +204,27 @@ t_lex	tokenice(char *command, t_ms_list *tokens, char **envp)
 	{
 		if (lex.start + lex.i <= lex.length)
 		{
-			if (command[lex.start +lex.i] == ' ')
+			if (command[lex.start + lex.i] == ' ')
 			{
 				// write(1, "inside 1\n", 10);
 				if (lex.i > 0)
 				{
-					if (!pipe_check(command, lex, tokens))
-					{
-						part = ft_substr(command,lex. start, lex.i);
-						newbe = ft_tokennew(part, "space", tokens->section);
-						ft_tokenadd_back(&tokens, newbe);
-					}
+//					if (!pipe_check(command, lex, ms->tokenlist))
+//					{
+						part = ft_substr(command, lex.start, lex.i);
+						newbe = ft_tokennew(part, "space", 0);
+						ft_tokenadd_back(&ms->tokenlist, newbe);
+//					}
 				}
 				while (command[lex.start + lex.i] == ' ')
 					lex.i++;
 				lex.start = lex.start + lex.i;
 				lex.i = -1;
 			}
-			lex = beforequotes(command, lex, tokens);
+			lex = beforequotes(command, lex, ms->tokenlist);
 		}
-		lex = double_quotes(command, lex, tokens);
-		lex = single_quotes(command, lex, tokens);
+		lex = double_quotes(command, lex, ms->tokenlist);
+		lex = single_quotes(command, lex, ms->tokenlist);
 		if (lex.error == 1)
 		{
 			write(1, "bash: syntax error, quotes missing\n", 36);
@@ -237,12 +238,12 @@ t_lex	tokenice(char *command, t_ms_list *tokens, char **envp)
 	{
 		// write(1, "inside 2\n", 10);
 		part = ft_substr(command, lex.start, lex.i);
-		newbe = ft_tokennew(part, "space_before", tokens->section);
-		ft_tokenadd_back(&tokens, newbe);
+		newbe = ft_tokennew(part, "space_before", 0);
+		ft_tokenadd_back(&ms->tokenlist, newbe);
 	}
-	redirecting(tokens);
-	dollarizing(tokens);
-	dollar_double(tokens, envp);
+	redirecting(ms->tokenlist);
+	dollarizing(ms->tokenlist);
+	dollar_double(ms->tokenlist, envp);
 	// free (command);
 	return (lex);
 }
