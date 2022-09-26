@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/26 11:46:45 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/09/26 12:04:18 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_env
 typedef struct s_ms
 {
 	t_env		*env_list;
+	int	env_lst_size;
 	t_lex		lex;
 	t_ms_list	*tokenlist;
 }	t_ms;
@@ -77,12 +78,12 @@ int		b_env(char *token, t_ms *ms);
 void	execute(t_ms_list *tokens, t_ms *ms, char **envp);
 void	make_array(t_ms *ms, int nlines);
 void	bubblesorting(int nlines, char *env_array[]);
-int	creating_env_list(char **envp, t_ms *ms);
+void	creating_env_list(char **envp, t_ms *ms);
 
 // void	initms(t_ms *ms);
 void print_env(t_ms	*ms);
-int	b_export(t_ms	*ms, int i);
-int	b_unset(t_ms	*ms, int i);
+void	b_export(t_ms	*ms);
+void	b_unset(t_ms	*ms);
 int	b_pwd(char *token, char **envp);
 t_env   *ft_envvnew(char *content);
 t_env   *ft_envvlast(t_env *envv);
