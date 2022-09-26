@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
+#    By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/09/23 00:33:33 by kaheinz          ###   ########.fr        #
+#    Updated: 2022/09/26 11:46:26 by ksura@student.42 ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 OS = $(shell uname)
 ifeq ($(OS), Linux)
-FLAGS_OS = -lreadline 
+FLAGS_OS = -lreadline
 endif
 ifeq ($(OS), Darwin)
 FLAGS_OS = -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
@@ -34,7 +34,7 @@ endif
 
 $(NAME): $(OBJS)
 	make -C libft/
-	$(CC) $(CFLAGS) $(FLAGS_OS) -o $(NAME) $(OBJS) $(LIBFT) 
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(FLAGS_OS)
 
 all: $(NAME)
 

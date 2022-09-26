@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/22 19:24:55 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/26 11:36:18 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (command)
 			free (command);
-		execute(ms->tokenlist, ms, envp);
 		if (ms->lex.error == 0)
 		{
+			execute(ms->tokenlist, ms, envp);
 			env_lst_size = b_export(ms, env_lst_size);
 			env_lst_size = b_unset(ms, env_lst_size);
 		}
