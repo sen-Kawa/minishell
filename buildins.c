@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/26 14:31:34 by kaheinz          ###   ########.fr       */
-/*   Updated: 2022/09/22 19:32:44 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/27 10:11:33 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 #include <stdlib.h>
@@ -140,6 +140,31 @@ int	b_pwd(char *token, char **envp)
 		}
 	}
 	return (0);
+}
+
+void	b_echo(t_ms	*ms)
+{
+	int			result;
+	t_ms_list	*tmp;
+
+	tmp = ms->tokenlist;
+	if (tmp)
+		result = ft_strncmp(tmp->token, "echo\0", 5);
+	if (tmp->next)
+	{
+		if (result == 0 && tmp->next != NULL)
+		{
+			if (!ft_strncmp(tmp->next->token, "-n\0", 3))
+			{
+				if (tmp->next->next)
+					ft_printf("%s",tmp->next->next->token);
+			}
+			else
+				ft_printf("%s\n",tmp->next->token);
+		}
+	}
+	else if (result == 0 && tmp->next == NULL)
+		ft_printf("\n");
 }
 
 // int b_cd(t_ms	*ms, char **envp)

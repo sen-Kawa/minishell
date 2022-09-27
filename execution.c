@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/26 14:32:38 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/27 10:02:23 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	execute(t_ms *ms, char **envp)
 		return ;
 	b_export(ms);
 	b_unset(ms);
+	b_echo(ms);
 	while(tmp)
 	{
 		len = ft_strlen(tmp->token);
