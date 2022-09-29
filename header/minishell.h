@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 09:46:32 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/29 11:42:56 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	b_export(t_ms	*ms);
 void	b_unset(t_ms	*ms);
 int		b_pwd(char *token, char **envp);
 void	b_echo(t_ms	*ms);
+void	b_cd(t_ms	*ms);
 
 //llist stuff
 t_env   *ft_envvnew(char *content);

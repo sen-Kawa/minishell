@@ -6,7 +6,7 @@
 #    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/09/29 09:52:24 by ksura            ###   ########.fr        #
+#    Updated: 2022/09/29 11:46:46 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,14 +36,6 @@ endif
 OBJS = $(SRCS:.c=.o)
 OBJECTS_PREF := $(addprefix $(OBJDIR), $(OBJS))
 
-
-$(LIBFT):
-	@make -C $(LIBFT_DIRECTORY)
-
-$(OBJECTS_PREF): build/%.o : srcs/%.c
-	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER) -I$(LIBFT_DIRECTORY)
-
 all: $(NAME)
 
 # $(NAME): $(OBJECTS_PREF) $(OBJDIR)
@@ -54,6 +46,13 @@ $(NAME):$(OBJECTS_PREF) $(OBJDIR)
 	@make -C $(LIBFT_DIRECTORY)
 	@$(CC) $(CFLAGS) $(OBJECTS_PREF) $(LIBFT) -I$(HEADER) $(FLAGS) -o $@ $(FLAGS_OS)
 	@echo "$(GREEN)$(NAME) was created"
+
+$(LIBFT):
+	@make -C $(LIBFT_DIRECTORY)
+
+$(OBJECTS_PREF): build/%.o : srcs/%.c
+	@mkdir -p $(OBJDIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER) -I$(LIBFT_DIRECTORY)
 
 clean:
 	@rm -rf $(OBJDIR)

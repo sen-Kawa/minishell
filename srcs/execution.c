@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 09:49:05 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/29 11:43:28 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	execute(t_ms *ms, char **envp)
 	b_export(ms);
 	b_unset(ms);
 	b_echo(ms);
+	b_cd(ms);
 	while(tmp)
 	{
 		len = ft_strlen(tmp->token);

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 09:48:42 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/29 12:59:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,24 +167,52 @@ void	b_echo(t_ms	*ms)
 		ft_printf("\n");
 }
 
-// int b_cd(t_ms	*ms, char **envp)
-// {
-// 	t_ms_list	*tmp;
-// 	int		result;
-// 	int		i;
+void	b_cd(t_ms	*ms)
+{
+	t_ms_list	*tmp;
+	t_env		*tmpenv;
+	int			result;
+	char		cwd[256];
+	char		*pwd;
 
-// 	tmp = ms->tokenlist;
-// 	while(tmp)
-// 	{
-// 		result = ft_strncmp(tmp->token, "cd\0", 3);
-// 		if (result == 0)
-// 		{
-// 			if (ft_strncmp(tmp->next->token, "-n\0", 3) == 0)
-// 			{
-// 			}
-// 			if (!chdir(tmp->next->token))
-// 				return ;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = ms->tokenlist;
+	if (tmp)
+	{
+		result = ft_strncmp(tmp->token, "cd\0", 3);
+		if (result == 0)
+		{
+			if (tmp->next)
+			{
+				if(chdir(tmp->next->token))
+				{
+					ft_printf("cd : %s: No such file or diectory\n", tmp->next->token);
+					return ;
+				}
+				else
+				{
+					tmpenv = ms->env_list;
+					while (tmpenv)
+					{
+						if (ft_strnstr(tmpenv->content, "PWD=", 4))
+						{
+							if (getcwd(cwd, sizeof(cwd)) == NULL)
+							{
+								perror("getcwd() error");
+								ft_printf("cd : %s: No such file or diectory\n", tmp->next->token);
+							}
+							else
+							{
+								pwd = tmpenv->content;
+								tmpenv->content = ft_strjoin("PWD=", &cwd[0]);
+								if (pwd)
+									free(pwd);
+								return ;
+							}
+						}
+						tmpenv = tmpenv->next;
+					}
+				}
+			}
+		}
+	}
+}
