@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 12:59:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/29 13:34:04 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,29 +114,31 @@ PARAMETER
 token: char pointer of the toekn value
 envp: char double pointer to environment variables
 */
-int	b_pwd(char *token, char **envp)
+int	b_pwd(t_ms	*ms)
 {
+	t_ms_list	*tmp;
 	char	*pwd_path;
+	t_env	*tmpenv;
 	int		result;
-	int		i;
 
-	result = ft_strncmp(token, "pwd\0", 4);
+	tmp = ms->tokenlist;
+	result = ft_strncmp(tmp->token, "pwd\0", 4);
 	if (result == 0)
 	{
-		i = 0;
-		while (envp[i])
+		tmpenv = ms->env_list;
+		while (tmpenv)
 		{
-			pwd_path = ft_strnstr(envp[i], "PWD=", 4);
+			pwd_path = ft_strnstr(tmpenv->content, "PWD=", 4);
 			if (pwd_path)
 			{
-				pwd_path = ft_substr(envp[i], 5, 100);
+				pwd_path = ft_substr(tmpenv->content, 5, 100);
 				if (!pwd_path)
 					return (0);
 				ft_printf("%s\n", pwd_path);
 				free (pwd_path);
 				return (1);
 			}
-			i++;
+			tmpenv = tmpenv->next;
 		}
 	}
 	return (0);
@@ -204,8 +206,8 @@ void	b_cd(t_ms	*ms)
 							{
 								pwd = tmpenv->content;
 								tmpenv->content = ft_strjoin("PWD=", &cwd[0]);
-								if (pwd)
-									free(pwd);
+								// if (pwd)
+								// 	free(pwd);
 								return ;
 							}
 						}

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/29 09:45:57 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/29 13:30:27 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void	creating_env_list(char **envp, t_ms *ms)
 		new = ft_envvnew(envp[ms->env_lst_size]);
 		ft_envvadd_back(&ms->env_list, new);
 		ms->env_lst_size++;
-        }
+	}
 }
