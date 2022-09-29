@@ -6,11 +6,11 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 22:17:47 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/29 09:49:25 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../header/minishell.h"
 /*
 DESCRIPTION
 Allocates (with malloc(3)) and returns an array

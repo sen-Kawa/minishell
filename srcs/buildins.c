@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/27 10:11:33 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/09/29 09:48:42 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "minishell.h"
+#include "../header/minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
 

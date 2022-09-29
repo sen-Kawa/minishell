@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sorting_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaheinz <kaheinz@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/26 11:51:08 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/29 09:49:17 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../header/minishell.h"
 
 void	make_array(t_ms *ms, int nlines)
 {

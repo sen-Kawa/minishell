@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/27 10:02:07 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/09/29 09:46:32 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 # include <signal.h>
 # include <stdio.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 # ifdef __APPLE__ // should work in linux and mac headers
 #  include </Users/ksura/goinfre/.brew/opt/readline/include/readline/readline.h>

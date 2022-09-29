@@ -6,11 +6,11 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:35:02 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/09 17:39:16 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/29 09:48:49 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../header/minishell.h"
 #include <errno.h>
 
 static char	*get_paths(int i, char **envp)

@@ -3,25 +3,27 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+         #
+#    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/09/26 11:46:26 by ksura@student.42 ###   ########.fr        #
+#    Updated: 2022/09/29 09:52:24 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
+CC = gcc
+CFLAGS := -Wall -Werror -Wextra -g
+HEADER = ./header
+SRCDIR = ./srcs/
+OBJDIR := ./build/
+LIBFT_DIRECTORY = ./libft
+LIBFT = $(LIBFT_DIRECTORY)/libft.a
+
+GREEN = \033[0;32m
+RED = \033[0;31m
 
 SRCS = main.c cmd_paths.c tokeniser.c printing.c dollars.c splitter2.c \
 		directing_vars.c buildins.c execution.c sorting_env.c llist_env.c
-
-
-LIBFT = libft/libft.a
-
-OBJS = $(SRCS:.c=.o)
-
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
 
 OS = $(shell uname)
 ifeq ($(OS), Linux)
@@ -31,20 +33,37 @@ ifeq ($(OS), Darwin)
 FLAGS_OS = -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
 endif
 
+OBJS = $(SRCS:.c=.o)
+OBJECTS_PREF := $(addprefix $(OBJDIR), $(OBJS))
 
-$(NAME): $(OBJS)
-	make -C libft/
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(FLAGS_OS)
+
+$(LIBFT):
+	@make -C $(LIBFT_DIRECTORY)
+
+$(OBJECTS_PREF): build/%.o : srcs/%.c
+	@mkdir -p $(OBJDIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER) -I$(LIBFT_DIRECTORY)
 
 all: $(NAME)
 
+# $(NAME): $(OBJECTS_PREF) $(OBJDIR)
+# 	make -C $(LIBFT_DIRECTORY)
+# 	$(CC) $(CFLAGS) $(OBJECTS_PREF) $(LIBFT) -I$(HEADER) -o $@ $(OBJS) $(LIBFT) $(FLAGS_OS)
+
+$(NAME):$(OBJECTS_PREF) $(OBJDIR)
+	@make -C $(LIBFT_DIRECTORY)
+	@$(CC) $(CFLAGS) $(OBJECTS_PREF) $(LIBFT) -I$(HEADER) $(FLAGS) -o $@ $(FLAGS_OS)
+	@echo "$(GREEN)$(NAME) was created"
+
 clean:
-	rm -f $(OBJS)
-	make clean -C libft/
+	@rm -rf $(OBJDIR)
+	@make clean -C libft/
+	@echo "$(RED)OBJECTFILES was deleted"
 
 fclean: clean
-	rm -f $(NAME)
-	make fclean -C libft/
+	@rm -f $(NAME)
+	@make fclean -C libft/
+	@echo "$(RED)$(NAME) was deleted"
 
 re: fclean all 
 

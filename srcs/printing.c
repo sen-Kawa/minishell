@@ -6,11 +6,11 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:31:23 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 19:49:54 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/29 09:49:14 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../header/minishell.h"
 
 void    printing_tokens(t_ms_list *tokens)
 {

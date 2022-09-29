@@ -6,11 +6,11 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 16:14:26 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/15 17:15:18 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/09/29 09:49:21 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../header/minishell.h"
 
 char			**ft_split(char const *s, char c);
 static size_t	word_count(char const *s, char c);
