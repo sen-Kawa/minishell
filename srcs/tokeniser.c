@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 09:49:30 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/29 16:24:05 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,8 +242,58 @@ t_lex	tokenice(char *command, t_ms *ms, char **envp)
 		ft_tokenadd_back(&ms->tokenlist, newbe);
 	}
 	redirecting(ms->tokenlist);
+	// sections(ms);
 	dollarizing(ms->tokenlist);
 	dollar_double(ms->tokenlist, envp);
 	// free (command);
 	return (lex);
+}
+
+void	sections(t_ms	*ms)
+{
+	t_ms_list	*tmp;
+	t_ms_list	*del;
+	int			section;
+
+	tmp = ms->tokenlist;
+	section = 0;
+	while(tmp && tmp->next && tmp->next->next)
+	{
+		if (!ft_strncmp(tmp->token, "|\0", 2) && tmp->next)
+		{
+			
+			del = tmp;
+			ms->tokenlist = tmp->next;
+			tmp = tmp->next;
+			free(del);
+			section++;
+		}
+		if (!ft_strncmp(tmp->next->token, "|\0", 2))
+		{
+			if (tmp->next->next != NULL)
+			{
+				del = tmp->next;
+				tmp->next = tmp->next->next;
+				free (del);
+				section++;
+			}
+			else
+			{
+				del = tmp->next;
+				tmp->next = NULL;
+				free (del);
+			}
+			
+		}
+		tmp->section = section;
+		tmp = tmp->next;
+		
+	}
+	// if (!ft_strncmp(tmp->next->token, "|\0", 2))
+	// {
+	// 	del = tmp->next;
+	// 	tmp->next = NULL;
+	// 	free (del);
+	// }
+
 }

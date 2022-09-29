@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 13:31:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/09/29 15:34:41 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,7 @@ void	b_cd(t_ms	*ms);
 t_env   *ft_envvnew(char *content);
 t_env   *ft_envvlast(t_env *envv);
 void    ft_envvadd_back(t_env **env, t_env *new);
+
+//tokenising
+void	sections(t_ms	*ms);
 #endif
