@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 13:43:03 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:06:48 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,31 @@ tokens: linked list for tokens
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback()
 */
-t_lex	*double_quotes(char *command, t_lex *lex, t_ms_list *tokens)
+t_lex	*double_quotes(char *command, t_ms *ms)
 {
 	t_ms_list	*newbe;
 	char		*part;
 
-	if (command[lex->start + lex->i] == '"')
+	if (command[ms->lex->start + ms->lex->i] == '"')
 	{
-		lex->i++;
-		while (command[lex->start + lex->i]
-			&& command[lex->start + lex->i] != '"')
-			lex->i++;
-		if (command[lex->start + lex->i] != '"')
+		ms->lex->i++;
+		while (command[ms->lex->start + ms->lex->i]
+			&& command[ms->lex->start + ms->lex->i] != '"')
+			ms->lex->i++;
+		if (command[ms->lex->start + ms->lex->i] != '"')
 		{
-			lex->error = 1;
-			return (lex);
+			ms->lex->error = 1;
+			return (ms->lex);
 		}
-		part = ft_substr(command, lex->start + 1, lex->i - 1);
-		newbe = ft_tokennew(part, "double quotes", tokens->section);
-		ft_tokenadd_back(&tokens, newbe);
-		lex->i++;
-		lex = afterquotes(command, lex, tokens);
-		lex->start = lex->start + lex->i;
-		lex->i = -1;
+		part = ft_substr(command, ms->lex->start + 1, ms->lex->i - 1);
+		newbe = ft_tokennew(part, "double quotes");
+		ft_tokenadd_back(&ms->tokenlist, newbe);
+		ms->lex->i++;
+		ms->lex = afterquotes(command, ms->lex, ms->tokenlist);
+		ms->lex->start = ms->lex->start + ms->lex->i;
+		ms->lex->i = -1;
 	}
-	return (lex);
+	return (ms->lex);
 }
 
 /*
@@ -86,7 +86,7 @@ t_lex	*single_quotes(char *command, t_lex *lex, t_ms_list *tokens)
 			return (lex);
 		}
 		part = ft_substr(command, lex->start + 1, lex->i - 1);
-		newbe = ft_tokennew(part, "single quotes", tokens->section);
+		newbe = ft_tokennew(part, "single quotes");
 		ft_tokenadd_back(&tokens, newbe);
 		lex->i++;
 		lex = afterquotes(command, lex, tokens);
@@ -109,7 +109,7 @@ t_lex	*beforequotes(char *command, t_lex *lex, t_ms_list *tokens)
 			if (!pipe_check(command, lex, tokens))
 			{
 				part = ft_substr(command, lex->start, lex->i);
-				newbe = ft_tokennew(part, "beforequotes", tokens->section);
+				newbe = ft_tokennew(part, "beforequotes");
 				ft_tokenadd_back(&tokens, newbe);
 			}
 		}
@@ -132,7 +132,7 @@ t_lex	*afterquotes(char *command, t_lex *lex, t_ms_list *tokens)
 			&& *command && command[lex->i + lex->start] != ' ')
 			lex->i++;
 		part = ft_substr(command, lex->start, lex->i);
-		newbe = ft_tokennew(part, "afterquotes_nospace", tokens->section);
+		newbe = ft_tokennew(part, "afterquotes_nospace");
 		ft_tokenadd_back(&tokens, newbe);
 	}
 	return (lex);

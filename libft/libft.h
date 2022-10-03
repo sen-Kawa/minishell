@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 17:21:39 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/21 15:17:15 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/03 15:00:05 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int			print_unum(va_list	list);
 int			write_char(char c);
 
 //MINISHELL
-t_ms_list	*ft_tokennew(char *token, char *type, int section);
+t_ms_list	*ft_tokennew(char *token, char *type);
 void		ft_tokenadd_back(t_ms_list **lst, t_ms_list *new);
 t_ms_list	*ft_tokenlast(t_ms_list *tokens);
 

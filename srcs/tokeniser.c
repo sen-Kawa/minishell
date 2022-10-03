@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 13:46:53 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:05:43 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 				if (ms->lex->i > 0)
 				{
 					part = ft_substr(command, ms->lex->start, ms->lex->i);
-					newbe = ft_tokennew(part, "space", 0);
+					newbe = ft_tokennew(part, "space");
 					ft_tokenadd_back(&ms->tokenlist, newbe);
 				}
 				while (command[ms->lex->start + ms->lex->i] == ' ')
@@ -101,7 +101,7 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 			}
 			ms->lex = beforequotes(command, ms->lex, ms->tokenlist);
 		}
-		ms->lex = double_quotes(command, ms->lex, ms->tokenlist);
+		ms->lex = double_quotes(command, ms);
 		ms->lex = single_quotes(command, ms->lex, ms->tokenlist);
 		if (ms->lex->error == 1)
 		{
@@ -115,7 +115,7 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	if (ms->lex->i > 0)
 	{
 		part = ft_substr(command, ms->lex->start, ms->lex->i);
-		newbe = ft_tokennew(part, "space_before", 0);
+		newbe = ft_tokennew(part, "space_before");
 		ft_tokenadd_back(&ms->tokenlist, newbe);
 	}
 	redirecting(ms->tokenlist);

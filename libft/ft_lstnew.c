@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 08:29:51 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/13 19:40:18 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/03 14:59:44 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_stack	*ft_stacknew(int value)
 	return (new_list);
 }
 
-t_ms_list	*ft_tokennew(char *token, char *type, int section)
+t_ms_list	*ft_tokennew(char *token, char *type)
 {
 	t_ms_list	*new_list;
 
@@ -63,6 +63,6 @@ t_ms_list	*ft_tokennew(char *token, char *type, int section)
 	new_list->type = type;
 	new_list->dollar = 0;
 	new_list->next = NULL;
-	new_list->section = section;
+	new_list->section = 0;
 	return (new_list);
 }
