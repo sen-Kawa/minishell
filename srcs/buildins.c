@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 13:34:04 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/03 10:11:46 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,6 @@ void	b_cd(t_ms	*ms)
 	t_env		*tmpenv;
 	int			result;
 	char		cwd[256];
-	char		*pwd;
 
 	tmp = ms->tokenlist;
 	if (tmp)
@@ -204,10 +203,7 @@ void	b_cd(t_ms	*ms)
 							}
 							else
 							{
-								pwd = tmpenv->content;
 								tmpenv->content = ft_strjoin("PWD=", &cwd[0]);
-								// if (pwd)
-								// 	free(pwd);
 								return ;
 							}
 						}

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/03 09:26:10 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/03 12:42:22 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ int	main(int argc, char **argv, char **envp)
 			b_exit(command);
 			add_history(command);
 			ms->lex = tokenice(command, ms, envp);
-			printing_tokens(ms->tokenlist);
+			// printing_tokens(ms->tokenlist);
 			if (ms->lex->error == 0)
 			{
 				execute(ms);
+				printing_tokens(ms->tokenlist);
 			}
 				
 			freeing_tokens(ms);

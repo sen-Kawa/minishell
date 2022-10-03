@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 09:21:38 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/03 13:10:14 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,53 +193,55 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	t_ms_list		*newbe;
 	t_lex	*lex;
 
-	lex = malloc(sizeof(t_lex *));
-	lex->i = 0;
-	lex->start = 0;
-	lex->error = 0;
-	lex->length = ft_strlen(command);
+	lex = malloc(sizeof(t_lex));
+	ms->lex = lex;
+	ms->lex->i = 0;
+	ms->lex->start = 0;
+	ms->lex->error = 0;
+	ms->lex->length = ft_strlen(command);
+	
 	
 	// printf("The Length is:%i\n", lex.length);
-	while (command[lex->start] == ' ')
-		lex->start++;
-	while(command[lex->start + lex->i] && *command)
+	while (command[ms->lex->start] == ' ')
+		ms->lex->start++;
+	while(command[ms->lex->start + ms->lex->i] && *command)
 	{
-		if (lex->start + lex->i <= lex->length)
+		if (ms->lex->start + ms->lex->i <= ms->lex->length)
 		{
-			if (command[lex->start + lex->i] == ' ')
+			if (command[ms->lex->start + ms->lex->i] == ' ')
 			{
 				// write(1, "inside 1\n", 10);
-				if (lex->i > 0)
+				if (ms->lex->i > 0)
 				{
 //					if (!pipe_check(command, lex, ms->tokenlist))
 //					{
-						part = ft_substr(command, lex->start, lex->i);
+						part = ft_substr(command, ms->lex->start, ms->lex->i);
 						newbe = ft_tokennew(part, "space", 0);
 						ft_tokenadd_back(&ms->tokenlist, newbe);
 //					}
 				}
-				while (command[lex->start + lex->i] == ' ')
-					lex->i++;
-				lex->start = lex->start + lex->i;
-				lex->i = -1;
+				while (command[ms->lex->start + ms->lex->i] == ' ')
+					ms->lex->i++;
+				ms->lex->start = ms->lex->start + ms->lex->i;
+				ms->lex->i = -1;
 			}
-			lex = beforequotes(command, lex, ms->tokenlist);
+			ms->lex = beforequotes(command, ms->lex, ms->tokenlist);
 		}
-		lex = double_quotes(command, lex, ms->tokenlist);
-		lex = single_quotes(command, lex, ms->tokenlist);
-		if (lex->error == 1)
+		ms->lex = double_quotes(command, ms->lex, ms->tokenlist);
+		ms->lex = single_quotes(command, ms->lex, ms->tokenlist);
+		if (ms->lex->error == 1)
 		{
 			write(1, "bash: syntax error, quotes missing\n", 36);
-			return (lex);
+			return (ms->lex);
 		}
-		if (lex->error == 2)
+		if (ms->lex->error == 2)
 			write(1, "bash: syntax error, space missing\n", 35);
-		lex->i++;
+		ms->lex->i++;
 	}
-	if (lex->i > 0)
+	if (ms->lex->i > 0)
 	{
 		// write(1, "inside 2\n", 10);
-		part = ft_substr(command, lex->start, lex->i);
+		part = ft_substr(command, ms->lex->start, ms->lex->i);
 		newbe = ft_tokennew(part, "space_before", 0);
 		ft_tokenadd_back(&ms->tokenlist, newbe);
 	}
@@ -248,13 +250,34 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	dollarizing(ms->tokenlist);
 	dollar_double(ms->tokenlist, envp);
 	// free (command);
-	return (lex);
+	return (ms->lex);
+}
+
+static t_ms_list	*sections_core(t_ms_list *tmp, int section)
+{
+	t_ms_list	*del;
+
+	while (tmp && tmp->next)
+	{
+		if (!ft_strncmp(tmp->next->token, "|\0", 2))
+		{
+			if (tmp->next->next != NULL)
+			{
+				del = tmp->next;
+				tmp->next = tmp->next->next;
+				free (del);
+				section++;
+			}
+		}
+		tmp->next->section = section;
+		tmp = tmp->next;
+	}
+	return (tmp);
 }
 
 void	sections(t_ms	*ms)
 {
 	t_ms_list	*tmp;
-	t_ms_list	*del;
 	int			section;
 
 	tmp = ms->tokenlist;
@@ -265,43 +288,11 @@ void	sections(t_ms	*ms)
 		ms->lex->error = 3;
 		return ;
 	}
-	while(tmp && tmp->next && tmp->next->next)
+	tmp = sections_core(tmp, section);
+	if (!ft_strncmp(tmp->token, "|\0", 2))
 	{
-		if (!ft_strncmp(tmp->token, "|\0", 2) && tmp->next)
-		{
-			
-			del = tmp;
-			ms->tokenlist = tmp->next;
-			tmp = tmp->next;
-			free(del);
-			section++;
-		}
-		if (!ft_strncmp(tmp->next->token, "|\0", 2))
-		{
-			if (tmp->next->next != NULL)
-			{
-				del = tmp->next;
-				tmp->next = tmp->next->next;
-				free (del);
-				section++;
-			}
-			else
-			{
-				del = tmp->next;
-				tmp->next = NULL;
-				free (del);
-			}
-			
-		}
-		tmp->section = section;
-		tmp = tmp->next;
-		
+		ft_printf("cli: syntax error near unexpected token `|'\n");
+		ms->lex->error = 3;
+		return ;
 	}
-	// if (!ft_strncmp(tmp->next->token, "|\0", 2))
-	// {
-	// 	del = tmp->next;
-	// 	tmp->next = NULL;
-	// 	free (del);
-	// }
-
 }
