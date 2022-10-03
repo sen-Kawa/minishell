@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 09:17:20 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/03 13:38:19 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ t_lex			*tokenice(char *command, t_ms *ms, char **envp);
 t_lex			*afterquotes(char *command, t_lex *lex, t_ms_list *tokens);
 t_lex			*beforequotes(char *command, t_lex *lex,
 					t_ms_list *tokens);
+t_lex   *double_quotes(char *command, t_lex *lex, t_ms_list *tokens);
+t_lex   *single_quotes(char *command, t_lex *lex, t_ms_list *tokens);
 int				pipe_check(char *command, t_lex *lex, t_ms_list *tokens);
 void			printing_tokens(t_ms_list *tokens);
 void			freeing_tokens(t_ms *ms);

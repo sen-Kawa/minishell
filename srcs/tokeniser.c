@@ -6,134 +6,11 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 13:10:14 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/03 13:46:53 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
-/*
-DESCRIPTION
-Makes Node out of Command within Double Quotes
-
-RETURN
-Structure "lex" which contain, integers start, i & length
-
-PARAMETERS
-command.: returne of readline()
-lex: structure for stuff
-tokens: linked list for tokens
-
-EXTERNAL FUNCTIONS
-ft_substr(), ft_tokennew(), ft_tokenaddback()
-*/
-t_lex	*double_quotes(char *command, t_lex *lex, t_ms_list *tokens)
-{
-	t_ms_list	*newbe;
-	char		*part;
-
-	if (command[lex->start + lex->i] == '"')
-	{
-		lex->i++;
-		while (command[lex->start + lex->i] && command[lex->start + lex->i] != '"')
-			lex->i++;
-		if(command[lex->start + lex->i] != '"')
-		{
-			lex->error = 1;
-			return (lex);
-		}
-		part = ft_substr(command, lex->start + 1, lex->i - 1);
-		newbe = ft_tokennew(part, "double quotes", tokens->section);
-		ft_tokenadd_back(&tokens, newbe);
-		lex->i++;
-		lex = afterquotes(command, lex, tokens);
-		lex->start = lex->start + lex->i;
-		lex->i = -1;
-	}
-	return (lex);
-}
-
-/*
-DESCRIPTION
-Makes Node out of Command within Single Quotes
-
-RETURN
-Structure "lex" which contain, integers start, i & length
-
-PARAMETERS
-command.: returne of readline()
-lex: structure for stuff
-tokens: linked list for tokens
-
-EXTERNAL FUNCTIONS
-ft_substr(), ft_tokennew(), ft_tokenaddback()
-*/
-t_lex	*single_quotes(char *command, t_lex *lex, t_ms_list *tokens)
-{
-	t_ms_list	*newbe;
-	char		*part;
-
-	if (command[lex->start + lex->i] == 39)
-	{
-		lex->i++;
-		while (command[lex->start + lex->i] && command[lex->start + lex->i] != 39)
-			lex->i++;
-		if(command[lex->start + lex->i] != 39)
-		{
-			lex->error = 1;
-			return (lex);
-		}
-		part = ft_substr(command, lex->start + 1, lex->i - 1);
-		newbe = ft_tokennew(part, "single quotes", tokens->section);
-		ft_tokenadd_back(&tokens, newbe);
-		lex->i++;
-		lex = afterquotes(command, lex, tokens);
-		lex->start = lex->start + lex->i;
-		lex->i = -1;
-	}
-	return (lex);
-}
-
-
-t_lex	*beforequotes(char *command, t_lex *lex, t_ms_list *tokens)
-{
-	char *part;
-	t_ms_list		*newbe;
-
-	if (command[lex->start +lex->i] == '"' || command[lex->start +lex->i] == 39)
-	{
-		if (lex->i > 0)
-		{
-			if (!pipe_check(command, lex, tokens))
-			{
-				part = ft_substr(command,lex->start, lex->i);
-				newbe = ft_tokennew(part, "beforequotes", tokens->section);
-				ft_tokenadd_back(&tokens, newbe);
-			}
-		}
-		lex->start = lex->start + lex->i;
-		lex->i = 0;
-	}
-	return (lex);
-}
-
-t_lex	*afterquotes(char *command, t_lex *lex, t_ms_list *tokens)
-{
-	char *part;
-	t_ms_list		*newbe;
-
-	if (command[lex->start + lex->i] != ' ' && command[lex->start + lex->i])
-	{
-		lex->start = lex->start + lex->i;
-		lex->i = 0;
-		while(command[lex->start + lex->i] && *command && command[lex->i + lex->start] != ' ')
-			lex->i++;
-		part = ft_substr(command, lex->start, lex->i);
-		newbe = ft_tokennew(part, "afterquotes_nospace", tokens->section);
-		ft_tokenadd_back(&tokens, newbe);
-	}
-	return (lex);
-}
 
 void	freeing_tokens(t_ms *ms)
 {
@@ -162,12 +39,14 @@ void	freeing_all(t_ms *ms)
 
 int	pipe_check(char *command, t_lex *lex, t_ms_list *tokens)
 {
-	if (command[lex->start + lex->i - 1] == '|' && command[lex->start + lex->i - 2] == ' ')
+	if (command[lex->start + lex->i - 1] == '|'
+		&& command[lex->start + lex->i - 2] == ' ')
 	{
 		tokens->section++;
 		return (1);
 	}
-	else if (command[lex->start + lex->i - 1] == '|' && command[lex->start + lex->i - 2] != ' ')
+	else if (command[lex->start + lex->i - 1]
+		== '|' && command[lex->start + lex->i - 2] != ' ')
 	{
 		lex->error = 2;
 		return (1);
@@ -186,39 +65,34 @@ PARAMETERS
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 */
+
 t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 {
-	(void) envp;
-	char *part;
-	t_ms_list		*newbe;
-	t_lex	*lex;
+	char		*part;
+	t_ms_list	*newbe;
+	t_lex		*lex;
 
+	(void) envp;
 	lex = malloc(sizeof(t_lex));
 	ms->lex = lex;
 	ms->lex->i = 0;
 	ms->lex->start = 0;
 	ms->lex->error = 0;
 	ms->lex->length = ft_strlen(command);
-	
-	
 	// printf("The Length is:%i\n", lex.length);
 	while (command[ms->lex->start] == ' ')
 		ms->lex->start++;
-	while(command[ms->lex->start + ms->lex->i] && *command)
+	while (command[ms->lex->start + ms->lex->i] && *command)
 	{
 		if (ms->lex->start + ms->lex->i <= ms->lex->length)
 		{
 			if (command[ms->lex->start + ms->lex->i] == ' ')
 			{
-				// write(1, "inside 1\n", 10);
 				if (ms->lex->i > 0)
 				{
-//					if (!pipe_check(command, lex, ms->tokenlist))
-//					{
-						part = ft_substr(command, ms->lex->start, ms->lex->i);
-						newbe = ft_tokennew(part, "space", 0);
-						ft_tokenadd_back(&ms->tokenlist, newbe);
-//					}
+					part = ft_substr(command, ms->lex->start, ms->lex->i);
+					newbe = ft_tokennew(part, "space", 0);
+					ft_tokenadd_back(&ms->tokenlist, newbe);
 				}
 				while (command[ms->lex->start + ms->lex->i] == ' ')
 					ms->lex->i++;
@@ -240,7 +114,6 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	}
 	if (ms->lex->i > 0)
 	{
-		// write(1, "inside 2\n", 10);
 		part = ft_substr(command, ms->lex->start, ms->lex->i);
 		newbe = ft_tokennew(part, "space_before", 0);
 		ft_tokenadd_back(&ms->tokenlist, newbe);
@@ -251,48 +124,4 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	dollar_double(ms->tokenlist, envp);
 	// free (command);
 	return (ms->lex);
-}
-
-static t_ms_list	*sections_core(t_ms_list *tmp, int section)
-{
-	t_ms_list	*del;
-
-	while (tmp && tmp->next)
-	{
-		if (!ft_strncmp(tmp->next->token, "|\0", 2))
-		{
-			if (tmp->next->next != NULL)
-			{
-				del = tmp->next;
-				tmp->next = tmp->next->next;
-				free (del);
-				section++;
-			}
-		}
-		tmp->next->section = section;
-		tmp = tmp->next;
-	}
-	return (tmp);
-}
-
-void	sections(t_ms	*ms)
-{
-	t_ms_list	*tmp;
-	int			section;
-
-	tmp = ms->tokenlist;
-	section = 0;
-	if (!ft_strncmp(tmp->token, "|\0", 2))
-	{
-		ft_printf("cli: syntax error near unexpected token `|'\n");
-		ms->lex->error = 3;
-		return ;
-	}
-	tmp = sections_core(tmp, section);
-	if (!ft_strncmp(tmp->token, "|\0", 2))
-	{
-		ft_printf("cli: syntax error near unexpected token `|'\n");
-		ms->lex->error = 3;
-		return ;
-	}
 }
