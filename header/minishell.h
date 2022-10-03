@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 15:34:41 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/03 09:17:20 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ typedef struct s_env
 typedef struct s_ms
 {
 	t_env		*env_list;
-	int	env_lst_size;
-	t_lex		lex;
+	int			env_lst_size;
+	t_lex		*lex;
 	t_ms_list	*tokenlist;
 }	t_ms;
 
 char			*get_cmd_path(char *cmd, char **envp);
 char			**ft_split_ssp(char const *s, char c);
-t_lex	tokenice(char *command, t_ms *ms, char **envp);
-t_lex	afterquotes(char *command, t_lex lex, t_ms_list *tokens);
-t_lex	beforequotes(char *command, t_lex lex,
+t_lex			*tokenice(char *command, t_ms *ms, char **envp);
+t_lex			*afterquotes(char *command, t_lex *lex, t_ms_list *tokens);
+t_lex			*beforequotes(char *command, t_lex *lex,
 					t_ms_list *tokens);
-int				pipe_check(char *command, t_lex lex, t_ms_list *tokens);
+int				pipe_check(char *command, t_lex *lex, t_ms_list *tokens);
 void			printing_tokens(t_ms_list *tokens);
 void			freeing_tokens(t_ms *ms);
 void			freeing_all(t_ms *ms);
