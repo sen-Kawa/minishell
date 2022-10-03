@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 13:31:58 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:50:06 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ char	*dollar_core(char **envp, char **space_split, int i)
 		// printf("string %i: %s\n", i, space_split[i]);
 		new_space = ft_strjoin(new_space, space_split[i]);
 		i++;
-		free (new_dollar);
+//		free (new_dollar);
 	}
 	return (new_space);
 }
