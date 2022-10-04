@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 15:08:40 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/04 16:47:41 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_ms
 {
 	t_env		*env_list;
 	int			env_lst_size;
+	int			sections;
 	t_lex		*lex;
 	t_ms_list	*tokenlist;
 }	t_ms;

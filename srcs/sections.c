@@ -6,13 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 13:47:12 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/04 16:48:23 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static t_ms_list	*sections_core(t_ms_list *tmp, int section)
+static t_ms_list	*sections_core(t_ms_list *tmp, t_ms *ms)
 {
 	t_ms_list	*del;
 
@@ -25,10 +25,10 @@ static t_ms_list	*sections_core(t_ms_list *tmp, int section)
 				del = tmp->next;
 				tmp->next = tmp->next->next;
 				free (del);
-				section++;
+				ms->sections++;
 			}
 		}
-		tmp->next->section = section;
+		tmp->next->section = ms->sections;
 		tmp = tmp->next;
 	}
 	return (tmp);
@@ -37,17 +37,15 @@ static t_ms_list	*sections_core(t_ms_list *tmp, int section)
 void	sections(t_ms	*ms)
 {
 	t_ms_list	*tmp;
-	int			section;
-
 	tmp = ms->tokenlist;
-	section = 0;
+	ms->sections = 0;
 	if (!ft_strncmp(tmp->token, "|\0", 2))
 	{
 		ft_printf("cli: syntax error near unexpected token `|'\n");
 		ms->lex->error = 3;
 		return ;
 	}
-	tmp = sections_core(tmp, section);
+	tmp = sections_core(tmp, ms);
 	if (!ft_strncmp(tmp->token, "|\0", 2))
 	{
 		ft_printf("cli: syntax error near unexpected token `|'\n");
