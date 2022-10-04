@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/04 12:47:44 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/04 16:08:07 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	heredoc(t_ms *ms)
 		while (ft_strncmp(hereline, delim, sizeof(delim)))
 		{
 			hereline = readline("> ");
+			if (hereline == NULL)
+			{
+				ft_printf("bash: warning: here-document at line 10 delimited by end-of-file (wanted `%s')\n", delim);
+				break ;
+			}
 			if (!ft_strncmp(hereline, delim, sizeof(delim)))
 			{
 				free (hereline);
