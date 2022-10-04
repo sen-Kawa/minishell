@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 13:56:02 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/04 18:50:54 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	b_env(char *token, t_ms *ms)
 	return (0);
 }
 
-void	b_export(t_ms	*ms)
+int	b_export(t_ms	*ms)
 {
 	int			result;
 	t_ms_list	*tmp;
@@ -65,15 +65,20 @@ void	b_export(t_ms	*ms)
 				new = ft_envvnew(tmp->next->token);
 				ft_envvadd_back(&ms->env_list, new);
 				ms->env_lst_size++;
+				return (1);
 			}
 		}
 		else if (result == 0 && tmp->next == NULL)
+		{
 			make_array(ms, ms->env_lst_size);
+			return (1);
+		}
 		tmp = tmp->next;
 	}
+	return (0);
 }
 
-void	b_unset(t_ms	*ms)
+int	b_unset(t_ms	*ms)
 {
 	t_ms_list	*tmp;
 	t_env		*envlst;
@@ -96,11 +101,13 @@ void	b_unset(t_ms	*ms)
 			prev_envlst->next = envlst->next;
 			free (envlst);
 			ms->env_lst_size--;
+			return (1);
 		}
 	}
+	return (0);
 }
 
-void	b_echo(t_ms	*ms)
+int	b_echo(t_ms	*ms)
 {
 	int			result;
 	t_ms_list	*tmp;
@@ -120,7 +127,12 @@ void	b_echo(t_ms	*ms)
 			else
 				ft_printf("%s\n", tmp->next->token);
 		}
+		return (1);
 	}
 	else if (result == 0 && tmp->next == NULL)
+	{
 		ft_printf("\n");
+		return (1);
+	}
+	return (0);
 }

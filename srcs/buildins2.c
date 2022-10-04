@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 13:56:33 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/04 18:57:40 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	b_pwd(t_ms	*ms)
 	return (0);
 }
 
-void	b_cd(t_ms	*ms)
+int	b_cd(t_ms	*ms)
 {
 	t_ms_list	*tmp;
 	t_env		*tmpenv;
@@ -75,8 +75,8 @@ void	b_cd(t_ms	*ms)
 				if (chdir(tmp->next->token))
 				{
 					ft_printf("cd : %s: No such file or diectory\n",
-						tmp->next->token);
-					return ;
+					tmp->next->token);
+					return (1);
 				}
 				else
 				{
@@ -89,12 +89,13 @@ void	b_cd(t_ms	*ms)
 							{
 								perror("getcwd() error");
 								ft_printf("cd : %s: No such file or diectory\n",
-									tmp->next->token);
+								tmp->next->token);
+								return (1);
 							}
 							else
 							{
 								tmpenv->content = ft_strjoin("PWD=", &cwd[0]);
-								return ;
+								return (1);
 							}
 						}
 						tmpenv = tmpenv->next;
@@ -103,4 +104,5 @@ void	b_cd(t_ms	*ms)
 			}
 		}
 	}
+	return (0);
 }

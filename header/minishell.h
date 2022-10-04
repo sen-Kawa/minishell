@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/04 17:59:26 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/04 18:51:42 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void	creating_env_list(char **envp, t_ms *ms);
 // void	initms(t_ms *ms);
 
 //buildins
-void	builtins(t_ms *ms);
+int	builtins(t_ms *ms);
 void	print_env(t_ms	*ms);
-void	b_export(t_ms	*ms);
-void	b_unset(t_ms	*ms);
+int	b_export(t_ms	*ms);
+int	b_unset(t_ms	*ms);
 int		b_pwd(t_ms	*ms);
-void	b_echo(t_ms	*ms);
-void	b_cd(t_ms	*ms);
+int	b_echo(t_ms	*ms);
+int	b_cd(t_ms	*ms);
 
 //llist stuff
 t_env   *ft_envvnew(char *content);
