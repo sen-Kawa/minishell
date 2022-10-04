@@ -6,11 +6,35 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/09/29 09:49:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/04 17:41:21 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+
+char **make_array_env(t_ms *ms)
+{
+	int		i;
+	char	**env_array;
+	char	*p;
+	t_env	*tmp;
+
+	env_array = ft_calloc(ms.env_lst_size, sizeof(char *));
+	tmp = ms->env_list;
+	i = -1;
+	while (++i < ms.env_lst_size)
+	{
+		p = ft_calloc(ft_strlen(tmp->content) + 1, sizeof(char));
+		ft_strlcpy(p, tmp->content, ft_strlen(tmp->content) + 1);
+		env_array[i] = p;
+		tmp = tmp->next;
+	}
+	i = -1;
+	while (++i < ms.env_lst_size)
+		ft_printf("env new list array %s\n", env_array[i]);
+	return (env_array);
+}
 
 void	make_array(t_ms *ms, int nlines)
 {
