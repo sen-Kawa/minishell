@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 18:37:02 by ksura             #+#    #+#             */
-/*   Updated: 2022/05/13 13:29:41 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/04 12:42:18 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	int				result;
 
 	result = 0;
+	if (!s1 || !s2)
+		return (0);
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] && s2[i] && i < (n))
 	{

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 19:22:54 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/04 12:47:44 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ void	heredoc(t_ms *ms)
 		herecom = NULL;
 		while (ft_strncmp(hereline, delim, sizeof(delim)))
 		{
-			
 			hereline = readline("> ");
-		
 			if (!ft_strncmp(hereline, delim, sizeof(delim)))
 			{
 				free (hereline);
@@ -80,7 +78,7 @@ void	heredoc(t_ms *ms)
 			else
 				herecom = ft_strjoin(hereline, "\n");
 			
-			free (hereline);
+			// free (hereline);
 		}
 		if (herecom)
 			{
