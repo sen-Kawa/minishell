@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 17:21:39 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 15:00:05 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/04 17:54:12 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ int			write_char(char c);
 t_ms_list	*ft_tokennew(char *token, char *type);
 void		ft_tokenadd_back(t_ms_list **lst, t_ms_list *new);
 t_ms_list	*ft_tokenlast(t_ms_list *tokens);
+int			ft_tokenlistsize(t_ms_list *tokenlist);
 
 #endif

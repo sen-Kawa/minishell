@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:02:39 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/05 10:25:20 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/04 17:54:24 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,26 @@ int	ft_stacksize(t_stack *stk)
 	else
 	{
 		temp = stk;
+		count = 1;
+		while (temp->next != NULL)
+		{
+			temp = temp->next;
+			count++;
+		}
+		return (count);
+	}
+}
+
+int	ft_tokenlistsize(t_ms_list *tokenlist)
+{
+	t_ms_list	*temp;
+	int		count;
+
+	if (tokenlist == NULL)
+		return (0);
+	else
+	{
+		temp = tokenlist;
 		count = 1;
 		while (temp->next != NULL)
 		{

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/04 16:47:41 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:59:26 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	creating_env_list(char **envp, t_ms *ms);
 // void	initms(t_ms *ms);
 
 //buildins
-void	execute(t_ms *ms);
+void	builtins(t_ms *ms);
 void	print_env(t_ms	*ms);
 void	b_export(t_ms	*ms);
 void	b_unset(t_ms	*ms);
@@ -101,4 +101,9 @@ void    ft_envvadd_back(t_env **env, t_env *new);
 
 //tokenising
 void	sections(t_ms	*ms);
+
+//execution
+int		execution(t_ms	*ms);
+char	**make_array_env(t_ms *ms);
+char	**make_array_token(t_ms *ms);
 #endif

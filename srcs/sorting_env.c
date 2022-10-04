@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/04 17:41:21 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/04 18:26:18 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,43 @@ char **make_array_env(t_ms *ms)
 	char	*p;
 	t_env	*tmp;
 
-	env_array = ft_calloc(ms.env_lst_size, sizeof(char *));
+	env_array = ft_calloc(ms->env_lst_size + 1, sizeof(char *));
 	tmp = ms->env_list;
 	i = -1;
-	while (++i < ms.env_lst_size)
+	while (++i < ms->env_lst_size)
 	{
 		p = ft_calloc(ft_strlen(tmp->content) + 1, sizeof(char));
 		ft_strlcpy(p, tmp->content, ft_strlen(tmp->content) + 1);
 		env_array[i] = p;
 		tmp = tmp->next;
 	}
-	i = -1;
-	while (++i < ms.env_lst_size)
-		ft_printf("env new list array %s\n", env_array[i]);
+	env_array[i + 1] = NULL;
 	return (env_array);
+}
+
+
+char **make_array_token(t_ms *ms)
+{
+	int		i;
+	char	**token_array;
+	char	*p;
+	t_ms_list	*tmp;
+
+	token_array = ft_calloc(ft_tokenlistsize(ms->tokenlist) + 1, sizeof(char *));
+	tmp = ms->tokenlist;
+	i = -1;
+	while (++i < ft_tokenlistsize(ms->tokenlist))
+	{
+		p = ft_calloc(ft_strlen(tmp->token) + 1, sizeof(char));
+		ft_strlcpy(p, tmp->token, ft_strlen(tmp->token) + 1);
+		token_array[i] = p;
+		tmp = tmp->next;
+	}
+	token_array[i + 1] = NULL;
+	// i = -1;
+	// while (++i < ft_tokenlistsize(ms->tokenlist))
+	// 	ft_printf("token %s\n", token_array[i]);
+	return (token_array);
 }
 
 void	make_array(t_ms *ms, int nlines)

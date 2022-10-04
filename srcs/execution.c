@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/04 16:08:07 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/04 18:23:45 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	heredoc(t_ms *ms);
 
-void	execute(t_ms *ms)
+void	builtins(t_ms *ms)
 {
 	t_ms_list	*tmp;
 	size_t	len;
@@ -91,4 +91,30 @@ void	heredoc(t_ms *ms)
 				//free (tmp_here);
 			}
 	}
+}
+
+
+int	execution(t_ms	*ms)
+{
+	char	*cmd_path;
+	char	**env_arr;
+	pid_t	pid;
+	
+	if (ms->sections == 0)
+	{
+		builtins(ms);
+		env_arr = make_array_env(ms);
+		cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
+		pid = fork();
+		if (pid == -1)
+			return (1);
+		if (pid == 0)
+		{
+			ft_printf("%i", execve(cmd_path, make_array_token(ms), env_arr));
+		//	ft_printf("%s", cmd_path);
+			exit (0);
+		}
+	waitpid(pid, NULL, WUNTRACED);
+	}
+	return (0);
 }
