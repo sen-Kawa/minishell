@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 10:58:49 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 13:22:09 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include "../libft/libft.h"
+# include <sys/wait.h>
 
 # ifdef __APPLE__ // should work in linux and mac headers
 #  include </Users/ksura/goinfre/.brew/opt/readline/include/readline/readline.h>

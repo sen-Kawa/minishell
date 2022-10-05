@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 12:46:08 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 14:44:24 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	b_export(t_ms	*ms)
 	int			flag;
 	t_ms_list	*tmp;
 	t_env		*new;
+	char *copy;
 	t_env		*tmp_env;
 	char 		**splitted;
 	// t_env		*tmp_env_pre;
@@ -70,7 +71,8 @@ int	b_export(t_ms	*ms)
 	{
 		if (result == 0 && ft_strchr(tmp->token, '='))
 		{
-			splitted = ft_split(tmp->token, '=');
+			copy = ft_strdup(tmp->token);
+			splitted = ft_split(copy, '=');
 			tmp_env = ms->env_list;
 			while (tmp_env && tmp_env->next && ft_strncmp(tmp->token, tmp_env->content, ft_strlen(splitted[0])))
 				tmp_env = tmp_env->next;
@@ -86,9 +88,13 @@ int	b_export(t_ms	*ms)
 				ms->env_lst_size++;
 				flag++;
 			}
+//			free(copy);
+			free(splitted);
 		}
 		if (tmp->next)
 			tmp = tmp->next;
+		else
+			break ;
 	}
 	if (flag > 0)
 		return (1);
