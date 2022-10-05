@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 16:07:10 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 18:08:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ tokens: linked list for tokens
 EXTERNAL FUNCTIONS
 -
 */
-void	dollarizing(t_ms_list *tokens);
+void	dollarizing(t_ms *ms);
 
 char	*replacing_vars(char **envp, int ds \
 , char **dollar_split, char *new_dollar);
@@ -37,12 +37,12 @@ char	*all_dollar_splitting(int a, char **envp \
 , char **dollar_split, char *new_dollar);
 char	*dollar_core(char **envp, char **space_split, int i);
 
-void	dollarizing(t_ms_list *tokens)
+void	dollarizing(t_ms *ms)
 {
 	t_ms_list	*tmp;
 	int			i;
 
-	tmp = tokens;
+	tmp =ms->tokenlist;
 	if (tmp)
 	{
 		while (tmp)
@@ -56,7 +56,11 @@ void	dollarizing(t_ms_list *tokens)
 					{
 						tmp->dollar = 1;
 						if (tmp->token[i + 1] == '?')
+						{
+							tmp->token = ft_itoa(WEXITSTATUS(ms->exit_status));
 							tmp->dollar = 0;
+						}
+							
 					}
 				}
 				i++;

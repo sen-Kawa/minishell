@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 15:44:14 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 17:24:11 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			printing_tokens(t_ms_list *tokens);
 void			freeing_tokens(t_ms *ms);
 void			freeing_all(t_ms *ms);
 void			redirecting(t_ms_list *tokens);
-void			dollarizing(t_ms_list *tokens);
+void			dollarizing(t_ms *ms);
 void			dollar_double(t_ms_list *tokens, char **envp);
 char	*replacing_vars(char **envp, int ds \
 , char **dollar_split, char *new_dollar);
@@ -95,6 +95,7 @@ int	b_unset(t_ms	*ms);
 int		b_pwd(t_ms	*ms);
 int	b_echo(t_ms	*ms);
 int	b_cd(t_ms	*ms);
+int	exit_status(t_ms	*ms);
 
 //llist stuff
 t_env   *ft_envvnew(char *content);

@@ -6,11 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 16:07:26 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 18:07:40 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	heredoc(t_ms *ms);
 
@@ -113,6 +115,7 @@ int	execution(t_ms	*ms)
 			exit (1);
 		}
 		waitpid(pid, &ms->exit_status, WUNTRACED);
+		printf("%i\n", WEXITSTATUS(ms->exit_status));
 	}
 	return (0);
 }
@@ -125,7 +128,13 @@ int	execution(t_ms	*ms)
 // 	tmp = ms->tokenlist;
 // 	while (tmp)
 // 	{
-// 		if ()
+// 		if (!ft_strncmp(tmp->token, "$?\0", 3))
+// 		{
+			
+// 			ms->exit_status = EXIT_SUCCESS;
+// 			return (1);
+// 		}
 // 		tmp = tmp->next;
 // 	}
+// 	return (0);
 // }
