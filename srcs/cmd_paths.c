@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:35:02 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 09:48:49 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 16:40:01 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,22 @@ char	*wright_path(int i, char **paths, char *cmd)
 	return (NULL);
 }
 
-static void	print_error(char *cmd, char	*envp_path)
+static void	print_error(char *cmd)
 {
 	if (ft_strchr(cmd, '/') == NULL)
 	{
-		ft_putstr_fd("zsh: command not found: ", 2);
+		ft_putstr_fd("ksh: command not found: ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd("\n", 2);
 	}
 	else
 	{
-		ft_putstr_fd("zsh: ", 2);
+		ft_putstr_fd("ksh: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd("\n", 2);
 	}
-	free (envp_path);
 	return ;
 }
 
@@ -103,6 +102,6 @@ char	*get_cmd_path(char *cmd, char **envp)
 	cmd_path = wright_path(i, paths, cmd);
 	if (cmd_path != NULL)
 		return (cmd_path);
-	print_error(cmd, envp_path);
+	print_error(cmd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/05 10:21:23 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 16:41:24 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 		sa.sa_handler = &handler_quit;
 		sigaction(SIGINT, &sa, NULL);
 		signal(SIGQUIT, SIG_IGN);
-		command = readline("cli prompt >> ");
+		command = readline("ksh >> ");
 		if (command == NULL)
 		{
 			write(1, "exit\n", 5);
