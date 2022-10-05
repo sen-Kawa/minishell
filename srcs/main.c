@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/04 16:58:50 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 10:21:23 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (command)
 			free (command);
-//		printing_tokens(ms->tokenlist);
+		printing_tokens(ms->tokenlist);
 //		freeing_tokens(ms);
 	}
 	freeing_all(ms);

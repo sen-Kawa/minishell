@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 15:50:52 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/05 10:58:14 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,31 @@ tokens: linked list for tokens
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback()
 */
-t_lex	*single_quotes(char *command, t_lex *lex, t_ms_list *tokens)
+t_lex	*single_quotes(char *command, t_ms *ms)
 {
 	t_ms_list	*newbe;
 	char		*part;
 
-	if (command[lex->start + lex->i] == 39)
+	if (command[ms->lex->start + ms->lex->i] == 39)
 	{
-		lex->i++;
-		while (command[lex->start + lex->i]
-			&& command[lex->start + lex->i] != 39)
-			lex->i++;
-		if (command[lex->start + lex->i] != 39)
+		ms->lex->i++;
+		while (command[ms->lex->start + ms->lex->i]
+			&& command[ms->lex->start + ms->lex->i] != 39)
+			ms->lex->i++;
+		if (command[ms->lex->start + ms->lex->i] != 39)
 		{
-			lex->error = 1;
-			return (lex);
+			ms->lex->error = 1;
+			return (ms->lex);
 		}
-		part = ft_substr(command, lex->start + 1, lex->i - 1);
+		part = ft_substr(command, ms->lex->start + 1, ms->lex->i - 1);
 		newbe = ft_tokennew(part, "single quotes");
-		ft_tokenadd_back(&tokens, newbe);
-		lex->i++;
-		lex = afterquotes(command, lex, tokens);
-		lex->start = lex->start + lex->i;
-		lex->i = -1;
+		ft_tokenadd_back(&ms->tokenlist, newbe);
+		ms->lex->i++;
+		ms->lex = afterquotes(command, ms->lex, ms->tokenlist);
+		ms->lex->start = ms->lex->start + ms->lex->i;
+		ms->lex->i = -1;
 	}
-	return (lex);
+	return (ms->lex);
 }
 
 t_lex	*beforequotes(char *command, t_lex *lex, t_ms_list *tokens)

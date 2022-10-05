@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 17:25:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 10:59:05 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 			ms->lex = beforequotes(command, ms->lex, ms->tokenlist);
 		}
 		ms->lex = double_quotes(command, ms);
-		ms->lex = single_quotes(command, ms->lex, ms->tokenlist);
+		ms->lex = single_quotes(command, ms);
 		if (ms->lex->error == 1)
 		{
 			write(1, "bash: syntax error, quotes missing\n", 36);
