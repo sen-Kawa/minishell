@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 17:41:18 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 16:07:10 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ void	dollarizing(t_ms_list *tokens)
 				if (tmp->token[i] == '$')
 				{
 					if (ft_strncmp(tmp->type, "single quotes", 2) != 0)
+					{
 						tmp->dollar = 1;
+						if (tmp->token[i + 1] == '?')
+							tmp->dollar = 0;
+					}
 				}
 				i++;
 			}

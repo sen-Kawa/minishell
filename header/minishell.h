@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 13:22:09 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/05 15:44:14 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_ms
 	int			sections;
 	t_lex		*lex;
 	t_ms_list	*tokenlist;
+	int			exit_status;
 }	t_ms;
 
 char			*get_cmd_path(char *cmd, char **envp);

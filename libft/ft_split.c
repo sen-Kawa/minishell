@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 15:02:01 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/05 16:29:21 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ char	**ft_split(char const *s, char c)
 	}
 	wc = word_count(s, c);
 	arr = (char **)malloc(sizeof(char *) * (wc + 1));
-	printf("size of chhar %li", sizeof(char));
-	printf("size of chharpointer %li", sizeof(char*));
 	if (!arr)
 		return (NULL);
 	make_word(s, c, arr, wc);

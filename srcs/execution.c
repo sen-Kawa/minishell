@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/04 19:13:28 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 16:07:26 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,20 @@ int	execution(t_ms	*ms)
 			execve(cmd_path, make_array_token(ms), env_arr);
 			exit (1);
 		}
-		waitpid(pid, NULL, WUNTRACED);
+		waitpid(pid, &ms->exit_status, WUNTRACED);
 	}
 	return (0);
 }
+
+
+// int	exit_status(t_ms	*ms)
+// {
+// 	t_ms_list	*tmp;
+
+// 	tmp = ms->tokenlist;
+// 	while (tmp)
+// 	{
+// 		if ()
+// 		tmp = tmp->next;
+// 	}
+// }
