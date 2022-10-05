@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/04 18:50:54 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/05 12:46:08 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,49 @@ int	b_env(char *token, t_ms *ms)
 int	b_export(t_ms	*ms)
 {
 	int			result;
+	int			flag;
 	t_ms_list	*tmp;
 	t_env		*new;
-
+	t_env		*tmp_env;
+	char 		**splitted;
+	// t_env		*tmp_env_pre;
+	
+	flag = 0;
 	tmp = ms->tokenlist;
+	result = ft_strncmp(tmp->token, "export\0", 7);
+	if (result == 0 && tmp->next == NULL)
+	{
+		make_array(ms, ms->env_lst_size);
+		return (1);
+	}
 	while (tmp)
 	{
-		result = ft_strncmp(tmp->token, "export\0", 7);
-		if (result == 0 && tmp->next != NULL)
+		if (result == 0 && ft_strchr(tmp->token, '='))
 		{
-			if (ft_strchr(tmp->next->token, '='))
+			splitted = ft_split(tmp->token, '=');
+			tmp_env = ms->env_list;
+			while (tmp_env && tmp_env->next && ft_strncmp(tmp->token, tmp_env->content, ft_strlen(splitted[0])))
+				tmp_env = tmp_env->next;
+			if (!ft_strncmp(tmp->token, tmp_env->content, ft_strlen(splitted[0])))
 			{
-				new = ft_envvnew(tmp->next->token);
+				tmp_env->content = tmp->token;
+				flag++;
+			}
+			else
+			{
+				new = ft_envvnew(tmp->token);
 				ft_envvadd_back(&ms->env_list, new);
 				ms->env_lst_size++;
-				return (1);
+				flag++;
 			}
 		}
-		else if (result == 0 && tmp->next == NULL)
-		{
-			make_array(ms, ms->env_lst_size);
-			return (1);
-		}
-		tmp = tmp->next;
+		if (tmp->next)
+			tmp = tmp->next;
 	}
-	return (0);
+	if (flag > 0)
+		return (1);
+	else
+		return (0);
 }
 
 int	b_unset(t_ms	*ms)
