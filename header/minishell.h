@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 14:07:20 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 15:01:25 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <stdio.h>
 # include "../libft/libft.h"
 # include <sys/wait.h>
-# include <sys/stat.h>
+// # include <sys/stat.h>
+# include <fcntl.h>
 
 # ifdef __APPLE__ // should work in linux and mac headers
 #  include </Users/ksura/goinfre/.brew/opt/readline/include/readline/readline.h>
@@ -62,7 +63,7 @@ typedef struct s_ms
 	t_lex		*lex;
 	t_ms_list	*tokenlist;
 	int			exit_status;
-	t_pipes		pipes_struct;
+	t_pipes		*pipes_struct;
 }	t_ms;
 
 char			*get_cmd_path(char *cmd, char **envp);
@@ -77,7 +78,7 @@ int				pipe_check(char *command, t_lex *lex, t_ms_list *tokens);
 void			printing_tokens(t_ms_list *tokens);
 void			freeing_tokens(t_ms *ms);
 void			freeing_all(t_ms *ms);
-void			redirecting(t_ms_list *tokens);
+void			redirecting(t_ms *ms);
 void			dollarizing(t_ms *ms);
 void			dollar_double(t_ms_list *tokens, char **envp);
 char	*replacing_vars(char **envp, int ds \

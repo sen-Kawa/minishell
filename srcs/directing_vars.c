@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 11:08:38 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 16:45:54 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,12 @@ tokens: linked list for tokens
 EXTERNAL FUNCTIONS
 -
 */
-void	redirecting(t_ms_list *tokens)
+
+void	redirecting(t_ms *ms)
 {
 	t_ms_list	*tmp;
 
-	tmp = tokens;
+	tmp = ms->tokenlist;
 	if (tmp)
 	{
 		while (tmp)
@@ -153,13 +154,35 @@ void	redirecting(t_ms_list *tokens)
 			{
 				tmp->type = "red_in";
 				if (tmp->next)
+				{
+					ms->pipes_struct->fd_file[0] = open(tmp->next->token, O_RDONLY);
+					ft_printf("infile fd: %i", open(tmp->next->token, O_RDONLY));
+					if (ms->pipes_struct->fd_file[0] == -1)
+					{
+						ft_printf("ksh: %s: No such file or directory", tmp->next->token);
+						ms->exit_status = 1;
+						ms->lex->error = 1;
+						return ;
+					}
 					tmp->next->type = "infile";
+				}
+					
 			}
 			else if (tmp->token[0] == '>' && !tmp->token[1])
 			{
 				tmp->type = "red_out";
 				if (tmp->next)
+				{
 					tmp->next->type = "outfile";
+					if (access (tmp->token, W_OK) != 0)
+					{
+						ft_printf("ksh: %s: Permission denied", tmp->next->token);
+						ms->exit_status = 1;
+						ms->lex->error = 1;
+						return ;
+					}
+					ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_CREAT);
+				}
 			}
 			redir2(tmp);
 			tmp = tmp->next;

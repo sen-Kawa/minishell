@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 13:50:28 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 15:12:52 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	execution(t_ms	*ms)
 	char	*cmd_path;
 	char	**env_arr;
 	pid_t	pid;
-	t_ms_list	*tmp_token_lst;
+	// t_ms_list	*tmp_token_lst;
 	
 	if (ms->sections == 0)
 	{
