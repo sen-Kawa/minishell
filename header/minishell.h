@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 17:24:11 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 11:06:15 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,5 @@ void	sections(t_ms	*ms);
 int		execution(t_ms	*ms);
 char	**make_array_env(t_ms *ms);
 char	**make_array_token(t_ms *ms);
+
 #endif

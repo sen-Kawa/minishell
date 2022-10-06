@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 09:09:41 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 11:09:16 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	ms->lex->i = 0;
 	ms->lex->start = 0;
 	ms->lex->error = 0;
-	// ms->exit_status = 0;
 	ms->lex->length = ft_strlen(command);
-	// printf("The Length is:%i\n", lex.length);
 	while (command[ms->lex->start] == ' ')
 		ms->lex->start++;
 	while (command[ms->lex->start + ms->lex->i] && *command)
@@ -106,11 +104,11 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 		ms->lex = single_quotes(command, ms);
 		if (ms->lex->error == 1)
 		{
-			write(1, "bash: syntax error, quotes missing\n", 36);
+			write(1, "ksh: syntax error, quotes missing\n", 35);
 			return (ms->lex);
 		}
 		if (ms->lex->error == 2)
-			write(1, "bash: syntax error, space missing\n", 35);
+			write(1, "ksh: syntax error, space missing\n", 34);
 		ms->lex->i++;
 	}
 	if (ms->lex->i > 0)

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/05 16:41:24 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/06 11:05:30 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int argc, char **argv, char **envp)
 	creating_env_list(envp, ms);
 	while (1)
 	{
-	//	ms->tokenlist = ft_tokennew("something", "first", 0);
 		sa.sa_handler = &handler_quit;
 		sigaction(SIGINT, &sa, NULL);
 		signal(SIGQUIT, SIG_IGN);
@@ -66,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (command)
 			free (command);
-		printing_tokens(ms->tokenlist);
+//		printing_tokens(ms->tokenlist);
 //		freeing_tokens(ms);
 	}
 	freeing_all(ms);

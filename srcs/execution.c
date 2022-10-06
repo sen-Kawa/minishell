@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 10:31:43 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 11:05:17 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	heredoc(t_ms *ms)
 	char		*delim;
 	char		*hereline;
 	char		*herecom;
-	//char		*tmp_here;
 
 	tmp = ms->tokenlist;
 	if(!ft_strncmp(tmp->token, "<<\0", 3))
@@ -55,7 +54,7 @@ void	heredoc(t_ms *ms)
 			delim = tmp->next->token;
 		else
 		{
-			ft_printf("cli: syntax error near unexpected token `newline'");
+			ft_printf("ksh: syntax error near unexpected token `newline'");
 			ms->lex->error = 4;
 			return ;
 		}
@@ -66,7 +65,7 @@ void	heredoc(t_ms *ms)
 			hereline = readline("> ");
 			if (hereline == NULL)
 			{
-				ft_printf("bash: warning: here-document at line 10 delimited by end-of-file (wanted `%s')\n", delim);
+				ft_printf("ksh: warning: here-document at line 10 delimited by end-of-file (wanted `%s')\n", delim);
 				break ;
 			}
 			if (!ft_strncmp(hereline, delim, sizeof(delim)))
@@ -76,20 +75,14 @@ void	heredoc(t_ms *ms)
 			}
 			if (herecom)
 			{
-				// tmp_here = herecom;
 				herecom = ft_strjoin(herecom, hereline);
 				herecom = ft_strjoin(herecom, "\n");
 			}
 			else
 				herecom = ft_strjoin(hereline, "\n");
-			
-			// free (hereline);
 		}
 		if (herecom)
-			{
 				ft_printf("%s", herecom);
-				//free (tmp_here);
-			}
 	}
 }
 
