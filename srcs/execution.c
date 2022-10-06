@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 18:07:40 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 10:31:43 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,9 @@ int	execution(t_ms	*ms)
 		if (pid == 0)
 		{
 			execve(cmd_path, make_array_token(ms), env_arr);
-			exit (1);
+			exit (127);
 		}
 		waitpid(pid, &ms->exit_status, WUNTRACED);
-		printf("%i\n", WEXITSTATUS(ms->exit_status));
 	}
 	return (0);
 }

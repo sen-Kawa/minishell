@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 18:08:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 09:30:32 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	dollarizing(t_ms *ms)
 						if (tmp->token[i + 1] == '?')
 						{
 							tmp->token = ft_itoa(WEXITSTATUS(ms->exit_status));
+							tmp->type = "int";
 							tmp->dollar = 0;
 						}
-							
 					}
 				}
 				i++;
