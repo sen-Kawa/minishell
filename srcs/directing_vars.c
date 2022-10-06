@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 16:45:54 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 17:54:11 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,10 @@ void	redirecting(t_ms *ms)
 				if (tmp->next)
 				{
 					ms->pipes_struct->fd_file[0] = open(tmp->next->token, O_RDONLY);
-					ft_printf("infile fd: %i", open(tmp->next->token, O_RDONLY));
+					ft_printf("infile fd: %i\n", open(tmp->next->token, O_RDONLY));
 					if (ms->pipes_struct->fd_file[0] == -1)
 					{
-						ft_printf("ksh: %s: No such file or directory", tmp->next->token);
+						ft_printf("ksh: %s: No such file or directory\n", tmp->next->token);
 						ms->exit_status = 1;
 						ms->lex->error = 1;
 						return ;
@@ -174,9 +174,10 @@ void	redirecting(t_ms *ms)
 				if (tmp->next)
 				{
 					tmp->next->type = "outfile";
-					if (access (tmp->token, W_OK) != 0)
+					if ((access (tmp->next->token, F_OK) == 0)
+									&& (access (tmp->next->token, W_OK) != 0))
 					{
-						ft_printf("ksh: %s: Permission denied", tmp->next->token);
+						ft_printf("ksh: %s: Permission denied\n", tmp->next->token);
 						ms->exit_status = 1;
 						ms->lex->error = 1;
 						return ;

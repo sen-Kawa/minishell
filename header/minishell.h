@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 15:01:25 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 17:27:26 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,12 @@
 
 # include <unistd.h>
 
-
+typedef struct s_pipes
+{
+	int		fd_file[2];
+	int		pipe_ends[2];
+	int		child_pid[2];
+}	t_pipes;
 
 typedef struct s_lex
 {
@@ -48,12 +53,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_pipes
-{
-	int		fd_file[2];
-	int		pipe_ends[2];
-	int		child_pid[2];
-}	t_pipes;
 
 typedef struct s_ms
 {
@@ -65,6 +64,7 @@ typedef struct s_ms
 	int			exit_status;
 	t_pipes		*pipes_struct;
 }	t_ms;
+
 
 char			*get_cmd_path(char *cmd, char **envp);
 char			**ft_split_ssp(char const *s, char c);

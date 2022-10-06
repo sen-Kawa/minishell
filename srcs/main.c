@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/06 11:05:30 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/06 17:36:15 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	pid = getpid();
 	ft_printf("pid is %d\n", pid);
 	ms = malloc(sizeof(t_ms));
+	ms->pipes_struct = malloc(sizeof(t_pipes));
 	creating_env_list(envp, ms);
 	while (1)
 	{
