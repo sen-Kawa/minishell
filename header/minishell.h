@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 11:06:15 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/06 14:07:20 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include "../libft/libft.h"
 # include <sys/wait.h>
+# include <sys/stat.h>
 
 # ifdef __APPLE__ // should work in linux and mac headers
 #  include </Users/ksura/goinfre/.brew/opt/readline/include/readline/readline.h>
@@ -46,6 +47,13 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_pipes
+{
+	int		fd_file[2];
+	int		pipe_ends[2];
+	int		child_pid[2];
+}	t_pipes;
+
 typedef struct s_ms
 {
 	t_env		*env_list;
@@ -54,6 +62,7 @@ typedef struct s_ms
 	t_lex		*lex;
 	t_ms_list	*tokenlist;
 	int			exit_status;
+	t_pipes		pipes_struct;
 }	t_ms;
 
 char			*get_cmd_path(char *cmd, char **envp);
@@ -109,5 +118,18 @@ void	sections(t_ms	*ms);
 int		execution(t_ms	*ms);
 char	**make_array_env(t_ms *ms);
 char	**make_array_token(t_ms *ms);
+
+//redirections
+/**
+*@brief opens/creates given files, checks for access rights
+*
+*@param *filename: char pointer to the file to open/create
+*@param rw: int to declare if its input file (rw = 0) or 
+*output file (rw = 1)
+*@param **envp; environmentpointer of the mainfct for 
+*execution of "touch" and "chmod"
+*@return filedescritor fd of the opened file
+*/
+int	open_file(char *filename, int rw, char **envp);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/04 18:26:18 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 14:14:25 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,14 @@ char **make_array_token(t_ms *ms)
 		p = ft_calloc(ft_strlen(tmp->token) + 1, sizeof(char));
 		ft_strlcpy(p, tmp->token, ft_strlen(tmp->token) + 1);
 		token_array[i] = p;
+		// // ft_printf("%i\n", tmp->section);
+		// if(tmp->next->section != (tmp->section))
+		// {
+		// 	ms->tokenlist = tmp->next;
+		// 	break ;
+		// }
 		tmp = tmp->next;
+		
 	}
 	token_array[i + 1] = NULL;
 	// i = -1;

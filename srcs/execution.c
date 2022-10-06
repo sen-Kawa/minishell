@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 11:05:17 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/06 13:50:28 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	execution(t_ms	*ms)
 	char	*cmd_path;
 	char	**env_arr;
 	pid_t	pid;
+	t_ms_list	*tmp_token_lst;
 	
 	if (ms->sections == 0)
 	{
@@ -109,6 +110,17 @@ int	execution(t_ms	*ms)
 		}
 		waitpid(pid, &ms->exit_status, WUNTRACED);
 	}
+	// if (ms->sections == 1)
+	// {
+	// 	tmp_token_lst = ms->tokenlist;
+	// 	env_arr = make_array_env(ms);
+	// 	if (pipe(ms->pipes_struct->pipe_ends) == -1)
+	// 		return (1);
+	// 	cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
+		
+	// 	close(ms->pipes_struct->pipe_ens[0]);
+	// 	close(ms->pipes_struct->pipe_ens[1]);
+	// }
 	return (0);
 }
 
