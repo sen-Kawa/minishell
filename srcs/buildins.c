@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 16:28:28 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/06 11:47:11 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	b_env(char *token, t_ms *ms)
 			ft_printf("%s\n", tmp->content);
 			tmp = tmp->next;
 		}
+		ms->exit_status = 0;
 		return (1);
 	}
 	return (0);
@@ -65,6 +66,7 @@ int	b_export(t_ms	*ms)
 	if (result == 0 && tmp->next == NULL)
 	{
 		make_array(ms, ms->env_lst_size);
+		ms->exit_status = 0;
 		return (1);
 	}
 	while (tmp)
@@ -97,7 +99,10 @@ int	b_export(t_ms	*ms)
 			break ;
 	}
 	if (flag > 0)
+	{
+		ms->exit_status = 0;
 		return (1);
+	}
 	else
 		return (0);
 }
@@ -125,6 +130,7 @@ int	b_unset(t_ms	*ms)
 			prev_envlst->next = envlst->next;
 			free (envlst);
 			ms->env_lst_size--;
+			ms->exit_status = 0;
 			return (1);
 		}
 	}
@@ -150,12 +156,14 @@ int	b_echo(t_ms	*ms)
 			}
 			else
 				ft_printf("%s\n", tmp->next->token);
-		}
+		ms->exit_status = 0;
 		return (1);
+		}
 	}
 	else if (result == 0 && tmp->next == NULL)
 	{
 		ft_printf("\n");
+		ms->exit_status = 0;
 		return (1);
 	}
 	return (0);
