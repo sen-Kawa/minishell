@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 16:17:55 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 18:35:13 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	execution(t_ms	*ms)
 	pid_t	pid;
 	// t_ms_list	*tmp_token_lst;
 	
-	if (ms->sections == 0)
+	if (ms->sections == 1)
 	{
 		if (builtins(ms) > 0)
 			return (0);

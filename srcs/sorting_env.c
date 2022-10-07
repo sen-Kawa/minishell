@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/07 18:29:42 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 18:38:26 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,10 @@ char **make_array_token(t_ms *ms)
 		if (!tmp->next)
 		{
 			token_array[i + 1] = NULL;
-				int n = -1;
-				while (++n <= i)
-					ft_printf("TOKEN ARRAY %s in section %i\n ", token_array[n], ms->current_section);
 			return (token_array);
 		}
 		if(tmp->section != tmp->next->section)
 		{
-				int n = -1;
-				while (++n <= i)
-					ft_printf("TOKEN ARRAY %s in section %i\n ", token_array[n], ms->current_section);
 			ms->current_section++;
 			break ;
 			
