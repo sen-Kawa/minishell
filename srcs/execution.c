@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 14:56:53 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 16:17:55 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,16 @@ int	execution(t_ms	*ms)
 		if (pid == 0)
 		{
 			if (ms->pipes_struct->fd_file[0])
+			{
 				dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
+				close(ms->pipes_struct->fd_file[0]);
+			}
+				
 			if (ms->pipes_struct->fd_file[1])
+			{
 				dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
+				close(ms->pipes_struct->fd_file[1]);
+			}
 			execve(cmd_path, make_array_token(ms), env_arr);
 			exit (127);
 		}

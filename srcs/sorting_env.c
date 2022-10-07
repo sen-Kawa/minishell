@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/06 14:14:25 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 18:29:42 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,35 @@ char **make_array_token(t_ms *ms)
 	token_array = ft_calloc(ft_tokenlistsize(ms->tokenlist) + 1, sizeof(char *));
 	tmp = ms->tokenlist;
 	i = -1;
+	while (ms->current_section != tmp->section)
+		tmp = tmp->next;
 	while (++i < ft_tokenlistsize(ms->tokenlist))
 	{
 		p = ft_calloc(ft_strlen(tmp->token) + 1, sizeof(char));
 		ft_strlcpy(p, tmp->token, ft_strlen(tmp->token) + 1);
 		token_array[i] = p;
-		// // ft_printf("%i\n", tmp->section);
-		// if(tmp->next->section != (tmp->section))
-		// {
-		// 	ms->tokenlist = tmp->next;
-		// 	break ;
-		// }
+		if (!tmp->next)
+		{
+			token_array[i + 1] = NULL;
+				int n = -1;
+				while (++n <= i)
+					ft_printf("TOKEN ARRAY %s in section %i\n ", token_array[n], ms->current_section);
+			return (token_array);
+		}
+		if(tmp->section != tmp->next->section)
+		{
+				int n = -1;
+				while (++n <= i)
+					ft_printf("TOKEN ARRAY %s in section %i\n ", token_array[n], ms->current_section);
+			ms->current_section++;
+			break ;
+			
+		}
+		if (!tmp)
+			break ;
 		tmp = tmp->next;
-		
 	}
 	token_array[i + 1] = NULL;
-	// i = -1;
-	// while (++i < ft_tokenlistsize(ms->tokenlist))
-	// 	ft_printf("token %s\n", token_array[i]);
 	return (token_array);
 }
 
