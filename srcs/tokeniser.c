@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 14:52:36 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 12:45:23 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,9 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 		newbe = ft_tokennew(part, "space_before");
 		ft_tokenadd_back(&ms->tokenlist, newbe);
 	}
-	
+	printing_tokens(ms->tokenlist);	
 	redirecting(ms);
+	printing_tokens(ms->tokenlist);
 	sections(ms);
 	dollarizing(ms);
 	dollar_double(ms->tokenlist, envp);

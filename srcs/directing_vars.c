@@ -6,11 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 11:25:50 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 12:42:25 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+void	delete_token(t_ms *ms);
 
 static char	*get_vars(char **envp, char *var)
 {
@@ -113,10 +115,10 @@ void	redir2(t_ms_list *tmp, t_ms	*ms)
 	{
 		if (tmp->token[0] == '>' && tmp->token[1] == '>')
 		{
-			tmp->type = "red_out_app";
+			tmp->type = "delete";
 			if (tmp->next)
 			{
-				tmp->next->type = "app_outfile";
+				tmp->next->type = "delete";
 				if ((access (tmp->next->token, F_OK) == 0)
 					&& (access (tmp->next->token, W_OK) != 0))
 				{
@@ -163,12 +165,11 @@ void	redirecting(t_ms *ms)
 				break;
 			if (tmp->token[0] == '<' && !tmp->token[1])
 			{
-				tmp->type = "red_in";
+				tmp->type = "delete";
 				if (tmp->next)
 				{
-					tmp->next->type = "infile";
+					tmp->next->type = "delete";
 					ms->pipes_struct->fd_file[0] = open(tmp->next->token, O_RDONLY);
-					ft_printf("infile fd: %i\n", open(tmp->next->token, O_RDONLY));
 					if (ms->pipes_struct->fd_file[0] == -1)
 					{
 						ft_printf("ksh: %s: No such file or directory\n", tmp->next->token);
@@ -176,14 +177,15 @@ void	redirecting(t_ms *ms)
 						ms->lex->error = 1;
 						return ;
 					}
+
 				}
 			}
 			else if (tmp->token[0] == '>' && !tmp->token[1])
 			{
-				tmp->type = "red_out";
+				tmp->type = "delete";
 				if (tmp->next)
 				{
-					tmp->next->type = "outfile";
+					tmp->next->type = "delete";
 					if ((access (tmp->next->token, F_OK) == 0)
 									&& (access (tmp->next->token, W_OK) != 0))
 					{
@@ -196,6 +198,41 @@ void	redirecting(t_ms *ms)
 				}
 			}
 			redir2(tmp, ms);
+			tmp = tmp->next;
+		}
+		delete_token(ms);
+	}
+}
+
+void	delete_token(t_ms *ms)
+{
+	t_ms_list	*tmp;
+	t_ms_list	*tmp_prev;
+
+
+	tmp = ms->tokenlist;
+	tmp_prev = ms->tokenlist;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->type, "delete", 6))
+		{
+				if (tmp_prev == tmp)
+				{
+					ms->tokenlist = ms->tokenlist->next;
+					tmp = tmp->next;
+					free(tmp_prev);
+					tmp_prev = tmp;
+				}
+				else
+				{
+					tmp_prev->next = tmp_prev->next->next;
+					free (tmp);
+					tmp = tmp_prev->next;
+				}
+		}
+		else
+		{
+			tmp_prev = tmp;
 			tmp = tmp->next;
 		}
 	}
