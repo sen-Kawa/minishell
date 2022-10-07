@@ -6,14 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/07 18:38:26 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 19:02:17 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-
-char **make_array_env(t_ms *ms)
+char	**make_array_env(t_ms *ms)
 {
 	int		i;
 	char	**env_array;
@@ -34,15 +33,14 @@ char **make_array_env(t_ms *ms)
 	return (env_array);
 }
 
-
-char **make_array_token(t_ms *ms)
+char	**make_array_token(t_ms *ms)
 {
-	int		i;
-	char	**token_array;
-	char	*p;
+	int			i;
+	char		**array;
+	char		*p;
 	t_ms_list	*tmp;
 
-	token_array = ft_calloc(ft_tokenlistsize(ms->tokenlist) + 1, sizeof(char *));
+	array = ft_calloc(ft_tokenlistsize(ms->tokenlist) + 1, sizeof(char *));
 	tmp = ms->tokenlist;
 	i = -1;
 	while (ms->current_section != tmp->section)
@@ -51,24 +49,16 @@ char **make_array_token(t_ms *ms)
 	{
 		p = ft_calloc(ft_strlen(tmp->token) + 1, sizeof(char));
 		ft_strlcpy(p, tmp->token, ft_strlen(tmp->token) + 1);
-		token_array[i] = p;
-		if (!tmp->next)
-		{
-			token_array[i + 1] = NULL;
-			return (token_array);
-		}
-		if(tmp->section != tmp->next->section)
+		array[i] = p;
+		if (!tmp || !tmp->next || tmp->section != tmp->next->section)
 		{
 			ms->current_section++;
 			break ;
-			
 		}
-		if (!tmp)
-			break ;
 		tmp = tmp->next;
 	}
-	token_array[i + 1] = NULL;
-	return (token_array);
+	array[i + 1] = NULL;
+	return (array);
 }
 
 void	make_array(t_ms *ms, int nlines)
