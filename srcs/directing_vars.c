@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 11:20:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 11:25:50 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ void	redirecting(t_ms *ms)
 				tmp->type = "red_in";
 				if (tmp->next)
 				{
+					tmp->next->type = "infile";
 					ms->pipes_struct->fd_file[0] = open(tmp->next->token, O_RDONLY);
 					ft_printf("infile fd: %i\n", open(tmp->next->token, O_RDONLY));
 					if (ms->pipes_struct->fd_file[0] == -1)
@@ -175,7 +176,6 @@ void	redirecting(t_ms *ms)
 						ms->lex->error = 1;
 						return ;
 					}
-					tmp->next->type = "infile";
 				}
 			}
 			else if (tmp->token[0] == '>' && !tmp->token[1])
