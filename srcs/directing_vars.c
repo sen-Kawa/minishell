@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 17:54:11 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/07 11:20:17 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ tmp: linked list for tokens
 EXTERNAL FUNCTIONS
 -
 */
-void	redir2(t_ms_list *tmp)
+void	redir2(t_ms_list *tmp, t_ms	*ms)
 {
 	if (tmp->token[0] == '<' && tmp->token[1] == '<')
 	{
@@ -115,7 +115,18 @@ void	redir2(t_ms_list *tmp)
 		{
 			tmp->type = "red_out_app";
 			if (tmp->next)
+			{
 				tmp->next->type = "app_outfile";
+				if ((access (tmp->next->token, F_OK) == 0)
+					&& (access (tmp->next->token, W_OK) != 0))
+				{
+					ft_printf("ksh: %s: Permission denied\n", tmp->next->token);
+					ms->exit_status = 1;
+					ms->lex->error = 1;
+					return ;
+				}
+				ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_RDWR | O_APPEND | O_CREAT);
+			}
 		}
 	}
 }
@@ -166,7 +177,6 @@ void	redirecting(t_ms *ms)
 					}
 					tmp->next->type = "infile";
 				}
-					
 			}
 			else if (tmp->token[0] == '>' && !tmp->token[1])
 			{
@@ -185,7 +195,7 @@ void	redirecting(t_ms *ms)
 					ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_CREAT);
 				}
 			}
-			redir2(tmp);
+			redir2(tmp, ms);
 			tmp = tmp->next;
 		}
 	}
