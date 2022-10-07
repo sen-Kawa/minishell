@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 11:47:11 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 14:38:32 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,17 @@ int	b_unset(t_ms	*ms)
 	return (0);
 }
 
+void	print_to_out(t_ms *ms, char *to_print)
+{
+	int fd;
+	
+	if (ms->pipes_struct->fd_file[1])
+		fd = ms->pipes_struct->fd_file[1];
+	else 
+		fd = 1;
+	ft_putstr_fd(to_print, fd);
+}
+
 int	b_echo(t_ms	*ms)
 {
 	int			result;
@@ -149,20 +160,25 @@ int	b_echo(t_ms	*ms)
 	{
 		if (result == 0 && tmp->next != NULL)
 		{
+			
 			if (!ft_strncmp(tmp->next->token, "-n\0", 3))
 			{
 				if (tmp->next->next)
-					ft_printf("%s", tmp->next->next->token);
+					print_to_out(ms, tmp->next->next->token);
 			}
 			else
-				ft_printf("%s\n", tmp->next->token);
+			{
+				print_to_out(ms, tmp->next->token);
+				print_to_out(ms, "\n");
+			}
+				
 		ms->exit_status = 0;
 		return (1);
 		}
 	}
 	else if (result == 0 && tmp->next == NULL)
 	{
-		ft_printf("\n");
+		print_to_out(ms, "\n");
 		ms->exit_status = 0;
 		return (1);
 	}

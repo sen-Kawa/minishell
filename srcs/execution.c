@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 11:33:52 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 14:42:28 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@ int	builtins(t_ms *ms)
 	
 	len = 0;
 	tmp = ms->tokenlist;
+	// if (ms->pipes_struct->fd_file[0])
+	// {
+	// 	ms->pipes_struct->fd_file[2] = dup(STDIN_FILENO);
+	// 	dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
+	// 	close(ms->pipes_struct->fd_file[0]);
+	// }
+	// if (ms->pipes_struct->fd_file[1])
+	// {
+	// 	ms->pipes_struct->fd_file[3] = dup(STDOUT_FILENO);
+	// 	dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
+	// 	close(ms->pipes_struct->fd_file[1]);
+	// }
 	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms) + b_cd(ms));
 	heredoc(ms);
 	while(tmp)
@@ -107,13 +119,14 @@ int	execution(t_ms	*ms)
 		{
 			if (ms->pipes_struct->fd_file[0])
 				dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
-			if (ms->pipes_struct->fd_file[1])
-				dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
+			// if (ms->pipes_struct->fd_file[1])
+			// 	dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
 			execve(cmd_path, make_array_token(ms), env_arr);
 			exit (127);
 		}
 		waitpid(pid, &ms->exit_status, WUNTRACED);
 	}
+	
 	// if (ms->sections == 1)
 	// {
 	// 	tmp_token_lst = ms->tokenlist;
