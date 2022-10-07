@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 12:42:25 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/07 13:18:31 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ void	redirecting(t_ms *ms)
 						ms->lex->error = 1;
 						return ;
 					}
-					ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_CREAT);
+					ms->pipes_struct->fd_file[1] = open(tmp->next->token,  O_WRONLY | O_CREAT);
 				}
 			}
 			redir2(tmp, ms);
