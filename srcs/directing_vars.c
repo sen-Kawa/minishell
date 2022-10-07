@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 19:37:35 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 20:36:19 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ void	redir2(t_ms_list *tmp, t_ms	*ms)
 				tmp->next->type = "delim";
 		}
 	}
-	if (tmp->token[0] && tmp->token[1] && !tmp->token[2])
+	if (tmp->token[0] && tmp->token[1])
 	{
 		if (tmp->token[0] == '>' && tmp->token[1] == '>')
 		{
 			tmp->type = "delete";
-			if (tmp->token[2] == '\0')
+			if (!tmp->token[2])
 			{
 				if (tmp->next)
 				{
@@ -134,6 +134,7 @@ void	redir2(t_ms_list *tmp, t_ms	*ms)
 			}
 			else if (tmp->token[2] != '\0')
 			{
+				tmp->type = "delete";
 				if ((access (tmp->token + 2, F_OK) == 0)
 					&& (access (tmp->token + 2, W_OK) != 0))
 				{
@@ -146,7 +147,10 @@ void	redir2(t_ms_list *tmp, t_ms	*ms)
 			}
 		}
 	}
+
 }
+
+
 
 
 /*
@@ -178,7 +182,7 @@ void	redirecting(t_ms *ms)
 		{
 			if (!ft_strncmp(tmp->type, "double quotes\0", 15) 
 			|| !ft_strncmp(tmp->type, "single quotes\0", 15))
-				break;
+				break ;
 			if (tmp->token[0] == '<' && !tmp->token[1])
 			{
 				tmp->type = "delete";
@@ -193,7 +197,18 @@ void	redirecting(t_ms *ms)
 						ms->lex->error = 1;
 						return ;
 					}
-
+				}
+			}
+			else if((tmp->token[0] == '<' && tmp->token[1] && tmp->token[1] != '<'))
+			{
+				tmp->type = "delete";
+				ms->pipes_struct->fd_file[0] = open(tmp->token + 1, O_RDONLY);
+				if (ms->pipes_struct->fd_file[0] == -1)
+				{
+					ft_printf("ksh: %s: No such file or directory\n", tmp->token + 1);
+					ms->exit_status = 1;
+					ms->lex->error = 1;
+					return ;
 				}
 			}
 			else if (tmp->token[0] == '>' && !tmp->token[1])
@@ -210,7 +225,20 @@ void	redirecting(t_ms *ms)
 						ms->lex->error = 1;
 						return ;
 					}
-					ms->pipes_struct->fd_file[1] = open(tmp->next->token,  O_WRONLY | O_CREAT);
+					ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_RDWR | O_CREAT);
+				}
+			}
+			else if((tmp->token[0] == '>' && tmp->token[1] && tmp->token[1] != '>'))
+			{
+				tmp->type = "delete";
+				ms->pipes_struct->fd_file[1] = open(tmp->token + 1, O_CREAT);
+				perror("error");
+				if (ms->pipes_struct->fd_file[1] == -1)
+				{
+					ft_printf("ksh: %s: No such file or directory1\n", tmp->token + 1);
+					ms->exit_status = 1;
+					ms->lex->error = 1;
+					return ;
 				}
 			}
 			redir2(tmp, ms);
