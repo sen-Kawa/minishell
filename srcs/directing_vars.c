@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 13:18:31 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/07 19:37:35 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,22 +116,38 @@ void	redir2(t_ms_list *tmp, t_ms	*ms)
 		if (tmp->token[0] == '>' && tmp->token[1] == '>')
 		{
 			tmp->type = "delete";
-			if (tmp->next)
+			if (tmp->token[2] == '\0')
 			{
-				tmp->next->type = "delete";
-				if ((access (tmp->next->token, F_OK) == 0)
-					&& (access (tmp->next->token, W_OK) != 0))
+				if (tmp->next)
 				{
-					ft_printf("ksh: %s: Permission denied\n", tmp->next->token);
+					tmp->next->type = "delete";
+					if ((access (tmp->next->token, F_OK) == 0)
+						&& (access (tmp->next->token, W_OK) != 0))
+					{
+						ft_printf("ksh: %s: Permission denied\n", tmp->next->token);
+						ms->exit_status = 1;
+						ms->lex->error = 1;
+						return ;
+					}
+				}
+				ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_RDWR | O_APPEND | O_CREAT);
+			}
+			else if (tmp->token[2] != '\0')
+			{
+				if ((access (tmp->token + 2, F_OK) == 0)
+					&& (access (tmp->token + 2, W_OK) != 0))
+				{
+					ft_printf("ksh: %s: Permission denied\n", tmp->token + 2);
 					ms->exit_status = 1;
 					ms->lex->error = 1;
 					return ;
 				}
-				ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_RDWR | O_APPEND | O_CREAT);
+				ms->pipes_struct->fd_file[1] = open(tmp->token + 2, O_RDWR | O_APPEND | O_CREAT);
 			}
 		}
 	}
 }
+
 
 /*
 DESCRIPTION
