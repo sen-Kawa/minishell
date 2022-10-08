@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/08 19:00:52 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/08 19:12:17 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ void	heredoc(t_ms *ms, char	*delim)
 		}
 		if (!ft_strncmp(hereline, delim, sizeof(delim)))
 		{
-			free (hereline);
+			if (hereline)
+				free (hereline);
+			ms->pipes_struct->fd_file[0] = open(".tmp_heredoc", O_RDONLY | O_CREAT | O_TRUNC, 0777);
 			break;
 		}
 		if (herecom)
@@ -109,14 +111,14 @@ int	execution(t_ms	*ms)
 		if (pid == 0)
 		{
 			// ft_printf("fd 0 is: %i", ms->pipes_struct->fd_file[0]);
-			if (ms->pipes_struct->fd_file[0] != 0)
+			if (ms->pipes_struct->fd_file[0] >= 0)
 			{
 				close(STDIN_FILENO);
 				dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
 				close(ms->pipes_struct->fd_file[0]);
 				ms->pipes_struct->fd_file[0] = 0;
 			}
-			if (ms->pipes_struct->fd_file[1])
+			if (ms->pipes_struct->fd_file[1] >= 0)
 			{
 				close(STDOUT_FILENO);
 				dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);

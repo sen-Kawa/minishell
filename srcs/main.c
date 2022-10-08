@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/08 14:46:13 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/08 19:09:20 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ void	handler_quit(int sig)
 		ft_putstr_fd("\b\b\n", 1);
 		rl_redisplay();
 	}
+}
+
+void	init(t_ms	*ms)
+{
+	ms->pipes_struct->fd_file[0] = -1;
+	ms->pipes_struct->fd_file[1] = -1;
+	ms->pipes_struct->fd_file[2] = -1;
+	ms->pipes_struct->fd_file[3] = -1;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -45,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 		sigaction(SIGINT, &sa, NULL);
 		signal(SIGQUIT, SIG_IGN);
 		command = readline("ksh >> ");
+		init(ms);
 		if (command == NULL)
 		{
 			write(1, "exit\n", 5);
