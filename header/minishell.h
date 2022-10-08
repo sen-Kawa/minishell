@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 17:33:51 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/08 17:03:15 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,6 @@ char	**make_array_token(t_ms *ms);
 *@return filedescritor fd of the opened file
 */
 int	open_file(char *filename, int rw, char **envp);
+void	heredoc(t_ms *ms, char	*delim);
 
 #endif

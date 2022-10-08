@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/08 16:29:26 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/08 17:08:38 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*replacing_vars(char **envp, int ds, char **dollar_split, char *new_dollar)
 char	*replacing_vars_middle_dollar(char **envp, int ds, char **dollar_split, char *new_dollar)
 {
 	char	*var;
-	
+
 	var = get_vars(envp, dollar_split[ds]);
 	if (var == NULL)
 		var = "";
@@ -103,12 +103,20 @@ void	redir2(t_ms_list *tmp, t_ms	*ms)
 	if (tmp->token[0] == '<' && tmp->token[1] == '<')
 	{
 		if (tmp->token[2] != '\0')
-			tmp->type = "sym+delim";
+		{
+			tmp->type = "delete";//sym+delim
+			heredoc(ms,tmp->token + 2);
+			
+		}
+
 		else if (tmp->token[2] == '\0')
 		{
-			tmp->type = "heredoc_sym";
+			tmp->type = "delete";//heredoc_sym
 			if (tmp->next)
-				tmp->next->type = "delim";
+			{
+				tmp->next->type = "delete";//delim
+				heredoc(ms,tmp->next->token);
+			}
 		}
 	}
 	if (tmp->token[0] && tmp->token[1])
@@ -180,7 +188,7 @@ void	redirecting(t_ms *ms)
 	{
 		while (tmp)
 		{
-			if (!ft_strncmp(tmp->type, "double quotes\0", 15) 
+			if (!ft_strncmp(tmp->type, "double quotes\0", 15)
 			|| !ft_strncmp(tmp->type, "single quotes\0", 15))
 				break ;
 			if (tmp->token[0] == '<' && !tmp->token[1])
