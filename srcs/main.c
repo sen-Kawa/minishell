@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/08 19:09:20 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/08 21:49:45 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ void	init(t_ms	*ms)
 	ms->pipes_struct->fd_file[2] = -1;
 	ms->pipes_struct->fd_file[3] = -1;
 }
+
+int	skip_space(char *command)
+{
+	int		i;
+
+	i = 0;
+	while (command[i] != 0 && (command[i] == ' ' || command[i] == '\t'))
+		i++;
+	if (command[i] == '\0')
+		return (1);
+	return (0);
+}
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -61,17 +74,20 @@ int	main(int argc, char **argv, char **envp)
 		}			
 		else if (command && *command)
 		{
-			b_exit(command);
-			add_history(command);
-			ms->lex = tokenice(command, ms, envp);
-			// printing_tokens(ms->tokenlist);
-			if (ms->lex->error == 0)
+			if (skip_space(command) == 0)
 			{
-				execution(ms);
-				printing_tokens(ms->tokenlist);
+				b_exit(command);
+				add_history(command);
+				ms->lex = tokenice(command, ms, envp);
+				// printing_tokens(ms->tokenlist);
+				if (ms->lex->error == 0)
+				{
+					execution(ms);
+					printing_tokens(ms->tokenlist);
+				}
+					
+				freeing_tokens(ms);
 			}
-				
-			freeing_tokens(ms);
 		}
 		if (command)
 			free (command);
