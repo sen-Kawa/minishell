@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/08 18:28:21 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/08 19:00:52 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	heredoc(t_ms *ms, char	*delim)
 	}
 	if (herecom)
 	{
-		ms->pipes_struct->fd_file[0] = open(".tmp_heredoc", O_WRONLY | O_CREAT, 0777);
+		ms->pipes_struct->fd_file[0] = open(".tmp_heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (ms->pipes_struct->fd_file[0] != -1)
 			ft_putstr_fd(herecom, ms->pipes_struct->fd_file[0]);
 		close(ms->pipes_struct->fd_file[0]);
