@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/07 19:02:52 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/08 14:46:13 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (command)
 			free (command);
+		if (ms->pipes_struct->fd_file[0])
+			close(ms->pipes_struct->fd_file[0]);
+		if (ms->pipes_struct->fd_file[1])
+			close(ms->pipes_struct->fd_file[1]);
 //		printing_tokens(ms->tokenlist);
 //		freeing_tokens(ms);
 	}
