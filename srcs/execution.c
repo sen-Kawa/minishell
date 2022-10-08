@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/08 17:32:55 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/08 18:28:21 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,11 @@ void	heredoc(t_ms *ms, char	*delim)
 	}
 	if (herecom)
 	{
-		ms->pipes_struct->fd_file[0] = open(".tmp_heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
+		ms->pipes_struct->fd_file[0] = open(".tmp_heredoc", O_WRONLY | O_CREAT, 0777);
 		if (ms->pipes_struct->fd_file[0] != -1)
 			ft_putstr_fd(herecom, ms->pipes_struct->fd_file[0]);
+		close(ms->pipes_struct->fd_file[0]);
+		ms->pipes_struct->fd_file[0] = open(".tmp_heredoc", O_RDONLY);
 	}
 }
 
@@ -101,20 +103,22 @@ int	execution(t_ms	*ms)
 		env_arr = make_array_env(ms);
 		cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
 		pid = fork();
-		perror("error fork");
+		// perror("error fork");
 		if (pid == -1)
 			return (1);
 		if (pid == 0)
 		{
-			ft_printf("fd 0 is: %i", ms->pipes_struct->fd_file[0]);
-			if (ms->pipes_struct->fd_file[0] == 3)
+			// ft_printf("fd 0 is: %i", ms->pipes_struct->fd_file[0]);
+			if (ms->pipes_struct->fd_file[0] != 0)
 			{
+				close(STDIN_FILENO);
 				dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
 				close(ms->pipes_struct->fd_file[0]);
 				ms->pipes_struct->fd_file[0] = 0;
 			}
 			if (ms->pipes_struct->fd_file[1])
 			{
+				close(STDOUT_FILENO);
 				dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
 				close(ms->pipes_struct->fd_file[1]);
 				ms->pipes_struct->fd_file[1] = 0;
