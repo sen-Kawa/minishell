@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 20:25:06 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 20:35:31 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	b_exit(t_ms	*ms)
 		}
 		if (tmp->next->next != NULL)
 		{
-			ft_printf("kshsh: exit: too many arguments\n");
+			ft_printf("ksh: exit: too many arguments\n");
+			ms->exit_status = 127;
 			return (1);
 		}
 		else

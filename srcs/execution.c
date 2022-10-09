@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 15:15:00 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 20:34:05 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	heredoc(t_ms *ms, char	*delim)
 		if (hereline == NULL)
 		{
 			ft_printf("ksh: warning: here-document delimited by end-of-file (wanted `%s')\n", delim);
+			ms->exit_status = 1;
 			break ;
 		}
 		if (!ft_strncmp(hereline, delim, sizeof(delim)))
