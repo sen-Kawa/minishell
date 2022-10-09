@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 20:35:31 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 21:01:52 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ int	b_unset(t_ms	*ms)
 			prev_envlst = envlst;
 			envlst = envlst->next;
 		}
+		if (!envlst->next)
+			return (1);
 		if (ft_strncmp(tmp->token, envlst->content,
 				ft_strlen(tmp->token)) == 0 && !ft_strchr(tmp->token, '='))
 		{
