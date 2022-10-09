@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 19:37:28 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 20:25:06 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,37 +180,46 @@ int	b_echo(t_ms	*ms)
 {
 	int			result;
 	t_ms_list	*tmp;
+	int			ret;
 
 	tmp = ms->tokenlist;
+	ret = 0;
 	if (tmp)
 		result = ft_strncmp(tmp->token, "echo\0", 5);
 	else
-		return (0);
-	if (tmp->next)
+		tmp = NULL;
+	while(tmp)
 	{
-		if (result == 0 && tmp->next != NULL)
+		if (tmp->next)
 		{
-			
-			if (!ft_strncmp(tmp->next->token, "-n\0", 3))
+			if (result == 0 && tmp->next != NULL)
 			{
-				if (tmp->next->next)
-					print_to_out(ms, tmp->next->next->token);
-			}
-			else
-			{
-				print_to_out(ms, tmp->next->token);
-				print_to_out(ms, "\n");
-			}
 				
-		ms->exit_status = 0;
-		return (1);
+				if (!ft_strncmp(tmp->next->token, "-n\0", 3))
+				{
+					if (tmp->next->next)
+						print_to_out(ms, tmp->next->next->token);
+				}
+				else
+				{
+					print_to_out(ms, tmp->next->token);
+					if (!tmp->next->next)
+						print_to_out(ms, "\n");
+					else
+						print_to_out(ms, " ");
+				}
+					
+			ms->exit_status = 0;
+			ret = 1;
+			}
 		}
+		else if (result == 0 && tmp->next == NULL)
+		{
+			print_to_out(ms, "\n");
+			ms->exit_status = 0;
+			ret = 1;
+		}
+		tmp = tmp->next;
 	}
-	else if (result == 0 && tmp->next == NULL)
-	{
-		print_to_out(ms, "\n");
-		ms->exit_status = 0;
-		return (1);
-	}
-	return (0);
+	return (ret);
 }
