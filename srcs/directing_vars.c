@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 14:47:45 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 20:00:15 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,69 +188,70 @@ void	redirecting(t_ms *ms)
 	{
 		while (tmp)
 		{
-			if (!ft_strncmp(tmp->type, "double quotes\0", 15)
-			|| !ft_strncmp(tmp->type, "single quotes\0", 15))
-				tmp = tmp->next;
-			if (tmp->token[0] == '<' && !tmp->token[1])
+			if (ft_strncmp(tmp->type, "double quotes\0", 15)
+			|| ft_strncmp(tmp->type, "single quotes\0", 15))
 			{
-				tmp->type = "delete";
-				if (tmp->next)
+				if (tmp->token[0] == '<' && !tmp->token[1])
 				{
-					tmp->next->type = "delete";
-					ms->pipes_struct->fd_file[0] = open(tmp->next->token, O_RDONLY);
+					tmp->type = "delete";
+					if (tmp->next)
+					{
+						tmp->next->type = "delete";
+						ms->pipes_struct->fd_file[0] = open(tmp->next->token, O_RDONLY);
+						if (ms->pipes_struct->fd_file[0] == -1)
+						{
+							ft_printf("ksh: %s: No such file or directory\n", tmp->next->token);
+							ms->exit_status = 1;
+							ms->lex->error = 1;
+							return ;
+						}
+					}
+				}
+				else if((tmp->token[0] == '<' && tmp->token[1] && tmp->token[1] != '<'))
+				{
+					tmp->type = "delete";
+					ms->pipes_struct->fd_file[0] = open(tmp->token + 1, O_RDONLY);
 					if (ms->pipes_struct->fd_file[0] == -1)
 					{
-						ft_printf("ksh: %s: No such file or directory\n", tmp->next->token);
+						ft_printf("ksh: %s: No such file or directory\n", tmp->token + 1);
 						ms->exit_status = 1;
 						ms->lex->error = 1;
 						return ;
 					}
 				}
-			}
-			else if((tmp->token[0] == '<' && tmp->token[1] && tmp->token[1] != '<'))
-			{
-				tmp->type = "delete";
-				ms->pipes_struct->fd_file[0] = open(tmp->token + 1, O_RDONLY);
-				if (ms->pipes_struct->fd_file[0] == -1)
+				else if (tmp->token[0] == '>' && !tmp->token[1])
 				{
-					ft_printf("ksh: %s: No such file or directory\n", tmp->token + 1);
-					ms->exit_status = 1;
-					ms->lex->error = 1;
-					return ;
-				}
-			}
-			else if (tmp->token[0] == '>' && !tmp->token[1])
-			{
-				tmp->type = "delete";
-				if (tmp->next)
-				{
-					tmp->next->type = "delete";
-					if ((access (tmp->next->token, F_OK) == 0)
-									&& (access (tmp->next->token, W_OK) != 0))
+					tmp->type = "delete";
+					if (tmp->next)
 					{
-						ft_printf("ksh: %s: Permission denied\n", tmp->next->token);
+						tmp->next->type = "delete";
+						if ((access (tmp->next->token, F_OK) == 0)
+										&& (access (tmp->next->token, W_OK) != 0))
+						{
+							ft_printf("ksh: %s: Permission denied\n", tmp->next->token);
+							ms->exit_status = 1;
+							ms->lex->error = 1;
+							return ;
+						}
+						ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_WRONLY | O_CREAT, 0777);
+					}
+				}
+				else if((tmp->token[0] == '>' && tmp->token[1] && tmp->token[1] != '>'))
+				{
+					tmp->type = "delete";
+					ms->pipes_struct->fd_file[1] = open(tmp->token + 1, O_CREAT | O_WRONLY, 0777);
+					perror("error");
+					if (ms->pipes_struct->fd_file[1] == -1)
+					{
+						ft_printf("ksh: %s: No such file or directory1\n", tmp->token + 1);
 						ms->exit_status = 1;
 						ms->lex->error = 1;
 						return ;
 					}
-					ms->pipes_struct->fd_file[1] = open(tmp->next->token, O_WRONLY | O_CREAT, 0777);
 				}
+				redir2(tmp, ms);
+				tmp = tmp->next;
 			}
-			else if((tmp->token[0] == '>' && tmp->token[1] && tmp->token[1] != '>'))
-			{
-				tmp->type = "delete";
-				ms->pipes_struct->fd_file[1] = open(tmp->token + 1, O_CREAT | O_WRONLY, 0777);
-				perror("error");
-				if (ms->pipes_struct->fd_file[1] == -1)
-				{
-					ft_printf("ksh: %s: No such file or directory1\n", tmp->token + 1);
-					ms->exit_status = 1;
-					ms->lex->error = 1;
-					return ;
-				}
-			}
-			redir2(tmp, ms);
-			tmp = tmp->next;
 		}
 		delete_token(ms);
 	}
