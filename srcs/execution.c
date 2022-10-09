@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 14:18:36 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 14:40:11 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	execution(t_ms	*ms)
 			return (0);
 		env_arr = make_array_env(ms);
 		cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
+		
 		pid = fork();
 		// perror("error fork");
 		if (pid == -1)
@@ -131,6 +132,7 @@ int	execution(t_ms	*ms)
 			exit (127);
 		}
 		waitpid(pid, &ms->exit_status, WUNTRACED);
+		
 		
 	}
 	
