@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 15:12:38 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 15:15:00 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ void	heredoc(t_ms *ms, char	*delim)
 	}
 }
 
+void    child_signal(int sig)
+{
+    if (sig == SIGQUIT)
+            write(1, "Quit (core dumped)", 18);
+}
+
 
 int	execution(t_ms	*ms)
 {
@@ -106,7 +112,7 @@ int	execution(t_ms	*ms)
 			return (0);
 		env_arr = make_array_env(ms);
 		cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
-		
+		signal(SIGQUIT, child_signal);
 		pid = fork();
 		// perror("error fork");
 		if (pid == -1)
@@ -132,8 +138,7 @@ int	execution(t_ms	*ms)
 			exit (127);
 		}
 		waitpid(pid, &ms->exit_status, WUNTRACED);
-		
-		
+		signal(SIGQUIT, SIG_IGN);
 	}
 	
 	// if (ms->sections == 1)
