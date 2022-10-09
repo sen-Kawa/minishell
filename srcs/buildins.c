@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/08 22:28:37 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 14:01:13 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,40 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	b_exit(char *command)
+int	b_exit(t_ms	*ms)
 {
 	int		i;
-	char	*needle;
+	t_ms_list	*tmp;
+	int		result;
 
-	i = 0;
-	while (command[i] != 0 && (command[i] == ' ' || command[i] == '\t'))
-		i++;
-	needle = ft_strnstr(&command[i], "exit", 5);
-	if (!needle)
-		return ;
-	else if (needle[4] == ' ' || needle[4] == '\0')
-		exit(EXIT_SUCCESS);
+	tmp = ms->tokenlist;
+	result = ft_strncmp(tmp->token, "exit\0", 4);
+	if (result == 0 && tmp->next == NULL)
+		exit (0);
+	else if (result == 0 && tmp->next != NULL)
+	{
+		i = 0;
+		while (tmp->next->token[i])
+		{
+			if (ft_isdigit(tmp->next->token[i]))
+				i++;
+			else
+			{
+				ft_printf("ksh: exit: %s: numeric argument required\n", tmp->next->token);
+				exit(2);
+			}
+		}
+		if (tmp->next->next != NULL)
+		{
+			ft_printf("kshsh: exit: too many arguments\n");
+			return (1);
+		}
+		else
+			exit (ft_atoi(tmp->next->token));
+	}
+	return (0);
 }
+
 
 int	b_env(char *token, t_ms *ms)
 {
@@ -141,7 +161,7 @@ void	print_to_out(t_ms *ms, char *to_print)
 {
 	int fd;
 	
-	if (ms->pipes_struct->fd_file[1])
+	if (ms->pipes_struct->fd_file[1] != -1)
 		fd = ms->pipes_struct->fd_file[1];
 	else 
 		fd = 1;

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/08 19:12:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 13:47:09 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	builtins(t_ms *ms)
 	// 	dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
 	// 	close(ms->pipes_struct->fd_file[1]);
 	// }
-	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms) + b_cd(ms));
+	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms) + b_cd(ms)) + b_exit(ms);
 	while(tmp)
 	{
 		len = ft_strlen(tmp->token);
