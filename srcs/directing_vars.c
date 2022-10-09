@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/08 17:08:38 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 14:47:45 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void	redirecting(t_ms *ms)
 		{
 			if (!ft_strncmp(tmp->type, "double quotes\0", 15)
 			|| !ft_strncmp(tmp->type, "single quotes\0", 15))
-				break ;
+				tmp = tmp->next;
 			if (tmp->token[0] == '<' && !tmp->token[1])
 			{
 				tmp->type = "delete";
