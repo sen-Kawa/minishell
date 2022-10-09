@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 15:08:12 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/09 21:13:42 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ void	dollarizing(t_ms *ms)
 						{
 							if (WIFSIGNALED(ms->exit_status))
 								tmp->token = ft_itoa(128 + WTERMSIG(ms->exit_status));
-							else
+							else if (WEXITSTATUS(ms->exit_status) != 0)
 								tmp->token = ft_itoa(WEXITSTATUS(ms->exit_status));
+							else
+								tmp->token = ft_itoa(ms->exit_status);
 							tmp->type = "int";
 							tmp->dollar = 0;
 						}
