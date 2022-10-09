@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/09 14:04:27 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 20:25:21 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	handler_quit(int sig)
 {
 	if (sig == SIGINT)
 	{
+		ft_putstr_fd("\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		ft_putstr_fd("\b\b\n", 1);
 		rl_redisplay();
 	}
 }

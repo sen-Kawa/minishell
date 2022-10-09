@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 20:34:05 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 20:59:03 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ int	builtins(t_ms *ms)
 	return (sum);
 }
 
+void	signal_heredoc(int sig)
+{
+		if (sig == SIGINT)
+				printf("signal in heredoc %i", sig);
+}
+
 void	heredoc(t_ms *ms, char	*delim)
 {
 	char		*hereline;
@@ -59,6 +65,7 @@ void	heredoc(t_ms *ms, char	*delim)
 	herecom = NULL;
 	while (ft_strncmp(hereline, delim, sizeof(delim)))
 	{
+		signal(SIGINT, signal_heredoc);
 		hereline = readline("> ");
 		if (hereline == NULL)
 		{
