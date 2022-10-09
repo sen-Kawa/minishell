@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/07 17:34:43 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 14:12:47 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	sections(t_ms	*ms)
 	tmp = ms->tokenlist;
 	ms->sections = 0;
 	ms->current_section = 0;
+	if (!tmp)
+		return ;
 	if (!ft_strncmp(tmp->token, "|\0", 2))
 	{
 		ft_printf("cli: syntax error near unexpected token `|'\n");

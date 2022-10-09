@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 12:46:52 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 14:14:15 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	b_pwd(t_ms	*ms)
 	int			result;
 
 	tmp = ms->tokenlist;
+	if (!tmp)
+		return (0);
 	result = ft_strncmp(tmp->token, "pwd\0", 4);
 	if (result == 0)
 	{

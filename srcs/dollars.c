@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/06 09:30:32 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 14:13:27 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	dollarizing(t_ms *ms)
 {
 	t_ms_list	*tmp;
 	int			i;
-
+	
+	
 	tmp =ms->tokenlist;
 	if (tmp)
 	{

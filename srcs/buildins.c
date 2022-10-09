@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 14:01:13 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/09 14:17:10 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	b_exit(t_ms	*ms)
 	int		result;
 
 	tmp = ms->tokenlist;
+	if (!tmp)
+		return (0);
 	result = ft_strncmp(tmp->token, "exit\0", 4);
 	if (result == 0 && tmp->next == NULL)
 		exit (0);
@@ -55,6 +57,8 @@ int	b_env(char *token, t_ms *ms)
 	t_env	*tmp;
 
 	tmp = ms->env_list;
+	if (!token)
+		return (0);
 	result = ft_strncmp(token, "env\0", 4);
 	if (result == 0)
 	{
@@ -82,6 +86,8 @@ int	b_export(t_ms	*ms)
 	
 	flag = 0;
 	tmp = ms->tokenlist;
+	if (!tmp)
+		return (0);
 	result = ft_strncmp(tmp->token, "export\0", 7);
 	if (result == 0 && tmp->next == NULL)
 	{
@@ -134,6 +140,8 @@ int	b_unset(t_ms	*ms)
 	t_env		*prev_envlst;
 
 	tmp = ms->tokenlist;
+	if (!tmp)
+		return (0);
 	envlst = ms->env_list;
 	if (ft_strncmp(tmp->token, "unset", 5) == 0 && tmp->next != NULL)
 	{
@@ -176,6 +184,8 @@ int	b_echo(t_ms	*ms)
 	tmp = ms->tokenlist;
 	if (tmp)
 		result = ft_strncmp(tmp->token, "echo\0", 5);
+	else
+		return (0);
 	if (tmp->next)
 	{
 		if (result == 0 && tmp->next != NULL)
