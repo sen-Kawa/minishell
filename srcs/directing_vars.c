@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 20:00:15 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/10 15:06:47 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,6 @@ void	redirecting(t_ms *ms)
 				{
 					tmp->type = "delete";
 					ms->pipes_struct->fd_file[1] = open(tmp->token + 1, O_CREAT | O_WRONLY, 0777);
-					perror("error");
 					if (ms->pipes_struct->fd_file[1] == -1)
 					{
 						ft_printf("ksh: %s: No such file or directory1\n", tmp->token + 1);

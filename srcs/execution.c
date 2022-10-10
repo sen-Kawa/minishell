@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 20:59:03 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:05:51 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,6 @@ int	builtins(t_ms *ms)
 	
 	len = 0;
 	tmp = ms->tokenlist;
-	// if (ms->pipes_struct->fd_file[0])
-	// {
-	// 	ms->pipes_struct->fd_file[2] = dup(STDIN_FILENO);
-	// 	dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
-	// 	close(ms->pipes_struct->fd_file[0]);
-	// }
-	// if (ms->pipes_struct->fd_file[1])
-	// {
-	// 	ms->pipes_struct->fd_file[3] = dup(STDOUT_FILENO);
-	// 	dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
-	// 	close(ms->pipes_struct->fd_file[1]);
-	// }
 	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms) + b_cd(ms)) + b_exit(ms);
 	while(tmp)
 	{
@@ -65,7 +53,7 @@ void	heredoc(t_ms *ms, char	*delim)
 	herecom = NULL;
 	while (ft_strncmp(hereline, delim, sizeof(delim)))
 	{
-		signal(SIGINT, signal_heredoc);
+	//	signal(SIGINT, signal_heredoc);
 		hereline = readline("> ");
 		if (hereline == NULL)
 		{
@@ -101,7 +89,7 @@ void	heredoc(t_ms *ms, char	*delim)
 void    child_signal(int sig)
 {
     if (sig == SIGQUIT)
-            write(1, "Quit (core dumped)", 18);
+            write(1, "Quit (core dumped)\n", 19);
 }
 
 
@@ -110,7 +98,6 @@ int	execution(t_ms	*ms)
 	char	*cmd_path;
 	char	**env_arr;
 	pid_t	pid;
-	// t_ms_list	*tmp_token_lst;
 	
 	if (!ms->tokenlist)
 		return (0);
@@ -122,12 +109,10 @@ int	execution(t_ms	*ms)
 		cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
 		signal(SIGQUIT, child_signal);
 		pid = fork();
-		// perror("error fork");
 		if (pid == -1)
 			return (1);
 		if (pid == 0)
 		{
-			// ft_printf("fd 0 is: %i", ms->pipes_struct->fd_file[0]);
 			if (ms->pipes_struct->fd_file[0] >= 0)
 			{
 				close(STDIN_FILENO);
@@ -148,18 +133,6 @@ int	execution(t_ms	*ms)
 		waitpid(pid, &ms->exit_status, WUNTRACED);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	
-	// if (ms->sections == 1)
-	// {
-	// 	tmp_token_lst = ms->tokenlist;
-	// 	env_arr = make_array_env(ms);
-	// 	if (pipe(ms->pipes_struct->pipe_ends) == -1)
-	// 		return (1);
-	// 	cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
-		
-	// 	close(ms->pipes_struct->pipe_ens[0]);
-	// 	close(ms->pipes_struct->pipe_ens[1]);
-	// }
 	return (0);
 }
 
