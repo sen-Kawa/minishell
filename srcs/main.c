@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/09 20:25:21 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/10 14:19:32 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 				if (ms->lex->error == 0)
 				{
 					execution(ms);
-					printing_tokens(ms->tokenlist);
+					//printing_tokens(ms->tokenlist);
 				}
 					
 				freeing_tokens(ms);

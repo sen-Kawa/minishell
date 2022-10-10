@@ -6,10 +6,11 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 21:15:29 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/10 14:32:30 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../header/minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -180,48 +181,41 @@ void	print_to_out(t_ms *ms, char *to_print)
 
 int	b_echo(t_ms	*ms)
 {
-	int			result;
 	t_ms_list	*tmp;
-	int			ret;
+	int			flag;
 
+	flag = 0;
 	tmp = ms->tokenlist;
-	ret = 0;
 	if (tmp)
-		result = ft_strncmp(tmp->token, "echo\0", 5);
+	{
+		if (ft_strncmp(tmp->token, "echo\0", 5) != 0)
+			return (0);
+	}
 	else
 		tmp = NULL;
-	while(tmp)
+	if (tmp->next)
 	{
-		if (tmp->next)
+		tmp = tmp->next;
+		if (!ft_strncmp(tmp->token, "-n\0", 3))
 		{
-			if (result == 0 && tmp->next != NULL)
-			{
-				
-				if (!ft_strncmp(tmp->next->token, "-n\0", 3))
-				{
-					if (tmp->next->next)
-						print_to_out(ms, tmp->next->next->token);
-				}
-				else
-				{
-					print_to_out(ms, tmp->next->token);
-					if (!tmp->next->next)
-						print_to_out(ms, "\n");
-					else
-						print_to_out(ms, " ");
-				}
-					
-			ms->exit_status = 0;
-			ret = 1;
-			}
+			flag++;
+			tmp = tmp->next;
 		}
-		else if (result == 0 && tmp->next == NULL)
-		{
-			print_to_out(ms, "\n");
-			ms->exit_status = 0;
-			ret = 1;
-		}
+	}
+	else
+	{
+		print_to_out(ms, "\n");
 		tmp = tmp->next;
 	}
-	return (ret);
+	while(tmp)
+	{
+		print_to_out(ms, tmp->token);
+		if (tmp->next)
+			print_to_out(ms, " ");
+		if (tmp->next == NULL && flag == 0)
+			print_to_out(ms, "\n");
+		tmp = tmp->next;
+	}
+	ms->exit_status = 0;
+	return (1);
 }
