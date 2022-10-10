@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/10 15:05:51 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/10 19:13:06 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void    child_signal(int sig)
 {
     if (sig == SIGQUIT)
             write(1, "Quit (core dumped)\n", 19);
+	if (sig == SIGINT)
+			write(1, "\b\b", 2);
 }
 
 
@@ -108,6 +110,7 @@ int	execution(t_ms	*ms)
 		env_arr = make_array_env(ms);
 		cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
 		signal(SIGQUIT, child_signal);
+		signal(SIGINT, child_signal);
 		pid = fork();
 		if (pid == -1)
 			return (1);
