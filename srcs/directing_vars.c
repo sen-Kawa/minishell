@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/11 13:55:20 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/11 18:36:41 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,8 @@ void	redirecting(t_ms *ms)
 			{
 				if (tmp->section % 2 == 1)
 				{
-					infd = 2;
-					outfd = 3;
+					infd = 0;
+					outfd = 1;
 				}
 				else
 				{

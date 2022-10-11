@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/11 13:11:07 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/11 19:13:06 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ int	main(int argc, char **argv, char **envp)
 {
 	struct	sigaction sa;
 	char *command;
-	pid_t	pid;
+//	pid_t	pid;
 	t_ms	*ms;
 
 	(void) argc;
 	(void) argv;
-	pid = getpid();
-	ft_printf("pid is %d\n", pid);
+//	pid = getpid();
+//	ft_printf("pid is %d\n", pid);
 	ms = malloc(sizeof(t_ms));
 	ms->pipes_struct = malloc(sizeof(t_pipes));
 	creating_env_list(envp, ms);
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				add_history(command);
 				ms->lex = tokenice(command, ms, envp);
-				// printing_tokens(ms->tokenlist);
+				printing_tokens(ms->tokenlist);
 				if (ms->lex->error == 0)
 				{
 					execution(ms);
@@ -97,11 +97,11 @@ int	main(int argc, char **argv, char **envp)
 			close(ms->pipes_struct->fd_file[0]);
 		if (ms->pipes_struct->fd_file[1]>= 0)
 			close(ms->pipes_struct->fd_file[1]);
-		if (ms->pipes_struct->fd_file[2] >= 0)
-			close(ms->pipes_struct->fd_file[2]);
-		if (ms->pipes_struct->fd_file[3]>= 0)
-			close(ms->pipes_struct->fd_file[3]);
-//		printing_tokens(ms->tokenlist);
+		// if (ms->pipes_struct->fd_file[2] >= 0)
+		// 	close(ms->pipes_struct->fd_file[2]);
+		// if (ms->pipes_struct->fd_file[3]>= 0)
+		// 	close(ms->pipes_struct->fd_file[3]);
+		// printing_tokens(ms->tokenlist);
 //		freeing_tokens(ms);
 	}
 	freeing_all(ms);
