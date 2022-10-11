@@ -6,30 +6,21 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/11 12:35:08 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/11 13:11:07 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../header/minishell.h"
-//#include <sys/siginfo.h>
 
-
-void	handler_quit(int sig, siginfo_t *info, void *ucontext)
+void	handler_quit(int sig)
 {
-		(void)info;
-	t_ms	*ms;
-	ms = (t_ms *)ucontext;
-		ms->exit_status = 130;
-//		ft_printf("sig info %i", info->si_value);
 	if (sig == SIGINT)
 	{
-//	ft_printf("si status %i\n", info->si_code);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		ft_putstr_fd("\b\b\n", 1);
 		rl_redisplay();
-		// ft_printf("exit %i\n", ms->exit_status);
-		
 	}
 }
 
@@ -74,13 +65,9 @@ int	main(int argc, char **argv, char **envp)
 	creating_env_list(envp, ms);
 	while (1)
 	{
-	//	sa.sa_handler = &handler_quit;
-		sa.sa_flags = SA_SIGINFO;
-		sa.sa_sigaction = &handler_quit;
+		sa.sa_handler = &handler_quit;
 		sigaction(SIGINT, &sa, NULL);
-//		pause();
 		signal(SIGQUIT, SIG_IGN);
-//		ft_printf("exit in loop %i\n", ms->exit_status); 
 		command = readline("ksh >> ");
 		init(ms);
 		if (command == NULL)
@@ -94,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				add_history(command);
 				ms->lex = tokenice(command, ms, envp);
-				 printing_tokens(ms->tokenlist);
+				// printing_tokens(ms->tokenlist);
 				if (ms->lex->error == 0)
 				{
 					execution(ms);
