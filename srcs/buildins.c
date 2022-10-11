@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/10 15:26:13 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/11 16:52:28 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ int	b_export(t_ms	*ms)
 	{
 		make_array(ms, ms->env_lst_size);
 		ms->exit_status = 0;
+		return (1);
+	}
+	if (result == 0 && (!ft_strchr(tmp->next->token, '=') || ft_strlen(tmp->next->token) == 1 || tmp->next->token[0] == '='))
+	{
+		ft_printf("ksh: export: `%s': not a valid identifier\n", tmp->next->token);
+		ms->exit_status = 1;
 		return (1);
 	}
 	while (tmp)
