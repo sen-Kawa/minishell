@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/11 18:48:09 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/11 20:06:18 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,24 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	ms->lex->length = ft_strlen(command);
 	while (command[ms->lex->start] == ' ')
 		ms->lex->start++;
+		// || command[ms->lex->start + ms->lex->i] == '|'
 	while (command[ms->lex->start + ms->lex->i] && *command)
 	{
 		if (ms->lex->start + ms->lex->i <= ms->lex->length)
 		{
-			if (command[ms->lex->start + ms->lex->i] == ' ')
+			if (command[ms->lex->start + ms->lex->i] == ' ' || command[ms->lex->start + ms->lex->i] == 124)
 			{
 				if (ms->lex->i > 0)
 				{
 					part = ft_substr(command, ms->lex->start, ms->lex->i);
 					newbe = ft_tokennew(part, "space");
 					ft_tokenadd_back(&ms->tokenlist, newbe);
+				}
+				if (command[ms->lex->start + ms->lex->i] == 124)
+				{
+					newbe = ft_tokennew("|", "space");
+					ft_tokenadd_back(&ms->tokenlist, newbe);
+					ms->lex->i++;
 				}
 				while (command[ms->lex->start + ms->lex->i] == ' ')
 					ms->lex->i++;
