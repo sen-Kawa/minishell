@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/11 17:07:11 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/11 17:18:24 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,20 +193,16 @@ int	b_echo(t_ms	*ms)
 
 	flag = 0;
 	tmp = ms->tokenlist;
-	if (tmp)
-	{
-		if (ft_strncmp(tmp->token, "echo\0", 5) != 0)
-			return (0);
-	}
-	else
-		tmp = NULL;
-	if (tmp->next)
+	if (!tmp || ft_strncmp(tmp->token, "echo\0", 5) != 0)
+		return (0);
+	if (tmp && tmp->next)
 	{
 		tmp = tmp->next;
 		if (!ft_strncmp(tmp->token, "-n\0", 3))
 		{
 			flag++;
-			tmp = tmp->next;
+			while (tmp && !ft_strncmp(tmp->token, "-n\0", 3))
+				tmp = tmp->next;
 		}
 	}
 	else
@@ -214,8 +210,6 @@ int	b_echo(t_ms	*ms)
 		print_to_out(ms, "\n");
 		tmp = tmp->next;
 	}
-	while (tmp && !ft_strncmp(tmp->token, "-n\0", 3))
-		tmp = tmp->next;
 	while(tmp)
 	{
 		print_to_out(ms, tmp->token);
