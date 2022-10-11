@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/11 13:10:25 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/11 13:37:36 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,9 @@ int	two_sections(t_ms	*ms)
 		return (1);
 	if (ms->pipes_struct->child_pid[0] == 0)
 		child1(ms);
-	ms->current_section++;
 	waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
+	ms->current_section++;
+	redirecting(ms);
 	ms->pipes_struct->child_pid[1] = fork();
 	if (ms->pipes_struct->child_pid[1] == -1)
 		return (1);
@@ -190,6 +191,7 @@ int	execution(t_ms	*ms)
 	
 	if (!ms->tokenlist)
 		return (0);
+	redirecting(ms);
 	if (ms->sections == 0)
 	{
 		if (builtins(ms) > 0)
