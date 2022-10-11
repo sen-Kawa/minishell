@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/10 15:05:51 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/11 13:06:19 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,94 @@ void    child_signal(int sig)
     if (sig == SIGQUIT)
             write(1, "Quit (core dumped)\n", 19);
 }
+void	child1(t_ms	*ms)
+{
+	char	**token_array;
+	
+		if (ms->pipes_struct->fd_file[0] >= 0)
+		{
+			close(STDIN_FILENO);
+			dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
+			close(ms->pipes_struct->fd_file[0]);
+			ms->pipes_struct->fd_file[0] = -1;
+		}
+		
+		if (ms->pipes_struct->fd_file[1] >= 0)
+		{
+			close(STDOUT_FILENO);
+			dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
+			close(ms->pipes_struct->fd_file[1]);
+			ms->pipes_struct->fd_file[1] = -1;
+		}
+		else if (ms->pipes_struct->pipe_ends[1] >= 0)
+		{
+			close(STDOUT_FILENO);
+			dup2(ms->pipes_struct->pipe_ends[1], STDOUT_FILENO);
+		}
+		close(ms->pipes_struct->pipe_ends[0]);
+		close(ms->pipes_struct->pipe_ends[1]);
+		token_array = make_array_token(ms);
+		execve(get_cmd_path(token_array[0], make_array_env(ms)), token_array, make_array_env(ms));
+		exit (127);
+}
 
+void	child2(t_ms	*ms)
+{
+	char	**token_array;
+
+	if (ms->pipes_struct->fd_file[2] >= 0)
+	{
+		close(STDIN_FILENO);
+		dup2(ms->pipes_struct->fd_file[2], STDIN_FILENO);
+		// close(ms->pipes_struct->fd_file[2]);
+		ms->pipes_struct->fd_file[2] = -1;
+	}
+	else if (ms->pipes_struct->pipe_ends[0] >= 0)
+	{
+		close(STDIN_FILENO);
+		dup2(ms->pipes_struct->pipe_ends[0], STDIN_FILENO);
+	}
+	if (ms->pipes_struct->fd_file[3] >= 0)
+	{
+		close(STDOUT_FILENO);
+		dup2(ms->pipes_struct->fd_file[3], STDOUT_FILENO);
+		// close(ms->pipes_struct->fd_file[3]);
+		ms->pipes_struct->fd_file[3] = -1;
+	}
+	close(ms->pipes_struct->pipe_ends[0]);
+	close(ms->pipes_struct->pipe_ends[1]);
+	token_array = make_array_token(ms);
+	execve(get_cmd_path(token_array[0], make_array_env(ms)), token_array, make_array_env(ms));
+	exit (127);
+}
+
+int	two_sections(t_ms	*ms)
+{
+	signal(SIGQUIT, child_signal);
+	if (pipe(ms->pipes_struct->pipe_ends) == -1)
+		return (1);
+	ms->pipes_struct->child_pid[0] = fork();
+	if (ms->pipes_struct->child_pid[0] == -1)
+		return (1);
+	if (ms->pipes_struct->child_pid[0] == 0)
+		child1(ms);
+	ms->current_section++;
+	waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
+	ms->pipes_struct->child_pid[1] = fork();
+	if (ms->pipes_struct->child_pid[1] == -1)
+		return (1);
+	if (ms->pipes_struct->child_pid[1] == 0)
+		child2(ms);
+	close(ms->pipes_struct->pipe_ends[0]);
+	close(ms->pipes_struct->pipe_ends[1]);
+	close(ms->pipes_struct->fd_file[2]);
+	ms->pipes_struct->fd_file[2] = -1;
+	close(ms->pipes_struct->fd_file[3]);
+	ms->pipes_struct->fd_file[3] = -1;
+	waitpid(ms->pipes_struct->child_pid[1], &ms->exit_status, WUNTRACED);
+	signal(SIGQUIT, SIG_IGN);
+	return (0);
+}
 
 int	execution(t_ms	*ms)
 {
@@ -132,6 +219,10 @@ int	execution(t_ms	*ms)
 		}
 		waitpid(pid, &ms->exit_status, WUNTRACED);
 		signal(SIGQUIT, SIG_IGN);
+	}
+	if (ms->sections == 1)
+	{
+		two_sections(ms);
 	}
 	return (0);
 }

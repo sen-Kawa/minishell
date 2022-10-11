@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/10 18:38:01 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/11 12:35:08 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	handler_quit(int sig, siginfo_t *info, void *ucontext)
 		rl_on_new_line();
 		ft_putstr_fd("\b\b\n", 1);
 		rl_redisplay();
-		ft_printf("exit %i\n", ms->exit_status);
+		// ft_printf("exit %i\n", ms->exit_status);
 		
 	}
 }
@@ -39,6 +39,10 @@ void	init(t_ms	*ms)
 	ms->pipes_struct->fd_file[1] = -1;
 	ms->pipes_struct->fd_file[2] = -1;
 	ms->pipes_struct->fd_file[3] = -1;
+	ms->pipes_struct->pipe_ends[0] = -1;
+	ms->pipes_struct->pipe_ends[1] = -1;
+	ms->pipes_struct->child_pid[0] = -1;
+	ms->pipes_struct->child_pid[1] = -1;
 }
 
 int	skip_space(char *command)
@@ -102,10 +106,14 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (command)
 			free (command);
-		if (ms->pipes_struct->fd_file[0])
+		if (ms->pipes_struct->fd_file[0] >= 0)
 			close(ms->pipes_struct->fd_file[0]);
-		if (ms->pipes_struct->fd_file[1])
+		if (ms->pipes_struct->fd_file[1]>= 0)
 			close(ms->pipes_struct->fd_file[1]);
+		if (ms->pipes_struct->fd_file[2] >= 0)
+			close(ms->pipes_struct->fd_file[2]);
+		if (ms->pipes_struct->fd_file[3]>= 0)
+			close(ms->pipes_struct->fd_file[3]);
 //		printing_tokens(ms->tokenlist);
 //		freeing_tokens(ms);
 	}
