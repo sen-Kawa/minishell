@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/11 16:52:28 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/11 16:59:08 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,9 @@ int	b_unset(t_ms	*ms)
 	if (!tmp)
 		return (0);
 	envlst = ms->env_list;
-	if (ft_strncmp(tmp->token, "unset", 5) == 0 && tmp->next != NULL)
+	if (ft_strncmp(tmp->token, "unset", 5) != 0)
+			return (0);
+	if (tmp->next != NULL)
 	{
 		tmp = tmp->next;
 		while (envlst && envlst->next && ft_strncmp(tmp->token,
@@ -167,16 +169,10 @@ int	b_unset(t_ms	*ms)
 			prev_envlst->next = envlst->next;
 			free (envlst);
 			ms->env_lst_size--;
-			ms->exit_status = 0;
-			return (1);
 		}
 	}
-	else if (ft_strncmp(tmp->token, "unset", 5) == 0 && tmp->next == NULL)
-	{
-		ms->exit_status = 0;
-		return (1);
-	}
-	return (0);
+	ms->exit_status = 0;
+	return (1);
 }
 
 void	print_to_out(t_ms *ms, char *to_print)
