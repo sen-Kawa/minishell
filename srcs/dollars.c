@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 13:15:55 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 13:41:29 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,37 @@ char	*all_dollar_splitting(int a, char **envp \
 , char **dollar_split, char *new_dollar);
 char	*dollar_core(char **space_split, int i, t_ms *ms);
 
+void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
+{
+	char	*tmp_exit_token;
+
+	if (tmp->token[i] == '$')
+	{
+		if (ft_strncmp(tmp->type, "single quotes", 2) != 0)
+		{
+			tmp->dollar = 1;
+			if (tmp->token[i + 1] == '?')
+			{
+				tmp_exit_token = tmp->token;
+				if (WIFSIGNALED(ms->exit_status))
+					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(128 + WTERMSIG(ms->exit_status)));
+				else if (WEXITSTATUS(ms->exit_status) != 0)
+					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(WEXITSTATUS(ms->exit_status)));
+				else
+					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(ms->exit_status));
+				tmp->token = ft_strjoin(tmp->token, ft_substr(tmp_exit_token, i + 2, ft_strlen(tmp_exit_token)));
+				tmp->type = "int";
+				tmp->dollar = 0;
+			}
+		}
+	}
+}
+
 void	dollarizing(t_ms *ms)
 {
-	t_ms_list	*tmp;
-	char		*tmp_exit_token;
 	int			i;
-	
-	
+	t_ms_list	*tmp;
+
 	tmp =ms->tokenlist;
 	if (tmp)
 	{
@@ -52,58 +76,13 @@ void	dollarizing(t_ms *ms)
 			i = 0;
 			while (tmp->token[i])
 			{
-				if (tmp->token[i] == '$')
-				{
-					if (ft_strncmp(tmp->type, "single quotes", 2) != 0)
-					{
-						tmp->dollar = 1;
-						if (tmp->token[i + 1] == '?')
-						{
-							tmp_exit_token = tmp->token;
-							if (WIFSIGNALED(ms->exit_status))
-								tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(128 + WTERMSIG(ms->exit_status)));
-							else if (WEXITSTATUS(ms->exit_status) != 0)
-								tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(WEXITSTATUS(ms->exit_status)));
-							else
-								tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(ms->exit_status));
-							tmp->token = ft_strjoin(tmp->token, ft_substr(tmp_exit_token, i + 2, ft_strlen(tmp_exit_token)));
-							tmp->type = "int";
-							tmp->dollar = 0;
-						}
-					}
-				}
+				replacing_exit(ms, i, tmp);
 				i++;
 			}
 			tmp = tmp->next;
 		}
 	}
 }
-
-// void	dollar_outside(t_ms_list *tokens, char **envp)
-// {
-// 	t_ms_list	*tmp;
-// 	char		**space_split;
-// 	char		*new_space;
-
-// 	tmp = tokens;
-// 	new_space = NULL;
-// 	if (tmp)
-// 	{
-// 		while (tmp)
-// 		{
-// 			if (ft_strncmp(tmp->type, "double quotes", 15)
-// 				!= 0 && tmp->dollar == 1)
-// 			{
-// 				space_split = ft_split_ssp(tmp->token, ' ');
-// 				new_space = dollar_core(envp, space_split, 0);
-// 			}
-// 			if(new_space != NULL)
-// 				tmp->token = new_space;
-// 			tmp = tmp->next;
-// 		}
-// 	}
-// 	free (tmp);
-// }
 
 void	dollar_double(t_ms_list *tokens, t_ms	*ms)
 {
@@ -121,11 +100,8 @@ void	dollar_double(t_ms_list *tokens, t_ms	*ms)
 			if (tmp->dollar == 1)
 			{
 				space_split = ft_split_ssp(tmp->token, ' ');
-			printf("%s\n", space_split[0]);
-			//	printf("%s\n", envp[0]);
+				printf("%s\n", space_split[0]);
 				new_space = dollar_core(space_split, 0, ms);
-				// space_split = ft_split_ssp(tmp->token, '$');
-				// new_space = dollar_core(envp, space_split, 0);
 			}
 			if (new_space != NULL)
 				tmp->token = new_space;
