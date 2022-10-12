@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 17:58:42 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 19:12:13 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,16 @@ void	delete_token(t_ms *ms);
 
 //redirecting.c
 void	redirecting(t_ms *ms);
+void	redir2(t_ms_list *tmp, t_ms	*ms, int outfd);
+void	redir2_1(t_ms_list *tmp, t_ms *ms, int outfd);
+int		redir2_1_1(t_ms_list *tmp, t_ms *ms, int outfd);
+
+//redirecting2.c
+int	redir1_0(t_ms_list *tmp, t_ms *ms, int infd, int outfd);
+int	redir1_1(t_ms_list *tmp, t_ms *ms, int infd);
+int	redir1_2(t_ms_list *tmp, t_ms *ms, int infd);
+int	redir1_3(t_ms_list *tmp, t_ms *ms, int outfd);
+int	redir1_4(t_ms_list *tmp, t_ms *ms, int outfd);
 
 //dollars.c
 void	dollarizing(t_ms *ms);

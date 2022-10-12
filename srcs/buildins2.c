@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 18:19:06 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 18:28:16 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,19 +109,19 @@ int	b_cd(t_ms	*ms)
 
 void	b_cd_tilde(char *token)
 {
-	char		*del;
+//	char		*del;
 
 	if (!ft_strncmp(token, "~\0", 2))
 	{
-		del = token;
+		//token;
 		token = getenv("HOME");
-		free (del);
+	//	free (del);
 	}
 	else if (!ft_strncmp(token, "~", 1))
 	{
-	del = token;
+	//del = token;
 	token = ft_strjoin(getenv("HOME"), token + 1);
-	free (del);
+	//free (del);
 	}
 
 }
