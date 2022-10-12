@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/11 18:36:41 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 11:42:08 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,18 @@ char	*replacing_vars_middle_dollar(char **envp, int ds, char **dollar_split, cha
 	if (ds == 1)
 	{
 		new_dollar = ft_strjoin(dollar_split[0], dollar_split[1]);
-		free (dollar_split[0]);
-		free (dollar_split[1]);
-		write(1, "here", 4);
+		if (dollar_split[0])
+			free (dollar_split[0]);
+		if (dollar_split[1][0])
+			free (dollar_split[1]);
+		// write(1, "here", 4);
 	}
 	else
 	{
 		new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
-		free (dollar_split[ds]);
-		write(1, "here", 4);
+		if (dollar_split[ds])
+			free (dollar_split[ds]);
+		// write(1, "here", 4);
 	}
 	return (new_dollar);
 }

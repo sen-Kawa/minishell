@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/10 18:32:15 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 12:07:38 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*replacing_vars_middle_dollar(char **envp, int ds \
 , char **dollar_split, char *new_dollar);
 char	*all_dollar_splitting(int a, char **envp \
 , char **dollar_split, char *new_dollar);
-char	*dollar_core(char **envp, char **space_split, int i);
+char	*dollar_core(char **space_split, int i, t_ms *ms);
 
 void	dollarizing(t_ms *ms)
 {
@@ -103,7 +103,7 @@ void	dollarizing(t_ms *ms)
 // 	free (tmp);
 // }
 
-void	dollar_double(t_ms_list *tokens, char **envp)
+void	dollar_double(t_ms_list *tokens, t_ms	*ms)
 {
 	t_ms_list	*tmp;
 	char		**space_split;
@@ -119,9 +119,11 @@ void	dollar_double(t_ms_list *tokens, char **envp)
 			if (tmp->dollar == 1)
 			{
 				space_split = ft_split_ssp(tmp->token, ' ');
-			//	printf("%s\n", space_split[0]);
+			printf("%s\n", space_split[0]);
 			//	printf("%s\n", envp[0]);
-				new_space = dollar_core(envp, space_split, 0);
+				new_space = dollar_core(space_split, 0, ms);
+				// space_split = ft_split_ssp(tmp->token, '$');
+				// new_space = dollar_core(envp, space_split, 0);
 			}
 			if (new_space != NULL)
 				tmp->token = new_space;
@@ -158,7 +160,7 @@ char	*all_dollar_splitting(int a, char **envp, char **dollar_split, char *new_do
 	return (new_dollar);
 }
 
-char	*dollar_core(char **envp, char **space_split, int i)
+char	*dollar_core(char **space_split, int i, t_ms	*ms)
 {
 	char		*new_dollar;
 	char		**dollar_split;
@@ -176,7 +178,7 @@ char	*dollar_core(char **envp, char **space_split, int i)
 				// printf("dollar found in string %i in character %i\n", i, a);
 				dollar_split = ft_split(space_split[i], '$');
 			//	free (space_split[i]);
-				new_dollar = all_dollar_splitting(a, envp, dollar_split, new_dollar);
+				new_dollar = all_dollar_splitting(a, (make_array_env(ms)), dollar_split, new_dollar);
 				if (new_dollar)
 				{
 					space_split[i] = new_dollar;
