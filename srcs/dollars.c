@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 12:07:38 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 13:15:55 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*dollar_core(char **space_split, int i, t_ms *ms);
 void	dollarizing(t_ms *ms)
 {
 	t_ms_list	*tmp;
+	char		*tmp_exit_token;
 	int			i;
 	
 	
@@ -58,13 +59,14 @@ void	dollarizing(t_ms *ms)
 						tmp->dollar = 1;
 						if (tmp->token[i + 1] == '?')
 						{
-//								ft_printf("indol %i\n", ms->exit_status);
+							tmp_exit_token = tmp->token;
 							if (WIFSIGNALED(ms->exit_status))
-								tmp->token = ft_itoa(128 + WTERMSIG(ms->exit_status));
+								tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(128 + WTERMSIG(ms->exit_status)));
 							else if (WEXITSTATUS(ms->exit_status) != 0)
-								tmp->token = ft_itoa(WEXITSTATUS(ms->exit_status));
+								tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(WEXITSTATUS(ms->exit_status)));
 							else
-								tmp->token = ft_itoa(ms->exit_status);
+								tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(ms->exit_status));
+							tmp->token = ft_strjoin(tmp->token, ft_substr(tmp_exit_token, i + 2, ft_strlen(tmp_exit_token)));
 							tmp->type = "int";
 							tmp->dollar = 0;
 						}

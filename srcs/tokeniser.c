@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 12:01:41 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 13:13:59 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	char		*part;
 	t_ms_list	*newbe;
 	t_lex		*lex;
+	// t_ms_list	*tmp;
 
 	(void) envp;
 	lex = malloc(sizeof(t_lex));
