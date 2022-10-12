@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 14:55:09 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 15:00:17 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*dollar_core(char **space_split, int i, t_ms *ms);
 
 void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 {
-	char	*tmp_exit_token;
+	char	*token_ex;
 
 	if (tmp->token[i] == '$')
 	{
@@ -48,18 +48,18 @@ void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 			tmp->dollar = 1;
 			if (tmp->token[i + 1] == '?')
 			{
-				tmp_exit_token = tmp->token;
+				token_ex = tmp->token;
 				if (WIFSIGNALED(ms->exit_status))
-					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), \
+					tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
 					ft_itoa(128 + WTERMSIG(ms->exit_status)));
 				else if (WEXITSTATUS(ms->exit_status) != 0)
-					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), \
+					tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
 					ft_itoa(WEXITSTATUS(ms->exit_status)));
 				else
-					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), \
+					tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
 					ft_itoa(ms->exit_status));
-				tmp->token = ft_strjoin(tmp->token, ft_substr(tmp_exit_token, \
-				i + 2, ft_strlen(tmp_exit_token)));
+				tmp->token = ft_strjoin(tmp->token, ft_substr(token_ex, \
+				i + 2, ft_strlen(token_ex)));
 				tmp->type = "int";
 				tmp->dollar = 0;
 			}
