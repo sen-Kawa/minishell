@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/11 17:18:24 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 14:10:34 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 int	b_exit(t_ms	*ms)
 {
-	int		i;
 	t_ms_list	*tmp;
-	int		result;
+	int			i;
+	int			result;
 
 	tmp = ms->tokenlist;
 	if (!tmp)
@@ -35,7 +35,8 @@ int	b_exit(t_ms	*ms)
 				i++;
 			else
 			{
-				ft_printf("ksh: exit: %s: numeric argument required\n", tmp->next->token);
+				ft_printf("ksh: exit: %s: numeric argument required\n",
+					tmp->next->token);
 				exit(2);
 			}
 		}
@@ -50,7 +51,6 @@ int	b_exit(t_ms	*ms)
 	}
 	return (0);
 }
-
 
 int	b_env(char *token, t_ms *ms)
 {
@@ -78,13 +78,12 @@ int	b_export(t_ms	*ms)
 {
 	int			result;
 	int			flag;
-	t_ms_list	*tmp;
+	char		*copy;
+	char		**splitted;
 	t_env		*new;
-	char *copy;
 	t_env		*tmp_env;
-	char 		**splitted;
-	// t_env		*tmp_env_pre;
-	
+	t_ms_list	*tmp;
+
 	flag = 0;
 	tmp = ms->tokenlist;
 	if (!tmp)
@@ -123,7 +122,6 @@ int	b_export(t_ms	*ms)
 				ms->env_lst_size++;
 				flag++;
 			}
-//			free(copy);
 			free(splitted);
 		}
 		if (tmp->next)
@@ -151,7 +149,7 @@ int	b_unset(t_ms	*ms)
 		return (0);
 	envlst = ms->env_list;
 	if (ft_strncmp(tmp->token, "unset", 5) != 0)
-			return (0);
+		return (0);
 	if (tmp->next != NULL)
 	{
 		tmp = tmp->next;
@@ -161,8 +159,6 @@ int	b_unset(t_ms	*ms)
 			prev_envlst = envlst;
 			envlst = envlst->next;
 		}
-	//	if (!envlst->next)
-	//		return (1);
 		if (ft_strncmp(tmp->token, envlst->content,
 				ft_strlen(tmp->token)) == 0 && !ft_strchr(tmp->token, '='))
 		{
@@ -173,17 +169,6 @@ int	b_unset(t_ms	*ms)
 	}
 	ms->exit_status = 0;
 	return (1);
-}
-
-void	print_to_out(t_ms *ms, char *to_print)
-{
-	int fd;
-	
-	if (ms->pipes_struct->fd_file[1] != -1)
-		fd = ms->pipes_struct->fd_file[1];
-	else 
-		fd = 1;
-	ft_putstr_fd(to_print, fd);
 }
 
 int	b_echo(t_ms	*ms)
@@ -210,7 +195,7 @@ int	b_echo(t_ms	*ms)
 		print_to_out(ms, "\n");
 		tmp = tmp->next;
 	}
-	while(tmp)
+	while (tmp)
 	{
 		print_to_out(ms, tmp->token);
 		if (tmp->next)
