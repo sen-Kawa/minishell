@@ -1,55 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.c                                         :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 14:15:24 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 17:24:50 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 int	b_exit(t_ms	*ms)
 {
 	t_ms_list	*tmp;
-	int			i;
-	int			result;
 
 	tmp = ms->tokenlist;
-	if (!tmp)
+	if (!tmp || ft_strncmp(tmp->token, "exit\0", 4) != 0)
 		return (0);
-	result = ft_strncmp(tmp->token, "exit\0", 4);
-	if (result == 0 && tmp->next == NULL)
+	if (tmp->next == NULL)
 		exit (0);
-	else if (result == 0 && tmp->next != NULL)
+	else if (tmp->next != NULL)
 	{
-		i = 0;
-		while (tmp->next->token[i])
-		{
-			if (ft_isdigit(tmp->next->token[i]))
-				i++;
-			else
-			{
-				ft_printf("ksh: exit: %s: numeric argument required\n",
-					tmp->next->token);
-				exit(2);
-			}
-		}
+		b_exit_arg(tmp->next->token);
 		if (tmp->next->next != NULL)
 		{
 			ft_printf("ksh: exit: too many arguments\n");
 			ms->exit_status = 127;
-			return (1);
 		}
 		else
 			exit (ft_atoi(tmp->next->token));
 	}
-	return (0);
+	return (1);
+}
+
+void	b_exit_arg(char *token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (ft_isdigit(token[i]))
+			i++;
+		else
+		{
+			ft_printf("ksh: exit: %s: numeric argument required\n", token);
+			exit(2);
+		}
+	}
 }
 
 int	b_env(char *token, t_ms *ms)
@@ -81,10 +81,8 @@ int	b_unset(t_ms	*ms)
 	t_env		*prev_envlst;
 
 	tmp = ms->tokenlist;
-	if (!tmp)
-		return (0);
 	envlst = ms->env_list;
-	if (ft_strncmp(tmp->token, "unset", 5) != 0)
+	if (!tmp || ft_strncmp(tmp->token, "unset", 5) != 0)
 		return (0);
 	if (tmp->next != NULL)
 	{
@@ -97,49 +95,15 @@ int	b_unset(t_ms	*ms)
 		}
 		if (ft_strncmp(tmp->token, envlst->content,
 				ft_strlen(tmp->token)) == 0 && !ft_strchr(tmp->token, '='))
-		{
-			prev_envlst->next = envlst->next;
-			free (envlst);
-			ms->env_lst_size--;
-		}
+			modify_env_list(prev_envlst, envlst, ms);
 	}
 	ms->exit_status = 0;
 	return (1);
 }
 
-int	b_echo(t_ms	*ms)
+void	modify_env_list(t_env *prev_envlst, t_env *envlst, t_ms *ms)
 {
-	t_ms_list	*tmp;
-	int			flag;
-
-	flag = 0;
-	tmp = ms->tokenlist;
-	if (!tmp || ft_strncmp(tmp->token, "echo\0", 5) != 0)
-		return (0);
-	if (tmp && tmp->next)
-	{
-		tmp = tmp->next;
-		if (!ft_strncmp(tmp->token, "-n\0", 3))
-		{
-			flag++;
-			while (tmp && !ft_strncmp(tmp->token, "-n\0", 3))
-				tmp = tmp->next;
-		}
-	}
-	else
-	{
-		print_to_out(ms, "\n");
-		tmp = tmp->next;
-	}
-	while (tmp)
-	{
-		print_to_out(ms, tmp->token);
-		if (tmp->next)
-			print_to_out(ms, " ");
-		if (tmp->next == NULL && flag == 0)
-			print_to_out(ms, "\n");
-		tmp = tmp->next;
-	}
-	ms->exit_status = 0;
-	return (1);
+	prev_envlst->next = envlst->next;
+	free (envlst);
+	ms->env_lst_size--;
 }
