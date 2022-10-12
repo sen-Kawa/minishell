@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 14:10:25 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 17:25:47 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <signal.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 # include "../libft/libft.h"
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -27,8 +29,6 @@
 #  include <readline/readline.h>
 #  include <readline/history.h>
 # endif
-
-# include <unistd.h>
 
 typedef struct s_pipes
 {
@@ -113,12 +113,20 @@ void	make_array(t_ms *ms, int nlines);
 char	**make_array_env(t_ms *ms);
 char	**make_array_token(t_ms *ms);
 
-//buildins
+//builtins
 int		b_exit(t_ms	*ms);
+void	b_exit_arg(char *token);
 int		b_env(char *token, t_ms *ms);
-int		b_export(t_ms	*ms);
 int		b_unset(t_ms	*ms);
+void	modify_env_list(t_env *prev_envlst, t_env *envlst, t_ms *ms);
+
+//echo.c
 int		b_echo(t_ms	*ms);
+void	b_echo_print(t_ms_list *tmp, t_ms *ms, int flag);
+
+//export.c
+int		b_export(t_ms	*ms);
+void	b_export_var(char *token, t_ms *ms);
 
 //buildins2.c
 int		b_pwd(t_ms	*ms);

@@ -6,7 +6,7 @@
 #    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/10/12 14:16:27 by kaheinz          ###   ########.fr        #
+#    Updated: 2022/10/12 17:26:59 by kaheinz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 
 SRCS = main.c cmd_paths.c tokeniser.c printing.c dollars.c splitter2.c \
-		directing_vars.c buildins.c buildins2.c execution.c sorting_env.c \
-		llist_env.c quote_handling.c sections.c export.c
+		directing_vars.c builtins.c buildins2.c execution.c sorting_env.c \
+		llist_env.c quote_handling.c sections.c export.c echo.c
 
 OS = $(shell uname)
 ifeq ($(OS), Linux)
