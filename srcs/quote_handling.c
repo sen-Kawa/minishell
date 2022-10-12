@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 12:59:47 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 16:18:17 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ t_lex	*double_quotes(char *command, t_ms *ms)
 		while (command[ms->lex->start + ms->lex->i]
 			&& command[ms->lex->start + ms->lex->i] != '"')
 			ms->lex->i++;
-//		printf("lex i: %i", ms->lex->i);
 		if (command[ms->lex->start + ms->lex->i] != '"')
 		{
 			ms->lex->error = 1;
 			return (ms->lex);
 		}
 		part = ft_substr(command, ms->lex->start + 1, ms->lex->i - 1);
-//		printf("part is: %s", part);
 		newbe = ft_tokennew(part, "double quotes");
 		ft_tokenadd_back(&ms->tokenlist, newbe);
 		ms->lex->i++;
