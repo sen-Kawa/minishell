@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 17:58:42 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 19:16:40 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,9 @@ void	b_export_var(char *token, t_ms *ms);
 //buildins2.c
 int		b_pwd(t_ms	*ms);
 int		b_cd(t_ms	*ms);
+void	b_cd_tilde(char **token);
+void	unsuccess_chdir(t_ms *ms);
+void	update_pwd(t_ms *ms);
 
 //llist_env.c
 t_env	*ft_envvnew(char *content);
