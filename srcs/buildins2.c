@@ -6,13 +6,11 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/09 14:14:15 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 17:58:39 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 /*
 DESCRIPTION
@@ -29,16 +27,12 @@ envp: char double pointer to environment variables
 */
 int	b_pwd(t_ms	*ms)
 {
-	t_ms_list	*tmp;
 	char		*pwd_path;
 	t_env		*tmpenv;
-	int			result;
+	t_ms_list	*tmp;
 
 	tmp = ms->tokenlist;
-	if (!tmp)
-		return (0);
-	result = ft_strncmp(tmp->token, "pwd\0", 4);
-	if (result == 0)
+	if (tmp && (ft_strncmp(tmp->token, "pwd\0", 4) == 0))
 	{
 		tmpenv = ms->env_list;
 		while (tmpenv)
@@ -67,7 +61,6 @@ int	b_cd(t_ms	*ms)
 	int			result;
 	char		cwd[256];
 	char		*del;
-	
 
 	tmp = ms->tokenlist;
 	if (tmp)
@@ -77,50 +70,50 @@ int	b_cd(t_ms	*ms)
 		{
 			if (tmp->next)
 			{
-				if(!ft_strncmp(tmp->next->token, "~\0", 2))
+				if (!ft_strncmp(tmp->next->token, "~\0", 2))
 				{
 					del = tmp->next->token;
 					tmp->next->token = getenv("HOME");
 					free (del);
 				}
-				else if(!ft_strncmp(tmp->next->token, "~", 1))
+				else if (!ft_strncmp(tmp->next->token, "~", 1))
 				{
 					del = tmp->next->token;
 					tmp->next->token = ft_strjoin(getenv("HOME"), tmp->next->token + 1);
 					free (del);
 				}
-					if (chdir(tmp->next->token))
-					{
-						ft_printf("cd : %s: No such file or diectory\n",
+				if (chdir(tmp->next->token))
+				{
+					ft_printf("cd : %s: No such file or diectory\n",
 						tmp->next->token);
-						ms->exit_status = 0;
-						return (1);
-					}
-					else
+					ms->exit_status = 0;
+					return (1);
+				}
+				else
+				{
+					tmpenv = ms->env_list;
+					while (tmpenv)
 					{
-						tmpenv = ms->env_list;
-						while (tmpenv)
+						if (ft_strnstr(tmpenv->content, "PWD=", 4))
 						{
-							if (ft_strnstr(tmpenv->content, "PWD=", 4))
+							if (getcwd(cwd, sizeof(cwd)) == NULL)
 							{
-								if (getcwd(cwd, sizeof(cwd)) == NULL)
-								{
-									perror("getcwd() error");
-									ft_printf("cd : %s: No such file or diectory\n",
+								perror("getcwd() error");
+								ft_printf("cd : %s: No such file or diectory\n",
 									tmp->next->token);
-									ms->exit_status = 0;
-									return (1);
-								}
-								else
-								{
-									tmpenv->content = ft_strjoin("PWD=", &cwd[0]);
-									ms->exit_status = 0;
-									return (1);
-								}
+								ms->exit_status = 0;
+								return (1);
 							}
-							tmpenv = tmpenv->next;
+							else
+							{
+								tmpenv->content = ft_strjoin("PWD=", &cwd[0]);
+								ms->exit_status = 0;
+								return (1);
+							}
 						}
+						tmpenv = tmpenv->next;
 					}
+				}
 			}
 		}
 	}

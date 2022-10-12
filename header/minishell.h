@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 17:25:47 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/12 17:58:42 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ char	*replacing_vars(char **envp, int ds \
 , char **dollar_split, char *new_dollar);
 char	*replacing_vars_middle_dollar(char **envp, int ds \
 , char **dollar_split, char *new_dollar);
+void	delete_token(t_ms *ms);
+
+//redirecting.c
 void	redirecting(t_ms *ms);
 
 //dollars.c

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/07 19:13:19 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 17:46:25 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**make_array_token(t_ms *ms)
 	array = ft_calloc(ft_tokenlistsize(ms->tokenlist) + 1, sizeof(char *));
 	tmp = ms->tokenlist;
 	i = -1;
-	while ( tmp->next && ms->current_section != tmp->section)
+	while (tmp->next && ms->current_section != tmp->section)
 		tmp = tmp->next;
 	while (++i < ft_tokenlistsize(ms->tokenlist))
 	{
