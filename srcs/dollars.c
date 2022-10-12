@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 13:41:29 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 14:55:09 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,16 @@ void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 			{
 				tmp_exit_token = tmp->token;
 				if (WIFSIGNALED(ms->exit_status))
-					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(128 + WTERMSIG(ms->exit_status)));
+					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), \
+					ft_itoa(128 + WTERMSIG(ms->exit_status)));
 				else if (WEXITSTATUS(ms->exit_status) != 0)
-					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(WEXITSTATUS(ms->exit_status)));
+					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), \
+					ft_itoa(WEXITSTATUS(ms->exit_status)));
 				else
-					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), ft_itoa(ms->exit_status));
-				tmp->token = ft_strjoin(tmp->token, ft_substr(tmp_exit_token, i + 2, ft_strlen(tmp_exit_token)));
+					tmp->token = ft_strjoin(ft_substr(tmp_exit_token, 0, i), \
+					ft_itoa(ms->exit_status));
+				tmp->token = ft_strjoin(tmp->token, ft_substr(tmp_exit_token, \
+				i + 2, ft_strlen(tmp_exit_token)));
 				tmp->type = "int";
 				tmp->dollar = 0;
 			}
@@ -68,7 +72,7 @@ void	dollarizing(t_ms *ms)
 	int			i;
 	t_ms_list	*tmp;
 
-	tmp =ms->tokenlist;
+	tmp = ms->tokenlist;
 	if (tmp)
 	{
 		while (tmp)
@@ -112,15 +116,16 @@ void	dollar_double(t_ms_list *tokens, t_ms	*ms)
 		free (space_split);
 }
 
-char	*all_dollar_splitting(int a, char **envp, char **dollar_split, char *new_dollar)
+char	*all_dollar_splitting(int a, char **envp, \
+char **dollar_split, char *new_dollar)
 {
-	int ds;
-	
+	int	ds;
+
 	new_dollar = "";
 	if (a == 0)
 	{
 		ds = 0;
-		while(dollar_split[ds])
+		while (dollar_split[ds])
 		{
 			new_dollar = replacing_vars(envp, ds, dollar_split, new_dollar);
 			ds++;
@@ -129,9 +134,10 @@ char	*all_dollar_splitting(int a, char **envp, char **dollar_split, char *new_do
 	else if (a != 0)
 	{
 		ds = 1;
-		while(dollar_split[ds])
+		while (dollar_split[ds])
 		{
-			new_dollar = replacing_vars_middle_dollar(envp, ds, dollar_split, new_dollar);
+			new_dollar = replacing_vars_middle_dollar(envp, ds, \
+			dollar_split, new_dollar);
 			ds++;
 		}
 	}
@@ -153,24 +159,18 @@ char	*dollar_core(char **space_split, int i, t_ms	*ms)
 		{
 			if (space_split[i][a] == '$')
 			{
-				// printf("dollar found in string %i in character %i\n", i, a);
 				dollar_split = ft_split(space_split[i], '$');
-			//	free (space_split[i]);
-				new_dollar = all_dollar_splitting(a, (make_array_env(ms)), dollar_split, new_dollar);
+				new_dollar = all_dollar_splitting(a, (make_array_env(ms)), \
+				dollar_split, new_dollar);
 				if (new_dollar)
-				{
 					space_split[i] = new_dollar;
-					
-				}
 				free (dollar_split);
 				break ;
 			}
 			a++;
 		}
-		// printf("string %i: %s\n", i, space_split[i]);
 		new_space = ft_strjoin(new_space, space_split[i]);
 		i++;
-//		free (new_dollar);
 	}
 	return (new_space);
 }
