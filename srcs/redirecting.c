@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 18:14:36 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/12 19:09:47 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ tmp: linked list for tokens
 EXTERNAL FUNCTIONS
 -
 */
-int	redir4(t_ms_list *tmp, t_ms *ms, int outfd)
+int	redir2_1_1(t_ms_list *tmp, t_ms *ms, int outfd)
 {
 	if (!tmp->token[2])
 	{
@@ -63,14 +63,14 @@ tmp: linked list for tokens
 EXTERNAL FUNCTIONS
 -
 */
-void	redir3(t_ms_list *tmp, t_ms *ms, int outfd)
+void	redir2_1(t_ms_list *tmp, t_ms *ms, int outfd)
 {
 	if (tmp->token[0] && tmp->token[1])
 	{
 		if (tmp->token[0] == '>' && tmp->token[1] == '>')
 		{
 			tmp->type = "delete";
-			if (redir4(tmp, ms, outfd) == 1)
+			if (redir2_1_1(tmp, ms, outfd) == 1)
 				return ;
 			else if (tmp->token[2] != '\0')
 			{
@@ -123,7 +123,7 @@ void	redir2(t_ms_list *tmp, t_ms	*ms, int outfd)
 			}
 		}
 	}
-	redir3(tmp, ms, outfd);
+	redir2_1(tmp, ms, outfd);
 }
 
 /*
@@ -149,8 +149,8 @@ void	redirecting(t_ms *ms)
 	int			infd;
 	int			outfd;
 
-	infd = -1;
-	outfd = -1;
+	infd = 0;
+	outfd = 1;
 	tmp = ms->tokenlist;
 	if (tmp)
 	{
@@ -158,83 +158,8 @@ void	redirecting(t_ms *ms)
 		{
 			if (tmp->section == ms->current_section)
 			{
-				if (tmp->section % 2 == 1)
-				{
-					infd = 0;
-					outfd = 1;
-				}
-				else
-				{
-					infd = 0;
-					outfd = 1;
-				}
-				if (tmp->token[0] == '<' && !tmp->token[1])
-				{
-					tmp->type = "delete";
-					if (tmp->next)
-					{
-						tmp->next->type = "delete";
-						ms->pipes_struct->fd_file[infd] = \
-						open(tmp->next->token, O_RDONLY);
-						if (ms->pipes_struct->fd_file[infd] == -1)
-						{
-							ft_printf("ksh: %s: No such file or directory\n", \
-							tmp->next->token);
-							ms->exit_status = 1;
-							ms->lex->error = 1;
-							return ;
-						}
-					}
-				}
-				else if ((tmp->token[0] == '<' && tmp->token[1] \
-				&& tmp->token[1] != '<'))
-				{
-					tmp->type = "delete";
-					ms->pipes_struct->fd_file[infd] = open(tmp->token + 1, \
-					O_RDONLY);
-					if (ms->pipes_struct->fd_file[infd] == -1)
-					{
-						ft_printf("ksh: %s: No such file or directory\n", \
-						tmp->token + 1);
-						ms->exit_status = 1;
-						ms->lex->error = 1;
-						return ;
-					}
-				}
-				else if (tmp->token[0] == '>' && !tmp->token[1])
-				{
-					tmp->type = "delete";
-					if (tmp->next)
-					{
-						tmp->next->type = "delete";
-						if ((access (tmp->next->token, F_OK) == 0) \
-						&& (access (tmp->next->token, W_OK) != 0))
-						{
-							ft_printf("ksh: %s: Permission denied\n", \
-							tmp->next->token);
-							ms->exit_status = 1;
-							ms->lex->error = 1;
-							return ;
-						}
-						ms->pipes_struct->fd_file[outfd] = \
-						open(tmp->next->token, O_WRONLY | O_CREAT, 0777);
-					}
-				}
-				else if ((tmp->token[0] == '>' && tmp->token[1] \
-				&& tmp->token[1] != '>'))
-				{
-					tmp->type = "delete";
-					ms->pipes_struct->fd_file[outfd] = open(tmp->token + 1, \
-					O_CREAT | O_WRONLY, 0777);
-					if (ms->pipes_struct->fd_file[outfd] == -1)
-					{
-						ft_printf("ksh: %s: No such file or directory1\n", \
-						tmp->token + 1);
-						ms->exit_status = 1;
-						ms->lex->error = 1;
-						return ;
-					}
-				}
+				if (redir1_0(tmp, ms, infd, outfd) == 1)
+					return ;
 				redir2(tmp, ms, outfd);
 			}
 			tmp = tmp->next;
