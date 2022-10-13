@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 16:41:36 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/13 18:32:03 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ typedef struct s_ms
 	t_pipes		*pipes_struct;
 	t_ms_list	*tokenlist;
 }	t_ms;
+
+//delete_section.c
+void	delete_section(t_ms *ms);
 
 //cmd_paths.c
 char	*get_cmd_path(char *cmd, char **envp);
@@ -135,7 +138,7 @@ void	modify_env_list(t_env *prev_envlst, t_env *envlst, t_ms *ms);
 
 //echo.c
 int		b_echo(t_ms	*ms);
-void	b_echo_print(char **token_array, t_ms *ms, int flag);
+void	b_echo_print(t_ms_list *tmp, t_ms *ms, int flag);
 
 //export.c
 int		b_export(t_ms	*ms);

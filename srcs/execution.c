@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 16:30:45 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/13 19:12:16 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	builtins(t_ms *ms)
 	int	sum;
 	
 	len = 0;
+	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms) + b_cd(ms) + b_exit(ms));
 	tmp = ms->tokenlist;
-	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms) + b_cd(ms)) + b_exit(ms);
 	while(tmp)
 	{
 		len = ft_strlen(tmp->token);
@@ -35,8 +35,17 @@ int	builtins(t_ms *ms)
 		}
 		tmp = tmp->next;
 	}
+	if (sum > 0)
+	{
+		ms->current_section++;
+		delete_section(ms);
+	}
+
+	printf("sum in builtins %i\n", sum);
+	printf("out of builtins\n");
 	return (sum);
 }
+//	write(1, "here", 4);
 
 void    child_signal(int sig)
 {
@@ -166,8 +175,10 @@ int	two_sections(t_ms	*ms)
 
 void	childm(t_ms	*ms, int	in_pipe_fd, int out_pipe_fd)
 {
+	printf("in child m\n");
 	char	**token_array;
 
+		printing_tokens(ms->tokenlist);
 	if (ms->pipes_struct->fd_file[0] >= 0)
 	{
 		close(STDIN_FILENO);
@@ -199,7 +210,11 @@ void	childm(t_ms	*ms, int	in_pipe_fd, int out_pipe_fd)
 	token_array = make_array_token(ms);
 	if (!get_cmd_path(token_array[0], make_array_env(ms)))
 		exit (127);
+	printf("token array %s\n", token_array[0]);
+	printf("token array %s\n", token_array[1]);
 	execve(get_cmd_path(token_array[0], make_array_env(ms)), token_array, make_array_env(ms));
+	perror("exec");
+	printf("after ex\n");
 	exit (127);
 }
 
@@ -214,8 +229,10 @@ int	multi_sections(t_ms	*ms)
 		return (1);
 	if (pipe(ms->pipes_struct->pipe2_ends) == -1)
 		return (1);
-	while (ms->current_section <= ms->sections && WEXITSTATUS(ms->exit_status) == 0)
+//	while (ms->current_section <= ms->sections && WEXITSTATUS(ms->exit_status) == 0)
+	while (ms->current_section <= ms->sections)
 	{
+	//		write(1, "call", 4);
 		if (ms->current_section % 2 == 0)
 		{
 			in_pipe_fd = ms->pipes_struct->pipe2_ends[0];
@@ -228,13 +245,17 @@ int	multi_sections(t_ms	*ms)
 		}
 		if (builtins(ms) == 0)
 		{
+				
+	printf("in builtins 0 for grep\n");
 			ms->pipes_struct->child_pid[0] = fork();
 			if (ms->pipes_struct->child_pid[0] == -1)
 				return (1);
 			if (ms->pipes_struct->child_pid[0] == 0)
 				childm(ms, in_pipe_fd, out_pipe_fd);
 			waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
+	printf("out of child\n");
 			ms->current_section++;
+
 		}
 		close(ms->pipes_struct->fd_file[0]);
 		ms->pipes_struct->fd_file[0] = -1;

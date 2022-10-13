@@ -6,7 +6,7 @@
 #    By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/10/13 14:42:33 by kaheinz          ###   ########.fr        #
+#    Updated: 2022/10/13 17:45:28 by kaheinz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ RED = \033[0;31m
 SRCS = main.c cmd_paths.c tokeniser.c printing.c dollars.c splitter2.c \
 		redirecting_vars.c builtins.c buildins2.c execution.c sorting_env.c \
 		llist_env.c quote_handling.c sections.c export.c echo.c redirecting.c\
-		redirecting2.c heredoc.c
+		redirecting2.c heredoc.c delete_section.c
 
 OS = $(shell uname)
 ifeq ($(OS), Linux)
