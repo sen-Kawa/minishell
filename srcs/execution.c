@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/11 19:07:40 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/13 14:24:19 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,9 +300,9 @@ int	execution(t_ms	*ms)
 	char	**env_arr;
 	pid_t	pid;
 	
+	redirecting(ms);
 	if (!ms->tokenlist)
 		return (0);
-	redirecting(ms);
 	if (ms->sections == 0)
 	{
 		if (builtins(ms) > 0)
