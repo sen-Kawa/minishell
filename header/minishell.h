@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 13:03:24 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/13 13:07:44 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_ms
 //cmd_paths.c
 char	*get_cmd_path(char *cmd, char **envp);
 
-//directing_vars.c
+//redirecting_vars.c
 char	*replacing_vars(char **envp, int ds \
 , char **dollar_split, char *new_dollar);
 char	*replacing_vars_middle_dollar(char **envp, int ds \

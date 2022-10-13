@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
+#    By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 08:30:23 by kaheinz           #+#    #+#              #
-#    Updated: 2022/10/12 19:10:12 by ksura            ###   ########.fr        #
+#    Updated: 2022/10/13 13:08:09 by ksura@student.42 ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 
 SRCS = main.c cmd_paths.c tokeniser.c printing.c dollars.c splitter2.c \
-		directing_vars.c builtins.c buildins2.c execution.c sorting_env.c \
+		redirecting_vars.c builtins.c buildins2.c execution.c sorting_env.c \
 		llist_env.c quote_handling.c sections.c export.c echo.c redirecting.c\
 		redirecting2.c
 
