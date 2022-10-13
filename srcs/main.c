@@ -6,10 +6,9 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/11 19:44:30 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/13 13:02:20 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../header/minishell.h"
 
@@ -48,13 +47,12 @@ int	skip_space(char *command)
 	return (0);
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
-	struct	sigaction sa;
-	char *command;
-	pid_t	pid;
-	t_ms	*ms;
+	struct sigaction	sa;
+	char				*command;
+	pid_t				pid;
+	t_ms				*ms;
 
 	(void) argc;
 	(void) argv;
@@ -83,11 +81,7 @@ int	main(int argc, char **argv, char **envp)
 				ms->lex = tokenice(command, ms, envp);
 				printing_tokens(ms->tokenlist);
 				if (ms->lex->error == 0)
-				{
 					execution(ms);
-					//printing_tokens(ms->tokenlist);
-				}
-					
 				freeing_tokens(ms);
 			}
 		}
@@ -95,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 			free (command);
 		if (ms->pipes_struct->fd_file[0] >= 0)
 			close(ms->pipes_struct->fd_file[0]);
-		if (ms->pipes_struct->fd_file[1]>= 0)
+		if (ms->pipes_struct->fd_file[1] >= 0)
 			close(ms->pipes_struct->fd_file[1]);
 		// if (ms->pipes_struct->fd_file[2] >= 0)
 		// 	close(ms->pipes_struct->fd_file[2]);
@@ -107,7 +101,7 @@ int	main(int argc, char **argv, char **envp)
 	freeing_all(ms);
 	free(command);
 	free (ms);
-	return 0;
+	return (0);
 }
 
 void	creating_env_list(char **envp, t_ms *ms)
@@ -115,7 +109,7 @@ void	creating_env_list(char **envp, t_ms *ms)
 	t_env	*new;
 
 	ms->env_lst_size = 0;
-	while(envp[ms->env_lst_size])
+	while (envp[ms->env_lst_size])
 	{
 		new = ft_envvnew(envp[ms->env_lst_size]);
 		ft_envvadd_back(&ms->env_list, new);
