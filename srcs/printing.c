@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:31:23 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 16:17:24 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/13 16:13:30 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void	print_to_out(t_ms *ms, char *to_print)
 
 	if (ms->pipes_struct->fd_file[1] != -1)
 		fd = ms->pipes_struct->fd_file[1];
+	else if (ms->sections > 0 && (ms->current_section % 2) == 0)
+		fd = ms->pipes_struct->pipe_ends[1];
+	else if (ms->sections > 0 && (ms->current_section % 2) == 1)
+		fd = ms->pipes_struct->pipe2_ends[1];
 	else
 		fd = 1;
 	ft_putstr_fd(to_print, fd);
