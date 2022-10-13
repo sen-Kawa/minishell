@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 19:12:16 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/13 20:28:40 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void	childm(t_ms	*ms, int	in_pipe_fd, int out_pipe_fd)
 		printing_tokens(ms->tokenlist);
 	if (ms->pipes_struct->fd_file[0] >= 0)
 	{
+			printf("here\n");
 		close(STDIN_FILENO);
 		dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
 		// close(ms->pipes_struct->fd_file[2]);
@@ -188,11 +189,13 @@ void	childm(t_ms	*ms, int	in_pipe_fd, int out_pipe_fd)
 	}
 	else if (ms->pipes_struct->pipe_ends[0] >= 0 && ms->current_section != 0)
 	{
+			printf("there\n");
 		close(STDIN_FILENO);
 		dup2(in_pipe_fd, STDIN_FILENO);
 	}
 	if (ms->pipes_struct->fd_file[1] >= 0)
 	{
+			printf("yoo\n");
 		close(STDOUT_FILENO);
 		dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
 		// close(ms->pipes_struct->fd_file[3]);
@@ -200,6 +203,7 @@ void	childm(t_ms	*ms, int	in_pipe_fd, int out_pipe_fd)
 	}
 	else if ((ms->pipes_struct->pipe_ends[1] >= 0 && ms->current_section != ms->sections))
 	{
+			printf("yo1\n");
 			close(STDOUT_FILENO);
 			dup2(out_pipe_fd, STDOUT_FILENO);
 	}
@@ -232,6 +236,7 @@ int	multi_sections(t_ms	*ms)
 //	while (ms->current_section <= ms->sections && WEXITSTATUS(ms->exit_status) == 0)
 	while (ms->current_section <= ms->sections)
 	{
+			printf("current section %i\n", ms->current_section);
 	//		write(1, "call", 4);
 		if (ms->current_section % 2 == 0)
 		{
@@ -252,9 +257,8 @@ int	multi_sections(t_ms	*ms)
 				return (1);
 			if (ms->pipes_struct->child_pid[0] == 0)
 				childm(ms, in_pipe_fd, out_pipe_fd);
-			waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
 	printf("out of child\n");
-			ms->current_section++;
+	//		ms->current_section++;
 
 		}
 		close(ms->pipes_struct->fd_file[0]);
@@ -262,6 +266,7 @@ int	multi_sections(t_ms	*ms)
 		close(ms->pipes_struct->fd_file[1]);
 		ms->pipes_struct->fd_file[1] = -1;
 		close(ms->pipes_struct->fd_file[2]);
+		waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
 		redirecting(ms);
 	}
 	close(ms->pipes_struct->pipe_ends[0]);
@@ -280,14 +285,14 @@ int	execution(t_ms	*ms)
 	redirecting(ms);
 	if (!ms->tokenlist)
 		return (0);
+	signal(SIGQUIT, child_signal);
+	signal(SIGINT, child_signal);
 	// if (ms->sections == 0)
 	// {
 	// // 	if (builtins(ms) > 0)
 	// // 		return (0);
 	// 	env_arr = make_array_env(ms);
 	// 	cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
-	// 	signal(SIGQUIT, child_signal);
-	// 	signal(SIGINT, child_signal);
 	// 	pid = fork();
 	// 	if (pid == -1)
 	// 		return (1);
@@ -311,7 +316,6 @@ int	execution(t_ms	*ms)
 	// 		exit (127);
 	// 	}
 	// 	waitpid(pid, &ms->exit_status, WUNTRACED);
-	// 	signal(SIGQUIT, SIG_IGN);
 	// }
 	// if (ms->sections == 1)
 	// {
@@ -321,6 +325,7 @@ int	execution(t_ms	*ms)
 	{
 		multi_sections(ms);
 	}
+	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }
 
