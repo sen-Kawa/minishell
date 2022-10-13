@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 14:30:42 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/13 16:30:45 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ int	multi_sections(t_ms	*ms)
 	int	in_pipe_fd;
 	int	out_pipe_fd;
 	
+	
 	signal(SIGQUIT, child_signal);
 	if (pipe(ms->pipes_struct->pipe_ends) == -1)
 		return (1);
@@ -225,18 +226,21 @@ int	multi_sections(t_ms	*ms)
 			in_pipe_fd = ms->pipes_struct->pipe_ends[0];
 			out_pipe_fd = ms->pipes_struct->pipe2_ends[1];
 		}
-		ms->pipes_struct->child_pid[0] = fork();
-		if (ms->pipes_struct->child_pid[0] == -1)
-			return (1);
-		if (ms->pipes_struct->child_pid[0] == 0)
-			childm(ms, in_pipe_fd, out_pipe_fd);
+		if (builtins(ms) == 0)
+		{
+			ms->pipes_struct->child_pid[0] = fork();
+			if (ms->pipes_struct->child_pid[0] == -1)
+				return (1);
+			if (ms->pipes_struct->child_pid[0] == 0)
+				childm(ms, in_pipe_fd, out_pipe_fd);
+			waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
+			ms->current_section++;
+		}
 		close(ms->pipes_struct->fd_file[0]);
 		ms->pipes_struct->fd_file[0] = -1;
 		close(ms->pipes_struct->fd_file[1]);
 		ms->pipes_struct->fd_file[1] = -1;
 		close(ms->pipes_struct->fd_file[2]);
-		waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
-		ms->current_section++;
 		redirecting(ms);
 	}
 	close(ms->pipes_struct->pipe_ends[0]);
@@ -248,51 +252,51 @@ int	multi_sections(t_ms	*ms)
 
 int	execution(t_ms	*ms)
 {
-	char	*cmd_path;
-	char	**env_arr;
-	pid_t	pid;
+	// char	*cmd_path;
+	// char	**env_arr;
+	// pid_t	pid;
 	
 	redirecting(ms);
 	if (!ms->tokenlist)
 		return (0);
-	if (ms->sections == 0)
-	{
-		if (builtins(ms) > 0)
-			return (0);
-		env_arr = make_array_env(ms);
-		cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
-		signal(SIGQUIT, child_signal);
-		signal(SIGINT, child_signal);
-		pid = fork();
-		if (pid == -1)
-			return (1);
-		if (pid == 0)
-		{
-			if (ms->pipes_struct->fd_file[0] >= 0)
-			{
-				close(STDIN_FILENO);
-				dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
-				close(ms->pipes_struct->fd_file[0]);
-				ms->pipes_struct->fd_file[0] = 0;
-			}
-			if (ms->pipes_struct->fd_file[1] >= 0)
-			{
-				close(STDOUT_FILENO);
-				dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
-				close(ms->pipes_struct->fd_file[1]);
-				ms->pipes_struct->fd_file[1] = 0;
-			}
-			execve(cmd_path, make_array_token(ms), env_arr);
-			exit (127);
-		}
-		waitpid(pid, &ms->exit_status, WUNTRACED);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	if (ms->sections == 1)
-	{
-		two_sections(ms);
-	}
-	if (ms->sections > 1)
+	// if (ms->sections == 0)
+	// {
+	// // 	if (builtins(ms) > 0)
+	// // 		return (0);
+	// 	env_arr = make_array_env(ms);
+	// 	cmd_path = get_cmd_path(ms->tokenlist->token, env_arr);
+	// 	signal(SIGQUIT, child_signal);
+	// 	signal(SIGINT, child_signal);
+	// 	pid = fork();
+	// 	if (pid == -1)
+	// 		return (1);
+	// 	if (pid == 0)
+	// 	{
+	// 		if (ms->pipes_struct->fd_file[0] >= 0)
+	// 		{
+	// 			close(STDIN_FILENO);
+	// 			dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
+	// 			close(ms->pipes_struct->fd_file[0]);
+	// 			ms->pipes_struct->fd_file[0] = 0;
+	// 		}
+	// 		if (ms->pipes_struct->fd_file[1] >= 0)
+	// 		{
+	// 			close(STDOUT_FILENO);
+	// 			dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
+	// 			close(ms->pipes_struct->fd_file[1]);
+	// 			ms->pipes_struct->fd_file[1] = 0;
+	// 		}
+	// 		execve(cmd_path, make_array_token(ms), env_arr);
+	// 		exit (127);
+	// 	}
+	// 	waitpid(pid, &ms->exit_status, WUNTRACED);
+	// 	signal(SIGQUIT, SIG_IGN);
+	// }
+	// if (ms->sections == 1)
+	// {
+	// 	two_sections(ms);
+	// }
+	if (ms->sections >= 0)
 	{
 		multi_sections(ms);
 	}

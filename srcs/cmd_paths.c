@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:35:02 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/05 16:40:01 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:13:36 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*get_paths(int i, char **envp)
 		envp_path = ft_strnstr(envp[i], "PATH=", 5);
 		if (envp_path)
 		{
-			envp_path = ft_substr(envp[i], 5, 100);
+			envp_path = ft_substr(envp[i], 5, ft_strlen(envp_path));
 			if (!envp_path)
 				return (0);
 			break ;
