@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/14 20:03:48 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:30:09 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	b_env(t_ms *ms)
 	{
 		print_to_out(ms, "env: No such file or directory");
 		print_to_out(ms, "\n");
+		ms->exit_status = 127;
 	}
 	else if (!tmp_tok->next || (tmp_tok->next && tmp_tok->next->section != ms->current_section))
 	{
@@ -74,8 +75,8 @@ int	b_env(t_ms *ms)
 			print_to_out(ms, "\n");
 			tmp = tmp->next;
 		}
+		ms->exit_status = 0;
 	}
-	ms->exit_status = 0;
 	return (1);
 }
 
@@ -90,7 +91,7 @@ int	b_unset(t_ms	*ms)
 	if (!tmp || ft_strncmp(tmp->token, "unset", 5) != 0)
 		return (0);
 	printf("unset\n");
-	if (tmp->next != NULL)
+	if (tmp->next != NULL && tmp->next->section == ms->current_section)
 	{
 		tmp = tmp->next;
 		while (envlst && envlst->next && ft_strncmp(tmp->token,
