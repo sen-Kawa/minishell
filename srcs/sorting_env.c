@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/12 17:46:25 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/14 17:31:43 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ void	make_array(t_ms *ms, int nlines)
 	i = -1;
 	while (++i < nlines)
 	{
-		ft_printf("declare -x %s\n", env_array[i]);
+		print_to_out(ms, "declare -x ");
+		print_to_out(ms, env_array[i]);
+		print_to_out(ms, "\n");
 		free (env_array[i]);
 	}
 	free(env_array);

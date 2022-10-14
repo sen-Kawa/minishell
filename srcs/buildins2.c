@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 16:05:51 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/14 17:15:39 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int	b_pwd(t_ms	*ms)
 				pwd_path = ft_substr(tmpenv->content, 5, 100);
 				if (!pwd_path)
 					return (0);
-				ft_printf("%s\n", pwd_path);
+		//		ft_printf("%s\n", pwd_path);
+				print_to_out(ms, pwd_path);
+				print_to_out(ms, "\n");
 				free (pwd_path);
 				ms->exit_status = 0;
 				return (1);

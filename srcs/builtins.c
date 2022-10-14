@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 17:24:50 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/14 19:21:00 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	b_unset(t_ms	*ms)
 	envlst = ms->env_list;
 	if (!tmp || ft_strncmp(tmp->token, "unset", 5) != 0)
 		return (0);
+	printf("unset\n");
 	if (tmp->next != NULL)
 	{
 		tmp = tmp->next;
