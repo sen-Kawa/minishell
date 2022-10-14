@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 18:32:03 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:04:23 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	**make_array_token(t_ms *ms);
 //builtins
 int		b_exit(t_ms	*ms);
 void	b_exit_arg(char *token);
-int		b_env(char *token, t_ms *ms);
+int		b_env(t_ms *ms);
 int		b_unset(t_ms	*ms);
 void	modify_env_list(t_env *prev_envlst, t_env *envlst, t_ms *ms);
 

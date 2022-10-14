@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/14 19:21:00 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:03:48 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,31 @@ void	b_exit_arg(char *token)
 	}
 }
 
-int	b_env(char *token, t_ms *ms)
+int	b_env(t_ms *ms)
 {
-	int		result;
-	t_env	*tmp;
+	t_ms_list	*tmp_tok;
+	t_env		*tmp;
 
+	tmp_tok = ms->tokenlist;
 	tmp = ms->env_list;
-	if (!token)
+	if (!tmp_tok || ft_strncmp(tmp_tok->token, "env\0", 4) != 0)
 		return (0);
-	result = ft_strncmp(token, "env\0", 4);
-	if (result == 0)
+	if (tmp_tok->next && tmp_tok->next->section == ms->current_section)
+	{
+		print_to_out(ms, "env: No such file or directory");
+		print_to_out(ms, "\n");
+	}
+	else if (!tmp_tok->next || (tmp_tok->next && tmp_tok->next->section != ms->current_section))
 	{
 		while (tmp)
 		{
-			ft_printf("%s\n", tmp->content);
+			print_to_out(ms, tmp->content);
+			print_to_out(ms, "\n");
 			tmp = tmp->next;
 		}
-		ms->exit_status = 0;
-		return (1);
 	}
-	return (0);
+	ms->exit_status = 0;
+	return (1);
 }
 
 int	b_unset(t_ms	*ms)

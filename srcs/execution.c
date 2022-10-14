@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/14 19:26:47 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:03:30 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,9 @@
 
 int	builtins(t_ms *ms)
 {
-	t_ms_list	*tmp;
-	size_t	len;
 	int	sum;
 	
-	len = 0;
-	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms) + b_cd(ms) + b_exit(ms));
-	tmp = ms->tokenlist;
-	while(tmp && tmp->section == ms->current_section)
-	{
-		len = ft_strlen(tmp->token);
-		if (b_env(tmp->token, ms) && len < 4)
-		{
-			tmp = tmp->next;
-			sum++;
-			break;
-		}
-		tmp = tmp->next;
-	}
+	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms) + b_cd(ms) + b_exit(ms) + b_env(ms));
 	if (sum > 0)
 	{
 		printf("executed in builtins\n");
