@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/14 19:05:56 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/15 09:41:47 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ int	b_export(t_ms	*ms)
 	tmp = ms->tokenlist;
 	if (!tmp || (ft_strncmp(tmp->token, "export\0", 7) != 0))
 		return (0);
-	if (tmp->next == NULL || (tmp->next && tmp->next->section > ms->current_section))
+	if (tmp->next == NULL
+		|| (tmp->next && tmp->next->section > ms->current_section))
 		make_array(ms, ms->env_lst_size);
-	else if (tmp->next->section == ms->current_section && (!ft_strchr(tmp->next->token, '=')
+	else if (tmp->next->section == ms->current_section
+		&& (!ft_strchr(tmp->next->token, '=')
 			|| ft_strlen(tmp->next->token) == 1 || tmp->next->token[0] == '='))
 	{
 		ft_printf("ksh: export: `%s': not a valid identifier\n",

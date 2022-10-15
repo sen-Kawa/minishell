@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 22:46:35 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/15 09:44:09 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	delete_section(t_ms *ms)
 
 	while (ms->tokenlist && ms->tokenlist->section < ms->current_section + 1)
 	{
-			tmp = ms->tokenlist;
-			ms->tokenlist = ms->tokenlist->next;
-			free(tmp);
+		tmp = ms->tokenlist;
+		ms->tokenlist = ms->tokenlist->next;
+		free(tmp);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/14 17:15:39 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/15 09:50:21 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,25 @@ int	b_pwd(t_ms	*ms)
 	t_ms_list	*tmp;
 
 	tmp = ms->tokenlist;
-	if (tmp && (ft_strncmp(tmp->token, "pwd\0", 4) == 0))
+	if (!tmp || (ft_strncmp(tmp->token, "pwd\0", 4) != 0))
+		return (0);
+	tmpenv = ms->env_list;
+	while (tmpenv)
 	{
-		tmpenv = ms->env_list;
-		while (tmpenv)
+		pwd_path = ft_strnstr(tmpenv->content, "PWD=", 4);
+		if (pwd_path)
 		{
-			pwd_path = ft_strnstr(tmpenv->content, "PWD=", 4);
-			if (pwd_path)
-			{
-				pwd_path = ft_substr(tmpenv->content, 5, 100);
-				if (!pwd_path)
-					return (0);
-		//		ft_printf("%s\n", pwd_path);
-				print_to_out(ms, pwd_path);
-				print_to_out(ms, "\n");
-				free (pwd_path);
-				ms->exit_status = 0;
-				return (1);
-			}
-			tmpenv = tmpenv->next;
+			pwd_path = ft_substr(tmpenv->content, 5, 200);
+			if (!pwd_path)
+				return (0);
+			print_to_out(ms, pwd_path);
+			print_to_out(ms, "\n");
+			free (pwd_path);
 		}
+		tmpenv = tmpenv->next;
 	}
-	return (0);
+	ms->exit_status = 0;
+	return (1);
 }
 
 int	b_cd(t_ms	*ms)

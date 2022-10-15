@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/14 20:30:09 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/15 09:43:36 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	b_env(t_ms *ms)
 		print_to_out(ms, "\n");
 		ms->exit_status = 127;
 	}
-	else if (!tmp_tok->next || (tmp_tok->next && tmp_tok->next->section != ms->current_section))
+	else if (!tmp_tok->next
+		|| (tmp_tok->next && tmp_tok->next->section != ms->current_section))
 	{
 		while (tmp)
 		{

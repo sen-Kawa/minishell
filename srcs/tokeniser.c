@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 13:13:59 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/15 09:57:42 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,12 @@ EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 */
 
-t_lex	*tokenice(char *command, t_ms *ms, char **envp)
+t_lex	*tokenice(char *command, t_ms *ms)
 {
 	char		*part;
 	t_ms_list	*newbe;
 	t_lex		*lex;
-	// t_ms_list	*tmp;
 
-	(void) envp;
 	lex = malloc(sizeof(t_lex));
 	ms->lex = lex;
 	ms->lex->i = 0;
@@ -82,12 +80,12 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 	ms->lex->length = ft_strlen(command);
 	while (command[ms->lex->start] == ' ')
 		ms->lex->start++;
-		// || command[ms->lex->start + ms->lex->i] == '|'
 	while (command[ms->lex->start + ms->lex->i] && *command)
 	{
 		if (ms->lex->start + ms->lex->i <= ms->lex->length)
 		{
-			if (command[ms->lex->start + ms->lex->i] == ' ' || command[ms->lex->start + ms->lex->i] == 124)
+			if (command[ms->lex->start + ms->lex->i] == ' '
+				|| command[ms->lex->start + ms->lex->i] == 124)
 			{
 				if (ms->lex->i > 0)
 				{
@@ -125,12 +123,14 @@ t_lex	*tokenice(char *command, t_ms *ms, char **envp)
 		newbe = ft_tokennew(part, "space_before");
 		ft_tokenadd_back(&ms->tokenlist, newbe);
 	}
-	
 	sections(ms);
-	//redirecting(ms);
 	dollarizing(ms);
 	dollar_double(ms->tokenlist, ms);
-	// free (command);
-	// printing_tokens(ms->tokenlist);
 	return (ms->lex);
 }
+/*
+
+void	init_lex()
+{
+
+}*/
