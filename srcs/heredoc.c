@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/17 22:21:09 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:34:36 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	here_command(char *hereline, char *herecom)
 	else
 	{
 		printf("else\n");
-		*herecom = ft_strjoin(hereline, "\n");
+		herecom = ft_strjoin(hereline, "\n");
 		printf("herecom in the else: %s\n", herecom);
 
 	}
