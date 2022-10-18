@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 14:38:11 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/18 16:48:08 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	childm(t_ms	*ms, int in_pipe_fd, int out_pipe_fd)
 	{
 		close(STDIN_FILENO);
 		dup2(ms->pipes_struct->fd_file[0], STDIN_FILENO);
-		// close(ms->pipes_struct->fd_file[2]);
 		ms->pipes_struct->fd_file[0] = -1;
 	}
 	else if (ms->pipes_struct->pipe_ends[0] >= 0 && ms->current_section != 0)
@@ -56,7 +55,6 @@ void	childm(t_ms	*ms, int in_pipe_fd, int out_pipe_fd)
 	{
 		close(STDOUT_FILENO);
 		dup2(ms->pipes_struct->fd_file[1], STDOUT_FILENO);
-		// close(ms->pipes_struct->fd_file[3]);
 		ms->pipes_struct->fd_file[1] = -1;
 	}
 	else if ((ms->pipes_struct->pipe_ends[1] >= 0
@@ -82,7 +80,6 @@ int	multi_sections(t_ms	*ms)
 	int	in_pipe_fd;
 	int	out_pipe_fd;
 
-//	while (ms->current_section <= ms->sections && WEXITSTATUS(ms->exit_status) == 0)
 	while (ms->current_section <= ms->sections)
 	{
 		if (ms->current_section % 2 == 0)
@@ -116,18 +113,6 @@ int	multi_sections(t_ms	*ms)
 		redirecting(ms);
 		ms->current_section++;
 		waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
-		// if (ms->current_section % 2 == 0)
-		// {
-		// 	close(ms->pipes_struct->pipe_ends[1]);
-		// 	// if (ms->pipes_struct->pipe2_ends[0] != -1)
-		// 	// 	close(ms->pipes_struct->pipe2_ends[0]);
-		// }
-		// else
-		// {
-		// 	close(ms->pipes_struct->pipe2_ends[1]);
-		// 	// if (ms->pipes_struct->pipe_ends[0] != -1)
-		// 	// 	close(ms->pipes_struct->pipe_ends[0]);
-		// }
 		if (out_pipe_fd)
 			close (out_pipe_fd);
 		if (in_pipe_fd)
@@ -144,26 +129,7 @@ int	execution(t_ms	*ms)
 	signal(SIGQUIT, child_signal);
 	signal(SIGINT, child_signal);
 	if (ms->sections >= 0)
-	{
 		multi_sections(ms);
-	}
 	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }
-
-// int	exit_status(t_ms	*ms)
-// {
-// 	t_ms_list	*tmp;
-
-// 	tmp = ms->tokenlist;
-// 	while (tmp)
-// 	{
-// 		if (!ft_strncmp(tmp->token, "$?\0", 3))
-// 		{
-// 			ms->exit_status = EXIT_SUCCESS;
-// 			return (1);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	return (0);
-// }

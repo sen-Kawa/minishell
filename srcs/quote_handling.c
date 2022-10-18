@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 14:41:25 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:50:00 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,9 @@ t_lex	*beforequotes(char *command, t_lex *lex, t_ms_list *tokens)
 	{
 		if (lex->i > 0)
 		{
-//			if (!pipe_check(command, lex, tokens))
-//			{
-				part = ft_substr(command, lex->start, lex->i);
-				newbe = ft_tokennew(part, "beforequotes");
-				ft_tokenadd_back(&tokens, newbe);
-//			}
+			part = ft_substr(command, lex->start, lex->i);
+			newbe = ft_tokennew(part, "beforequotes");
+			ft_tokenadd_back(&tokens, newbe);
 		}
 		lex->start = lex->start + lex->i;
 		lex->i = 0;
