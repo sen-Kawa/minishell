@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/15 09:58:00 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:43:57 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	init(t_ms	*ms)
 	ms->pipes_struct->fd_file[3] = -1;
 	ms->pipes_struct->pipe_ends[0] = -1;
 	ms->pipes_struct->pipe_ends[1] = -1;
+	ms->pipes_struct->pipe2_ends[0] = -1;
+	ms->pipes_struct->pipe2_ends[1] = -1;
 	ms->pipes_struct->child_pid[0] = -1;
 	ms->pipes_struct->child_pid[1] = -1;
 }
@@ -78,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 			if (skip_space(command) == 0)
 			{
 				add_history(command);
-				ms->lex = tokenice(command, ms);
+				ms->lex = tokenice(command, ms, envp);
 				printing_tokens(ms->tokenlist);
 				if (ms->lex->error == 0)
 					execution(ms);
