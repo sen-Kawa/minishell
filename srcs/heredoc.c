@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 15:50:55 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/17 22:21:09 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-char	*here_command(char *hereline);
+void	here_command(char *hereline, char *herecom);
 
 void	heredoc(t_ms *ms, char	*delim)
 {
@@ -41,7 +41,8 @@ void	heredoc(t_ms *ms, char	*delim)
 					O_RDONLY | O_CREAT | O_TRUNC, 0777);
 			break ;
 		}
-		herecom = here_command(hereline);
+		here_command(hereline, herecom);
+		printf("herecom is: %s\n", herecom);
 	}
 	if (herecom)
 	{
@@ -54,17 +55,23 @@ void	heredoc(t_ms *ms, char	*delim)
 	}
 }
 
-char	*here_command(char *hereline)
+void	here_command(char *hereline, char *herecom)
 {
-	char		*herecom;
+//	char		*herecom;
 
-	herecom = NULL;
+//	herecom = NULL;
 	if (herecom)
 	{
+		printf("hereline is: %s\n", herecom);
 		herecom = ft_strjoin(herecom, hereline);
 		herecom = ft_strjoin(herecom, "\n");
 	}
 	else
-		herecom = ft_strjoin(hereline, "\n");
-	return (herecom);
+	{
+		printf("else\n");
+		*herecom = ft_strjoin(hereline, "\n");
+		printf("herecom in the else: %s\n", herecom);
+
+	}
+//	return (herecom);
 }

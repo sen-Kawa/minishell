@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 15:00:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/15 18:02:37 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,42 +27,31 @@ tokens: linked list for tokens
 EXTERNAL FUNCTIONS
 -
 */
-void	dollarizing(t_ms *ms);
-
-char	*replacing_vars(char **envp, int ds \
-, char **dollar_split, char *new_dollar);
-char	*replacing_vars_middle_dollar(char **envp, int ds \
-, char **dollar_split, char *new_dollar);
-char	*all_dollar_splitting(int a, char **envp \
-, char **dollar_split, char *new_dollar);
-char	*dollar_core(char **space_split, int i, t_ms *ms);
 
 void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 {
 	char	*token_ex;
 
-	if (tmp->token[i] == '$')
+	if (tmp->token[i] == '$'
+		&& (ft_strncmp(tmp->type, "single quotes", 2) != 0))
 	{
-		if (ft_strncmp(tmp->type, "single quotes", 2) != 0)
+		tmp->dollar = 1;
+		if (tmp->token[i + 1] == '?')
 		{
-			tmp->dollar = 1;
-			if (tmp->token[i + 1] == '?')
-			{
-				token_ex = tmp->token;
-				if (WIFSIGNALED(ms->exit_status))
-					tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
-					ft_itoa(128 + WTERMSIG(ms->exit_status)));
-				else if (WEXITSTATUS(ms->exit_status) != 0)
-					tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
-					ft_itoa(WEXITSTATUS(ms->exit_status)));
-				else
-					tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
-					ft_itoa(ms->exit_status));
-				tmp->token = ft_strjoin(tmp->token, ft_substr(token_ex, \
-				i + 2, ft_strlen(token_ex)));
-				tmp->type = "int";
-				tmp->dollar = 0;
-			}
+			token_ex = tmp->token;
+			if (WIFSIGNALED(ms->exit_status))
+				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
+				ft_itoa(128 + WTERMSIG(ms->exit_status)));
+			else if (WEXITSTATUS(ms->exit_status) != 0)
+				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
+				ft_itoa(WEXITSTATUS(ms->exit_status)));
+			else
+				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
+				ft_itoa(ms->exit_status));
+			tmp->token = ft_strjoin(tmp->token, ft_substr(token_ex, \
+			i + 2, ft_strlen(token_ex)));
+			tmp->type = "int";
+			tmp->dollar = 0;
 		}
 	}
 }
@@ -144,7 +133,7 @@ char **dollar_split, char *new_dollar)
 	return (new_dollar);
 }
 
-char	*dollar_core(char **space_split, int i, t_ms	*ms)
+char	*dollar_core(char **space_split, int i, t_ms *ms)
 {
 	char		*new_dollar;
 	char		**dollar_split;

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 13:30:57 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/17 21:37:40 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	**ft_split_ssp(char const *s, char c)
 		return (arr);
 	}
 	wc = word_count(s, c);
-//	printf("word count is: %li\n", wc);
 	arr = (char **)malloc(sizeof(char *) * (wc + 1));
 	if (!arr)
 		return (NULL);
@@ -112,3 +111,8 @@ static void	make_word(char const	*s, char c, char **result, size_t wa)
 	}
 	result[i2] = 0;
 }
+/*
+int	word(int i2, char **result, char const *s, char c)
+{
+
+}	*/
