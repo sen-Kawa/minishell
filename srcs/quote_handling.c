@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 16:18:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/18 14:41:25 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_lex	*double_quotes(char *command, t_ms *ms)
 		if (command[ms->lex->start + ms->lex->i] != '"')
 		{
 			ms->lex->error = 1;
+			write(1, "ksh: syntax error, quotes missing\n", 35);
 			return (ms->lex);
 		}
 		part = ft_substr(command, ms->lex->start + 1, ms->lex->i - 1);
@@ -83,6 +84,7 @@ t_lex	*single_quotes(char *command, t_ms *ms)
 		if (command[ms->lex->start + ms->lex->i] != 39)
 		{
 			ms->lex->error = 1;
+			write(1, "ksh: syntax error, quotes missing\n", 35);
 			return (ms->lex);
 		}
 		part = ft_substr(command, ms->lex->start + 1, ms->lex->i - 1);
@@ -106,12 +108,12 @@ t_lex	*beforequotes(char *command, t_lex *lex, t_ms_list *tokens)
 	{
 		if (lex->i > 0)
 		{
-			if (!pipe_check(command, lex, tokens))
-			{
+//			if (!pipe_check(command, lex, tokens))
+//			{
 				part = ft_substr(command, lex->start, lex->i);
 				newbe = ft_tokennew(part, "beforequotes");
 				ft_tokenadd_back(&tokens, newbe);
-			}
+//			}
 		}
 		lex->start = lex->start + lex->i;
 		lex->i = 0;

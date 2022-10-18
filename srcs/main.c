@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/15 09:58:00 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:12:09 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handler_quit(int sig)
 	}
 }
 
-void	init(t_ms	*ms)
+void	init(t_ms	*ms, char *command)
 {
 	ms->pipes_struct->fd_file[0] = -1;
 	ms->pipes_struct->fd_file[1] = -1;
@@ -33,6 +33,11 @@ void	init(t_ms	*ms)
 	ms->pipes_struct->pipe_ends[1] = -1;
 	ms->pipes_struct->child_pid[0] = -1;
 	ms->pipes_struct->child_pid[1] = -1;
+    ms->lex->start = 0;
+	ms->lex->i = 0;
+	if (command)
+    	ms->lex->length = ft_strlen(command);
+    ms->lex->error = 0;
 }
 
 int	skip_space(char *command)
@@ -60,6 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_printf("pid is %d\n", pid);
 	ms = malloc(sizeof(t_ms));
 	ms->pipes_struct = malloc(sizeof(t_pipes));
+	ms->lex = malloc(sizeof(t_lex));
 	creating_env_list(envp, ms);
 	while (1)
 	{
@@ -67,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
 		sigaction(SIGINT, &sa, NULL);
 		signal(SIGQUIT, SIG_IGN);
 		command = readline("ksh >> ");
-		init(ms);
+		init(ms, command);
 		if (command == NULL)
 		{
 			write(1, "exit\n", 5);
@@ -78,7 +84,7 @@ int	main(int argc, char **argv, char **envp)
 			if (skip_space(command) == 0)
 			{
 				add_history(command);
-				ms->lex = tokenice(command, ms);
+				tokenice(command, ms);
 				printing_tokens(ms->tokenlist);
 				if (ms->lex->error == 0)
 					execution(ms);

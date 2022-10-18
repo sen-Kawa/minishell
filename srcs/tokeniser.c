@@ -6,11 +6,14 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/15 09:57:42 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:39:38 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+void	lex_continue(t_ms *ms);
+void	add_token(char *command, t_ms *ms);
 
 void	freeing_tokens(t_ms *ms)
 {
@@ -66,18 +69,10 @@ EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 */
 
-t_lex	*tokenice(char *command, t_ms *ms)
+void	tokenice(char *command, t_ms *ms)
 {
-	char		*part;
 	t_ms_list	*newbe;
-	t_lex		*lex;
 
-	lex = malloc(sizeof(t_lex));
-	ms->lex = lex;
-	ms->lex->i = 0;
-	ms->lex->start = 0;
-	ms->lex->error = 0;
-	ms->lex->length = ft_strlen(command);
 	while (command[ms->lex->start] == ' ')
 		ms->lex->start++;
 	while (command[ms->lex->start + ms->lex->i] && *command)
@@ -88,11 +83,7 @@ t_lex	*tokenice(char *command, t_ms *ms)
 				|| command[ms->lex->start + ms->lex->i] == 124)
 			{
 				if (ms->lex->i > 0)
-				{
-					part = ft_substr(command, ms->lex->start, ms->lex->i);
-					newbe = ft_tokennew(part, "space");
-					ft_tokenadd_back(&ms->tokenlist, newbe);
-				}
+					add_token(command, ms);
 				if (command[ms->lex->start + ms->lex->i] == 124)
 				{
 					newbe = ft_tokennew("|", "space");
@@ -109,28 +100,27 @@ t_lex	*tokenice(char *command, t_ms *ms)
 		ms->lex = double_quotes(command, ms);
 		ms->lex = single_quotes(command, ms);
 		if (ms->lex->error == 1)
-		{
-			write(1, "ksh: syntax error, quotes missing\n", 35);
-			return (ms->lex);
-		}
-		if (ms->lex->error == 2)
-			write(1, "ksh: syntax error, space missing\n", 34);
+			return ;
 		ms->lex->i++;
 	}
 	if (ms->lex->i > 0)
-	{
-		part = ft_substr(command, ms->lex->start, ms->lex->i);
-		newbe = ft_tokennew(part, "space_before");
-		ft_tokenadd_back(&ms->tokenlist, newbe);
-	}
+		add_token(command, ms);
+	lex_continue(ms);
+}
+
+void	add_token(char *command, t_ms *ms)
+{
+	char		*part;
+	t_ms_list	*newbe;
+
+	part = ft_substr(command, ms->lex->start, ms->lex->i);
+	newbe = ft_tokennew(part, "space");
+	ft_tokenadd_back(&ms->tokenlist, newbe);
+}
+
+void	lex_continue(t_ms *ms)
+{
 	sections(ms);
 	dollarizing(ms);
 	dollar_double(ms->tokenlist, ms);
-	return (ms->lex);
 }
-/*
-
-void	init_lex()
-{
-
-}*/
