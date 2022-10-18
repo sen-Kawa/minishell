@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 17:02:01 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 17:23:06 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	lex_continue(t_ms *ms);
 void	add_token(char *command, t_ms *ms);
+void	pipe_token(char *command, t_ms *ms);
+void	quote_call(char *command, t_ms *ms);
 
 /*
 DESCRIPTION
@@ -30,11 +32,10 @@ ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 
 void	tokenice(char *command, t_ms *ms)
 {
-	t_ms_list	*newbe;
-
 	while (command[ms->lex->start] == ' ')
 		ms->lex->start++;
-	while (command[ms->lex->start + ms->lex->i] && *command)
+	while (command[ms->lex->start + ms->lex->i] && *command
+		&& ms->lex->error == 0)
 	{
 		if (ms->lex->start + ms->lex->i <= ms->lex->length)
 		{
@@ -43,23 +44,14 @@ void	tokenice(char *command, t_ms *ms)
 			{
 				if (ms->lex->i > 0)
 					add_token(command, ms);
-				if (command[ms->lex->start + ms->lex->i] == 124)
-				{
-					newbe = ft_tokennew("|", "space");
-					ft_tokenadd_back(&ms->tokenlist, newbe);
-					ms->lex->i++;
-				}
+				pipe_token(command, ms);
 				while (command[ms->lex->start + ms->lex->i] == ' ')
 					ms->lex->i++;
 				ms->lex->start = ms->lex->start + ms->lex->i;
 				ms->lex->i = -1;
 			}
-			ms->lex = beforequotes(command, ms->lex, ms->tokenlist);
 		}
-		ms->lex = double_quotes(command, ms);
-		ms->lex = single_quotes(command, ms);
-		if (ms->lex->error == 1)
-			return ;
+		quote_call(command, ms);
 		ms->lex->i++;
 	}
 	if (ms->lex->i > 0)
@@ -82,4 +74,22 @@ void	lex_continue(t_ms *ms)
 	sections(ms);
 	dollarizing(ms);
 	dollar_double(ms->tokenlist, ms);
+}
+
+void	pipe_token(char *command, t_ms *ms)
+{
+	t_ms_list	*newbe;
+
+	if (command[ms->lex->start + ms->lex->i] == 124)
+	{
+		newbe = ft_tokennew("|", "space");
+		ft_tokenadd_back(&ms->tokenlist, newbe);
+		ms->lex->i++;
+	}
+}
+
+void	quote_call(char *command, t_ms *ms)
+{
+	ms->lex = double_quotes(command, ms);
+	ms->lex = single_quotes(command, ms);
 }
