@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 14:05:31 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:54:26 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,7 @@ char	*dollar_core(char **space_split, int i, t_ms	*ms);
 
 //execution.c
 int		builtins(t_ms *ms);
-
-//heredoc.c
 void	heredoc(t_ms *ms, char	*delim);
-void	here_command(char *hereline, char **herecom);
-void	tmp_heredoc(t_ms *ms, char *herecom);
 
 //quote_handling.c
 t_lex	*double_quotes(char *command, t_ms *ms);

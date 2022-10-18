@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/18 14:12:09 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:55:34 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	init(t_ms	*ms, char *command)
 	ms->pipes_struct->fd_file[3] = -1;
 	ms->pipes_struct->pipe_ends[0] = -1;
 	ms->pipes_struct->pipe_ends[1] = -1;
+	ms->pipes_struct->pipe2_ends[0] = -1;
+	ms->pipes_struct->pipe2_ends[1] = -1;
 	ms->pipes_struct->child_pid[0] = -1;
 	ms->pipes_struct->child_pid[1] = -1;
     ms->lex->start = 0;

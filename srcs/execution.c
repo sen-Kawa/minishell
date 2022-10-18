@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/15 10:08:32 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:38:11 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,21 @@ int	multi_sections(t_ms	*ms)
 	int	in_pipe_fd;
 	int	out_pipe_fd;
 
-	if (pipe(ms->pipes_struct->pipe_ends) == -1)
-		return (1);
-	if (pipe(ms->pipes_struct->pipe2_ends) == -1)
-		return (1);
 //	while (ms->current_section <= ms->sections && WEXITSTATUS(ms->exit_status) == 0)
 	while (ms->current_section <= ms->sections)
 	{
 		if (ms->current_section % 2 == 0)
 		{
-			in_pipe_fd = ms->pipes_struct->pipe2_ends[0];
+			if (pipe(ms->pipes_struct->pipe_ends) == -1)
+				return (1);
+			if (ms->pipes_struct->pipe2_ends[0] != -1)
+				in_pipe_fd = ms->pipes_struct->pipe2_ends[0];
 			out_pipe_fd = ms->pipes_struct->pipe_ends[1];
 		}
 		else
 		{
+			if (pipe(ms->pipes_struct->pipe2_ends) == -1)
+				return (1);
 			in_pipe_fd = ms->pipes_struct->pipe_ends[0];
 			out_pipe_fd = ms->pipes_struct->pipe2_ends[1];
 		}
@@ -115,11 +116,22 @@ int	multi_sections(t_ms	*ms)
 		redirecting(ms);
 		ms->current_section++;
 		waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
-//	close(ms->pipes_struct->pipe_ends[0]);
-//	close(ms->pipes_struct->pipe_ends[1]);
-//	close(ms->pipes_struct->pipe2_ends[0]);
-//	close(ms->pipes_struct->pipe2_ends[1]);
-		close (out_pipe_fd);
+		// if (ms->current_section % 2 == 0)
+		// {
+		// 	close(ms->pipes_struct->pipe_ends[1]);
+		// 	// if (ms->pipes_struct->pipe2_ends[0] != -1)
+		// 	// 	close(ms->pipes_struct->pipe2_ends[0]);
+		// }
+		// else
+		// {
+		// 	close(ms->pipes_struct->pipe2_ends[1]);
+		// 	// if (ms->pipes_struct->pipe_ends[0] != -1)
+		// 	// 	close(ms->pipes_struct->pipe_ends[0]);
+		// }
+		if (out_pipe_fd)
+			close (out_pipe_fd);
+		if (in_pipe_fd)
+			close (in_pipe_fd);
 	}
 	return (0);
 }
