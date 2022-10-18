@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 16:56:13 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/18 17:27:50 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ void	child_signal(int sig)
 		write(1, "\b\b", 2);
 }
 
-void	childm(t_ms	*ms, int in_pipe_fd, int out_pipe_fd)
+void	child_infilefd(t_ms *ms, int in_pipe_fd)
 {
-	char	**token_array;
-
 	if (ms->pipes_struct->fd_file[0] >= 0)
 	{
 		close(STDIN_FILENO);
@@ -53,6 +51,10 @@ void	childm(t_ms	*ms, int in_pipe_fd, int out_pipe_fd)
 		dup2(in_pipe_fd, STDIN_FILENO);
 		close(in_pipe_fd);
 	}
+}
+
+void	child_outfilefd(t_ms *ms, int out_pipe_fd)
+{
 	if (ms->pipes_struct->fd_file[1] >= 0)
 	{
 		close(STDOUT_FILENO);
@@ -67,6 +69,14 @@ void	childm(t_ms	*ms, int in_pipe_fd, int out_pipe_fd)
 		dup2(out_pipe_fd, STDOUT_FILENO);
 		close(out_pipe_fd);
 	}
+}
+
+void	childm(t_ms	*ms, int in_pipe_fd, int out_pipe_fd)
+{
+	char	**token_array;
+
+	child_infilefd(ms, in_pipe_fd);
+	child_outfilefd(ms, out_pipe_fd);
 	token_array = make_array_token(ms);
 	if (!get_cmd_path(token_array[0], make_array_env(ms)))
 		exit (127);
