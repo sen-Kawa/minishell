@@ -6,16 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 13:24:52 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 13:28:17 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 #include <sys/types.h>
 #include <sys/wait.h>
-
-void	here_command(char *hereline, char **herecom);
-void	tmp_heredoc(t_ms *ms, char *herecom);
 
 void	heredoc(t_ms *ms, char	*delim)
 {
