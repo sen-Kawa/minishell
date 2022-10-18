@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 14:39:38 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 17:02:01 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,47 +15,6 @@
 void	lex_continue(t_ms *ms);
 void	add_token(char *command, t_ms *ms);
 
-void	freeing_tokens(t_ms *ms)
-{
-	t_ms_list	*temp;
-
-	while (ms->tokenlist != NULL)
-	{
-		temp = ms->tokenlist;
-		ms->tokenlist = ms->tokenlist->next;
-		free(temp);
-	}
-}
-
-void	freeing_all(t_ms *ms)
-{
-	t_env	*tenv;
-
-	freeing_tokens(ms);
-	while (ms->env_list != NULL)
-	{
-		tenv = ms->env_list;
-		ms->env_list = ms->env_list->next;
-		free(tenv);
-	}
-}
-
-int	pipe_check(char *command, t_lex *lex, t_ms_list *tokens)
-{
-	if (command[lex->start + lex->i - 1] == '|'
-		&& command[lex->start + lex->i - 2] == ' ')
-	{
-		tokens->section++;
-		return (1);
-	}
-	else if (command[lex->start + lex->i - 1]
-		== '|' && command[lex->start + lex->i - 2] != ' ')
-	{
-		lex->error = 2;
-		return (1);
-	}
-	return (0);
-}
 /*
 DESCRIPTION
 Makes Nodes out of Commandline returned by readline
