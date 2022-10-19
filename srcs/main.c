@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/18 17:31:03 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:41:36 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	shell(char *command, t_ms *ms)
 		printing_tokens(ms->tokenlist);
 		if (ms->lex->error == 0)
 			execution(ms);
-//		printing_tokens(ms->tokenlist);
 		freeing_tokens(ms);
 	}
 }
@@ -96,37 +95,16 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}			
 		else if (command && *command)
-		{
 			shell(command, ms);
-		}
 		if (command)
 			free (command);
 		if (ms->pipes_struct->fd_file[0] >= 0)
 			close(ms->pipes_struct->fd_file[0]);
 		if (ms->pipes_struct->fd_file[1] >= 0)
 			close(ms->pipes_struct->fd_file[1]);
-		// if (ms->pipes_struct->fd_file[2] >= 0)
-		// 	close(ms->pipes_struct->fd_file[2]);
-		// if (ms->pipes_struct->fd_file[3]>= 0)
-		// 	close(ms->pipes_struct->fd_file[3]);
-		// printing_tokens(ms->tokenlist);
-//		freeing_tokens(ms);
 	}
 	freeing_all(ms);
 	free(command);
 	free (ms);
 	return (0);
-}
-
-void	creating_env_list(char **envp, t_ms *ms)
-{
-	t_env	*new;
-
-	ms->env_lst_size = 0;
-	while (envp[ms->env_lst_size])
-	{
-		new = ft_envvnew(envp[ms->env_lst_size]);
-		ft_envvadd_back(&ms->env_list, new);
-		ms->env_lst_size++;
-	}
 }

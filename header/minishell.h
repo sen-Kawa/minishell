@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 14:58:17 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:41:57 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ int		pipe_check(char *command, t_lex *lex, t_ms_list *tokens);
 void	tokenice(char *command, t_ms *ms);
 
 //main.c
-void	creating_env_list(char **envp, t_ms *ms);
 
 //printing.c
 void	printing_tokens(t_ms_list *tokens);
@@ -160,6 +159,7 @@ t_env	*ft_envvnew(char *content);
 t_env	*ft_envvlast(t_env *envv);
 void	ft_envvadd_back(t_env **env, t_env *new);
 void	print_env(t_ms	*ms);
+void	creating_env_list(char **envp, t_ms *ms);
 
 //sections.c
 void	sections(t_ms	*ms);
