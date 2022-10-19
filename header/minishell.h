@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 11:56:00 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/19 12:11:25 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,12 @@ int		builtins(t_ms *ms);
 void	child_signal(int sig);
 void	child_infilefd(t_ms *ms, int in_pipe_fd);
 void	child_outfilefd(t_ms *ms, int out_pipe_fd);
+
+//init.c
+void	init(t_ms   *ms, char *command);
+
+//parent_signals.c
+void	handler_quit(int sig);
+void	parent_signals(void);
 
 #endif

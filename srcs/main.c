@@ -6,41 +6,11 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/19 12:01:16 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 12:09:38 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
-void	handler_quit(int sig)
-{
-	if (sig == SIGINT)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		ft_putstr_fd("\b\b\n", 1);
-		rl_redisplay();
-	}
-}
-
-void	init(t_ms	*ms, char *command)
-{
-	ms->pipes_struct->fd_file[0] = -1;
-	ms->pipes_struct->fd_file[1] = -1;
-	ms->pipes_struct->fd_file[2] = -1;
-	ms->pipes_struct->fd_file[3] = -1;
-	ms->pipes_struct->pipe_ends[0] = -1;
-	ms->pipes_struct->pipe_ends[1] = -1;
-	ms->pipes_struct->pipe2_ends[0] = -1;
-	ms->pipes_struct->pipe2_ends[1] = -1;
-	ms->pipes_struct->child_pid[0] = -1;
-	ms->pipes_struct->child_pid[1] = -1;
-	ms->lex->start = 0;
-	ms->lex->i = 0;
-	if (command)
-		ms->lex->length = ft_strlen(command);
-	ms->lex->error = 0;
-}
 
 int	skip_space(char *command)
 {
@@ -67,16 +37,7 @@ void	shell(char *command, t_ms *ms)
 	}
 }
 
-void	parent_signals()
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = &handler_quit;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-t_ms	*struct_allocation()
+t_ms	*struct_allocation(void)
 {
 	t_ms	*ms;
 
@@ -86,9 +47,17 @@ t_ms	*struct_allocation()
 	return (ms);
 }
 
+void	closing_fd(t_ms *ms)
+{
+	if (ms->pipes_struct->fd_file[0] >= 0)
+		close(ms->pipes_struct->fd_file[0]);
+	if (ms->pipes_struct->fd_file[1] >= 0)
+		close(ms->pipes_struct->fd_file[1]);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char				*command;
+	char	*command;
 	t_ms	*ms;
 
 	(void) argc;
@@ -109,10 +78,7 @@ int	main(int argc, char **argv, char **envp)
 			shell(command, ms);
 		if (command)
 			free (command);
-		if (ms->pipes_struct->fd_file[0] >= 0)
-			close(ms->pipes_struct->fd_file[0]);
-		if (ms->pipes_struct->fd_file[1] >= 0)
-			close(ms->pipes_struct->fd_file[1]);
+		closing_fd(ms);
 	}
 	freeing_all(ms, command);
 	return (0);
