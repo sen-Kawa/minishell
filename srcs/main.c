@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/18 16:49:10 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/18 17:31:03 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,20 @@ int	skip_space(char *command)
 	return (0);
 }
 
+void	shell(char *command, t_ms *ms)
+{
+	if (skip_space(command) == 0)
+	{
+		add_history(command);
+		tokenice(command, ms);
+		printing_tokens(ms->tokenlist);
+		if (ms->lex->error == 0)
+			execution(ms);
+//		printing_tokens(ms->tokenlist);
+		freeing_tokens(ms);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	struct sigaction	sa;
@@ -83,16 +97,7 @@ int	main(int argc, char **argv, char **envp)
 		}			
 		else if (command && *command)
 		{
-			if (skip_space(command) == 0)
-			{
-				add_history(command);
-				tokenice(command, ms);
-				printing_tokens(ms->tokenlist);
-				if (ms->lex->error == 0)
-					execution(ms);
-//				printing_tokens(ms->tokenlist);
-				freeing_tokens(ms);
-			}
+			shell(command, ms);
 		}
 		if (command)
 			free (command);
