@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:02:39 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/04 17:54:24 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/19 12:26:40 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_stacksize(t_stack *stk)
 int	ft_tokenlistsize(t_ms_list *tokenlist)
 {
 	t_ms_list	*temp;
-	int		count;
+	int			count;
 
 	if (tokenlist == NULL)
 		return (0);

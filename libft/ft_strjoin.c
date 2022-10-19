@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:00:39 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/20 11:19:16 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/19 12:25:31 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t		len;
 	char		*dst;
 
-	
 	if (s1 == NULL && s2 == NULL)
 		return (NULL);
 	if (s1 == NULL)
