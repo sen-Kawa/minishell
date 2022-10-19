@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/19 11:46:37 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 12:01:16 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,37 @@ void	shell(char *command, t_ms *ms)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+void	parent_signals()
 {
 	struct sigaction	sa;
-	char				*command;
-	t_ms				*ms;
 
-	(void) argc;
-	(void) argv;
+	sa.sa_handler = &handler_quit;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+t_ms	*struct_allocation()
+{
+	t_ms	*ms;
+
 	ms = malloc(sizeof(t_ms));
 	ms->pipes_struct = malloc(sizeof(t_pipes));
 	ms->lex = malloc(sizeof(t_lex));
+	return (ms);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char				*command;
+	t_ms	*ms;
+
+	(void) argc;
+	(void) argv;
+	parent_signals();
+	ms = struct_allocation();
 	creating_env_list(envp, ms);
 	while (1)
 	{
-		sa.sa_handler = &handler_quit;
-		sigaction(SIGINT, &sa, NULL);
-		signal(SIGQUIT, SIG_IGN);
 		command = readline("ksh >> ");
 		init(ms, command);
 		if (command == NULL)
