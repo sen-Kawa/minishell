@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/15 09:43:36 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 15:02:44 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	b_exit(t_ms	*ms)
 		if (tmp->next->next != NULL)
 		{
 			ft_printf("ksh: exit: too many arguments\n");
-			ms->exit_status = 127;
+			ms->exit_status = 1;
 		}
 		else
 			exit (ft_atoi(tmp->next->token));
@@ -91,7 +91,6 @@ int	b_unset(t_ms	*ms)
 	envlst = ms->env_list;
 	if (!tmp || ft_strncmp(tmp->token, "unset", 5) != 0)
 		return (0);
-	printf("unset\n");
 	if (tmp->next != NULL && tmp->next->section == ms->current_section)
 	{
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/15 09:43:08 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 15:02:06 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	b_echo(t_ms	*ms)
 	tmp = ms->tokenlist;
 	if (!tmp || ft_strncmp(tmp->token, "echo\0", 5) != 0)
 		return (0);
-	printf("in echo\n");
 	if (tmp && tmp->next)
 	{
 		tmp = tmp->next;

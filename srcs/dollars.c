@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/15 18:02:37 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 15:04:27 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 		{
 			token_ex = tmp->token;
 			if (WIFSIGNALED(ms->exit_status))
+			{
+				ft_printf("WIFSIGNALEED");
 				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
 				ft_itoa(128 + WTERMSIG(ms->exit_status)));
+			}
 			else if (WEXITSTATUS(ms->exit_status) != 0)
 				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
 				ft_itoa(WEXITSTATUS(ms->exit_status)));
