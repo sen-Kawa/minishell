@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/09/29 09:49:09 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/19 11:42:43 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,18 @@ void	print_env(t_ms	*ms)
 	{
 		printf("%s\n", ms->env_list->content);
 		ms->env_list = ms->env_list->next;
+	}
+}
+
+void	creating_env_list(char **envp, t_ms *ms)
+{
+	t_env	*new;
+
+	ms->env_lst_size = 0;
+	while (envp[ms->env_lst_size])
+	{
+		new = ft_envvnew(envp[ms->env_lst_size]);
+		ft_envvadd_back(&ms->env_list, new);
+		ms->env_lst_size++;
 	}
 }

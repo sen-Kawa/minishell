@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 14:58:17 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:56:00 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,15 @@ t_lex	*afterquotes(char *command, t_lex *lex, t_ms_list *tokens);
 //splitter2.c
 char	**ft_split_ssp(char const *s, char c);
 
-//tokeniser.c
+//free.c
 void	freeing_tokens(t_ms *ms);
-void	freeing_all(t_ms *ms);
+void	freeing_all(t_ms *ms, char *command);
+
+//tokeniser.c
 int		pipe_check(char *command, t_lex *lex, t_ms_list *tokens);
 void	tokenice(char *command, t_ms *ms);
 
 //main.c
-void	creating_env_list(char **envp, t_ms *ms);
 
 //printing.c
 void	printing_tokens(t_ms_list *tokens);
@@ -160,11 +161,18 @@ t_env	*ft_envvnew(char *content);
 t_env	*ft_envvlast(t_env *envv);
 void	ft_envvadd_back(t_env **env, t_env *new);
 void	print_env(t_ms	*ms);
+void	creating_env_list(char **envp, t_ms *ms);
 
 //sections.c
 void	sections(t_ms	*ms);
 
 //execution
 int		execution(t_ms	*ms);
+
+//execution2
+int		builtins(t_ms *ms);
+void	child_signal(int sig);
+void	child_infilefd(t_ms *ms, int in_pipe_fd);
+void	child_outfilefd(t_ms *ms, int out_pipe_fd);
 
 #endif
