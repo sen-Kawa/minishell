@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 15:03:49 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 16:36:53 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	builtins(t_ms *ms)
 	sum = (b_pwd(ms) + b_export(ms) + b_unset(ms) + b_echo(ms)
 			+ b_cd(ms) + b_exit(ms) + b_env(ms));
 	if (sum > 0)
+	{
 		delete_section(ms);
+		ms->pipes_struct->child_pid[0] = -1;
+	}
 	return (sum);
 }
 

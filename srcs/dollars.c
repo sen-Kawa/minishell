@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 15:04:27 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 16:31:30 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,16 @@ void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 		if (tmp->token[i + 1] == '?')
 		{
 			token_ex = tmp->token;
-			if (WIFSIGNALED(ms->exit_status))
+			if (WIFEXITED(ms->exit_status))
 			{
-				ft_printf("WIFSIGNALEED");
+				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
+				ft_itoa(WEXITSTATUS(ms->exit_status)));
+			}
+			else if (WIFSIGNALED(ms->exit_status) && ms->pipes_struct->child_pid[0] != -1)
+			{
 				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
 				ft_itoa(128 + WTERMSIG(ms->exit_status)));
 			}
-			else if (WEXITSTATUS(ms->exit_status) != 0)
-				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
-				ft_itoa(WEXITSTATUS(ms->exit_status)));
 			else
 				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
 				ft_itoa(ms->exit_status));
