@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/19 11:41:36 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:46:37 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	struct sigaction	sa;
 	char				*command;
-	pid_t				pid;
 	t_ms				*ms;
 
 	(void) argc;
 	(void) argv;
-	pid = getpid();
-	ft_printf("pid is %d\n", pid);
 	ms = malloc(sizeof(t_ms));
 	ms->pipes_struct = malloc(sizeof(t_pipes));
 	ms->lex = malloc(sizeof(t_lex));
@@ -103,8 +100,6 @@ int	main(int argc, char **argv, char **envp)
 		if (ms->pipes_struct->fd_file[1] >= 0)
 			close(ms->pipes_struct->fd_file[1]);
 	}
-	freeing_all(ms);
-	free(command);
-	free (ms);
+	freeing_all(ms, command);
 	return (0);
 }

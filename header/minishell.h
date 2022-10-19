@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 11:41:57 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:47:45 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,11 @@ t_lex	*afterquotes(char *command, t_lex *lex, t_ms_list *tokens);
 //splitter2.c
 char	**ft_split_ssp(char const *s, char c);
 
-//tokeniser.c
+//free.c
 void	freeing_tokens(t_ms *ms);
-void	freeing_all(t_ms *ms);
+void	freeing_all(t_ms *ms, char *command);
+
+//tokeniser.c
 int		pipe_check(char *command, t_lex *lex, t_ms_list *tokens);
 void	tokenice(char *command, t_ms *ms);
 

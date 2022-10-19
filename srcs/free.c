@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 11:31:32 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:46:47 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	freeing_tokens(t_ms *ms)
 	}
 }
 
-void	freeing_all(t_ms *ms)
+void	freeing_all(t_ms *ms, char *command)
 {
 	t_env	*tenv;
 
@@ -35,4 +35,6 @@ void	freeing_all(t_ms *ms)
 		ms->env_list = ms->env_list->next;
 		free(tenv);
 	}
+	free (command);
+	free (ms);
 }
