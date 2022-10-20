@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 19:00:42 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 19:13:21 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*dollar_core(char **space_split, int i, t_ms	*ms);
 
 //exit_status.c
 void	checking_status(t_ms *ms, t_ms_list *tmp, int i);
-void	replacing_exit(t_ms *ms, int i, t_ms_list   *tmp);
+void	replacing_exit(t_ms *ms, int i, t_ms_list *tmp);
 
 //execution.c
 int		builtins(t_ms *ms);
