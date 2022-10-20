@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 12:27:17 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:36:16 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 typedef struct s_pipes
 {
-	int		fd_file[4];
+	int		fd_file[2];
 	int		pipe_ends[2];
 	int		pipe2_ends[2];
 	int		child_pid[2];

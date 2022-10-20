@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 16:30:49 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:36:00 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	multi_sections(t_ms	*ms)
 	int	in_pipe_fd;
 	int	out_pipe_fd;
 
+	in_pipe_fd = -1;
+	out_pipe_fd = -1;
 	while (ms->current_section <= ms->sections)
 	{
 		if (pipesandforks(&out_pipe_fd, &in_pipe_fd, ms) == 1)
@@ -69,14 +71,13 @@ int	multi_sections(t_ms	*ms)
 		ms->pipes_struct->fd_file[0] = -1;
 		close(ms->pipes_struct->fd_file[1]);
 		ms->pipes_struct->fd_file[1] = -1;
-		close(ms->pipes_struct->fd_file[2]);
 		ms->current_section++;
 		redirecting(ms);
 		waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
 		//	ms->pipes_struct->child_pid[0] = -1;
-		if (out_pipe_fd)
+		if (out_pipe_fd != -1)
 			close (out_pipe_fd);
-		if (in_pipe_fd)
+		if (in_pipe_fd != -1)
 			close (in_pipe_fd);
 	}
 	return (0);
