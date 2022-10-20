@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:35:02 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/13 15:13:36 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/20 17:01:32 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,18 @@ char	*get_cmd_path(char *cmd, char **envp)
 	i = 0;
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
-	if (get_paths(i, envp) == 0)
-		return (0);
 	envp_path = get_paths(i, envp);
+	if (envp_path == 0)
+		return (0);
 	paths = ft_split(envp_path, ':');
+	free (envp_path);
 	if (!paths)
 		return (0);
 	i = 0;
 	paths = slash_path(i, paths);
 	i = 0;
 	cmd_path = wright_path(i, paths, cmd);
+	freeing_paths(paths);
 	if (cmd_path != NULL)
 		return (cmd_path);
 	print_error(cmd);

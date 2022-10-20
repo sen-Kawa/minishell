@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 16:31:30 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:34:39 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 			i + 2, ft_strlen(token_ex)));
 			tmp->type = "int";
 			tmp->dollar = 0;
+			free(token_ex);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 16:11:55 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:59:27 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,17 @@ void	freeing_all(t_ms *ms, char *command)
 	free (ms->pipes_struct);
 	free (ms->lex);
 	free (ms);
+}
+
+void	freeing_paths(char **paths)
+{
+	int i;
+
+	i = 0;
+	while (paths[i])
+	{
+			free(paths[i]);
+			i++;
+	}
+	free (paths);
 }
