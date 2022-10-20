@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 08:29:51 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/03 14:59:44 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/20 16:09:40 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ t_stack	*ft_stacknew(int value)
 t_ms_list	*ft_tokennew(char *token, char *type)
 {
 	t_ms_list	*new_list;
-
+	char		*tmp;
+	
 	new_list = (t_ms_list *)malloc(sizeof (t_ms_list));
 	if (!new_list)
 		return (NULL);
-	new_list->token = token;
+	tmp = ft_strdup(token);
+	new_list->token = tmp;
 	new_list->type = type;
 	new_list->dollar = 0;
 	new_list->next = NULL;

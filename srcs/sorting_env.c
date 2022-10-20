@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/14 17:31:43 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:13:37 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**make_array_env(t_ms *ms)
 		env_array[i] = p;
 		tmp = tmp->next;
 	}
-	env_array[i + 1] = NULL;
+	env_array[i] = NULL;
 	return (env_array);
 }
 

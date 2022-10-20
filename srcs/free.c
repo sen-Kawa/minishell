@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 15:57:08 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:11:55 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	freeing_tokens(t_ms *ms)
 	{
 		temp = ms->tokenlist;
 		ms->tokenlist = ms->tokenlist->next;
+		free(temp->token);
 		free(temp);
 	}
 }
