@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 13:36:00 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/20 17:04:51 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@
 void	childm(t_ms	*ms, int in_pipe_fd, int out_pipe_fd)
 {
 	char	**token_array;
+	char	**env_array;
 
 	child_infilefd(ms, in_pipe_fd);
 	child_outfilefd(ms, out_pipe_fd);
 	token_array = make_array_token(ms);
-	if (!get_cmd_path(token_array[0], make_array_env(ms)))
+	env_array = make_array_env(ms);
+	if (!get_cmd_path(token_array[0], env_array))
 		exit (127);
-	execve(get_cmd_path(token_array[0], make_array_env(ms)),
-		token_array, make_array_env(ms));
+	execve(get_cmd_path(token_array[0], env_array),
+		token_array, env_array);
 	exit (127);
 }
 
