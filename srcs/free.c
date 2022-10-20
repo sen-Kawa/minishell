@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 18:41:17 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 19:17:31 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	freeing_all(t_ms *ms, char *command)
 
 void	freeing_paths(char **paths)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (paths[i])
 	{
-			free(paths[i]);
-			i++;
+		free(paths[i]);
+		i++;
 	}
 	free (paths);
 }

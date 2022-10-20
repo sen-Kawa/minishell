@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 08:29:51 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 16:24:37 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 19:18:24 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_ms_list	*ft_tokennew(char *token, char *type)
 {
 	t_ms_list	*new_list;
 	char		*tmp;
-	
+
 	new_list = (t_ms_list *)malloc(sizeof (t_ms_list));
 	if (!new_list)
 		return (NULL);
