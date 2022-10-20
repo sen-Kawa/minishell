@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/19 12:09:38 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 15:44:26 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ t_ms	*struct_allocation(void)
 	ms = malloc(sizeof(t_ms));
 	ms->pipes_struct = malloc(sizeof(t_pipes));
 	ms->lex = malloc(sizeof(t_lex));
+	ms->tokenlist = NULL;
+	ms->env_list = NULL;
 	return (ms);
 }
 
