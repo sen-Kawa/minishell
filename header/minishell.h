@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 17:01:07 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 19:00:42 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,10 @@ char	*all_dollar_splitting(int a, char **envp \
 , char **dollar_split, char *new_dollar);
 char	*dollar_core(char **space_split, int i, t_ms	*ms);
 
+//exit_status.c
+void	checking_status(t_ms *ms, t_ms_list *tmp, int i);
+void	replacing_exit(t_ms *ms, int i, t_ms_list   *tmp);
+
 //execution.c
 int		builtins(t_ms *ms);
 
@@ -118,6 +122,7 @@ char	**ft_split_ssp(char const *s, char c);
 void	freeing_paths(char **paths);
 void	freeing_tokens(t_ms *ms);
 void	freeing_all(t_ms *ms, char *command);
+void	free_status(char *status, char *replaced, char *remain, char *sub);
 
 //tokeniser.c
 int		pipe_check(char *command, t_lex *lex, t_ms_list *tokens);

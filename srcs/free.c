@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 17:40:41 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 18:41:17 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,12 @@ void	freeing_paths(char **paths)
 			i++;
 	}
 	free (paths);
+}
+
+void	free_status(char *status, char *replaced, char *remain, char *sub)
+{
+	free(status);
+	free(replaced);
+	free(remain);
+	free(sub);
 }
