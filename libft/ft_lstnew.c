@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 08:29:51 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 16:09:40 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:24:37 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ t_ms_list	*ft_tokennew(char *token, char *type)
 	new_list->dollar = 0;
 	new_list->next = NULL;
 	new_list->section = 0;
+	free (token);
 	return (new_list);
 }
