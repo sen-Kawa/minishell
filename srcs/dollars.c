@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 16:34:39 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/20 17:58:34 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ EXTERNAL FUNCTIONS
 void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 {
 	char	*token_ex;
+	char	*sub;
+	char 	*remain;
+	char	*replaced;
 
 	if (tmp->token[i] == '$'
 		&& (ft_strncmp(tmp->type, "single quotes", 2) != 0))
@@ -39,24 +42,21 @@ void	replacing_exit(t_ms *ms, int i, t_ms_list	*tmp)
 		if (tmp->token[i + 1] == '?')
 		{
 			token_ex = tmp->token;
+			sub = ft_substr(token_ex, 0, i);
+			remain = ft_substr(token_ex, i + 2, ft_strlen(token_ex));
 			if (WIFEXITED(ms->exit_status))
-			{
-				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
-				ft_itoa(WEXITSTATUS(ms->exit_status)));
-			}
+				replaced = ft_strjoin(sub, ft_itoa(WEXITSTATUS(ms->exit_status)));
 			else if (WIFSIGNALED(ms->exit_status) && ms->pipes_struct->child_pid[0] != -1)
-			{
-				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
-				ft_itoa(128 + WTERMSIG(ms->exit_status)));
-			}
+				replaced = ft_strjoin(sub, ft_itoa(128 + WTERMSIG(ms->exit_status)));
 			else
-				tmp->token = ft_strjoin(ft_substr(token_ex, 0, i), \
-				ft_itoa(ms->exit_status));
-			tmp->token = ft_strjoin(tmp->token, ft_substr(token_ex, \
-			i + 2, ft_strlen(token_ex)));
+				replaced = ft_strjoin(sub, ft_itoa(ms->exit_status));
+			tmp->token = ft_strjoin(replaced, remain);
 			tmp->type = "int";
 			tmp->dollar = 0;
 			free(token_ex);
+			free(replaced);
+			free(remain);
+			free(sub);
 		}
 	}
 }
