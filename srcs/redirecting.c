@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirecting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 19:09:47 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/22 14:33:55 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,9 @@ void	redirecting(t_ms *ms)
 	{
 		while (tmp)
 		{
-			if (tmp->section == ms->current_section)
+			if (tmp->section == ms->current_section
+				&& (ft_strncmp(tmp->type, "single quotes", 14) != 0)
+				&& (ft_strncmp(tmp->type, "double quotes", 2) != 0))
 			{
 				if (redir1_0(tmp, ms, infd, outfd) == 1)
 					return ;
