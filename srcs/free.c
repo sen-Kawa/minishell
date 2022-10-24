@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 19:17:31 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 12:47:33 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	freeing_all(t_ms *ms, char *command)
 	{
 		tenv = ms->env_list;
 		ms->env_list = ms->env_list->next;
+		free (tenv->content);
 		free(tenv);
 	}
 	free (command);
