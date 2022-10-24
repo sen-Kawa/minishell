@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 13:34:54 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 13:37:42 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,14 @@ void	b_cd_tilde(char **token)
 	{
 		tmp = *token;
 		*token = ft_strdup(getenv("HOME"));
+		free (tmp);
 	}
 	else if (!ft_strncmp(*token, "~", 1))
 	{
 		tmp = *token;
 		*token = ft_strjoin(getenv("HOME"), &tmp[1]);
+		free (tmp);
 	}
-	free (tmp);
 }
 
 void	unsuccess_chdir(t_ms *ms)
