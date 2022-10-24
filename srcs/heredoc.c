@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/18 13:28:17 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 15:14:43 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	heredoc(t_ms *ms, char	*delim)
 
 	hereline = "";
 	herecom = NULL;
-	while (ft_strncmp(hereline, delim, sizeof(delim)))
+	while (1)
 	{
 		hereline = readline("> ");
 		if (hereline == NULL)
@@ -40,19 +40,32 @@ void	heredoc(t_ms *ms, char	*delim)
 			break ;
 		}
 		here_command(hereline, &herecom);
+		if (hereline)
+			free (hereline);
 	}
 	tmp_heredoc(ms, herecom);
+	free(herecom);
 }
 
 void	here_command(char *hereline, char **herecom)
 {
+	char *tmp;
+
 	if (herecom)
 	{
-		*herecom = ft_strjoin(*herecom, hereline);
-		*herecom = ft_strjoin(*herecom, "\n");
+		tmp = *herecom;
+		*herecom = ft_strjoin(tmp, hereline);
+		free (tmp);
+		tmp = *herecom;
+		*herecom = ft_strjoin(tmp, "\n");
+		free (tmp);
 	}
 	else
+	{
+		tmp = *herecom;
 		*herecom = ft_strjoin(hereline, "\n");
+		free (tmp);
+	}
 }
 
 void	tmp_heredoc(t_ms *ms, char *herecom)
