@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 18:34:25 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/24 19:41:26 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_vars(char **envp, char *var)
 		envp_var = ft_strnstr(envp[i], tmp, ft_strlen(var) + 1);
 		if (envp_var)
 		{
-			envp_var = ft_substr(envp[i], ft_strlen(var) + 1, 100);
+			envp_var = ft_substr(envp[i], ft_strlen(var) + 1, 200);
 			if (!envp_var)
 				return (0);
 			break ;
