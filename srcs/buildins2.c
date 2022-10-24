@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 12:05:47 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/24 13:15:15 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	update_pwd(t_ms *ms)
 {
 	t_env		*tmpenv;
 	char		cwd[256];
+	char		*tmp;
 
 	tmpenv = ms->env_list;
 	while (tmpenv)
@@ -93,8 +94,10 @@ void	update_pwd(t_ms *ms)
 			}
 			else
 			{
+				tmp = tmpenv->content;
 				tmpenv->content = ft_strjoin("PWD=", &cwd[0]);
 				ms->exit_status = 0;
+				free (tmp);
 			}
 		}
 		tmpenv = tmpenv->next;
@@ -103,19 +106,19 @@ void	update_pwd(t_ms *ms)
 
 void	b_cd_tilde(char **token)
 {
-	char **tmp;
+	// char **tmp;
 	
 	if (!ft_strncmp(*token, "~\0", 2))
 	{
-		tmp = token;
+		// tmp = token;
 		*token = getenv("HOME");
 	}
 	else if (!ft_strncmp(*token, "~", 1))
 	{
-		tmp = token;
+		// tmp = token;
 		*token = ft_strjoin(getenv("HOME"), *token + 1);
 	}
-	free (tmp);
+	// free (tmp);
 }
 
 void	unsuccess_chdir(t_ms *ms)

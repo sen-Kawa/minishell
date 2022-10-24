@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   llist_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 11:42:43 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 13:09:18 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_env	*ft_envvnew(char *content)
 	new_list = malloc(sizeof (t_env));
 	if (!new_list)
 		return (NULL);
-	new_list->content = content;
+	new_list->content = ft_strdup(content);
 	new_list->next = NULL;
 	return (new_list);
 }
