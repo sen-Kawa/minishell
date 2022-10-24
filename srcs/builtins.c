@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 16:02:59 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 14:28:24 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	b_unset(t_ms	*ms)
 void	modify_env_list(t_env *prev_envlst, t_env *envlst, t_ms *ms)
 {
 	prev_envlst->next = envlst->next;
+	free (envlst->content);
 	free (envlst);
 	ms->env_lst_size--;
 }
