@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollars.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 18:58:25 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:20:38 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	dollar_double(t_ms_list *tokens, t_ms	*ms)
 			if (tmp->dollar == 1)
 			{
 				space_split = ft_split_ssp(tmp->token, ' ');
-				printf("%s\n", space_split[0]);
 				new_space = dollar_core(space_split, 0, ms);
 			}
 			if (new_space != NULL)
@@ -111,6 +110,7 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 	char		**dollar_split;
 	char		*new_space;
 	int			a;
+	char		**tmp;
 
 	new_space = "";
 	while (space_split[i])
@@ -120,12 +120,14 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 		{
 			if (space_split[i][a] == '$')
 			{
+				tmp = make_array_env(ms);
 				dollar_split = ft_split(space_split[i], '$');
-				new_dollar = all_dollar_splitting(a, (make_array_env(ms)), \
+				new_dollar = all_dollar_splitting(a, tmp, \
 				dollar_split, new_dollar);
 				if (new_dollar)
 					space_split[i] = new_dollar;
 				free (dollar_split);
+				freeing_paths(tmp);
 				break ;
 			}
 			a++;
