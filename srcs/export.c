@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/15 09:41:47 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:50:33 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	b_export_var(char *token, t_ms *ms)
 			ft_envvadd_back(&ms->env_list, new);
 			ms->env_lst_size++;
 		}
-		free(splitted);
+		freeing_paths(splitted);
 	}
 }
