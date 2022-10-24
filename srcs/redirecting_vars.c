@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   directing_vars.c                                   :+:      :+:    :+:   */
+/*   redirecting_vars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 19:46:32 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/24 14:40:41 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,14 @@ void	delete_token(t_ms *ms)
 			{
 				ms->tokenlist = ms->tokenlist->next;
 				tmp = tmp->next;
+				free (tmp_prev->token);
 				free(tmp_prev);
 				tmp_prev = tmp;
 			}
 			else
 			{
 				tmp_prev->next = tmp_prev->next->next;
+				free (tmp->token);
 				free (tmp);
 				tmp = tmp_prev->next;
 			}
