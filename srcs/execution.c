@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 19:16:34 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:02:06 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,16 @@ int	multi_sections(t_ms	*ms)
 		ms->pipes_struct->fd_file[1] = -1;
 		ms->current_section++;
 		redirecting(ms);
-		waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
+		// waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
 		if (out_pipe_fd != -1)
 			close (out_pipe_fd);
 		if (in_pipe_fd != -1)
 			close (in_pipe_fd);
+	}
+	while(ms->current_section >= 0)
+	{
+		wait(&ms->exit_status);
+		ms->current_section--;
 	}
 	return (0);
 }
