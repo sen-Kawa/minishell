@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 16:19:33 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/24 14:04:13 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_ms_list	*sections_core(t_ms_list *tmp, t_ms *ms)
 			{
 				del = tmp->next;
 				tmp->next = tmp->next->next;
+				free (del->token);
 				free (del);
 				ms->sections++;
 			}

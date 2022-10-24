@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 16:24:35 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/24 14:06:08 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	pipe_token(char *command, t_ms *ms)
 
 	if (command[ms->lex->start + ms->lex->i] == 124)
 	{
-		newbe = ft_tokennew("|", "space");
+		newbe = ft_tokennew(ft_strdup("|"), "space");
 		ft_tokenadd_back(&ms->tokenlist, newbe);
 		ms->lex->i++;
 	}
