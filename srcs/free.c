@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 12:47:33 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/25 20:44:14 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	freeing_paths(char **paths)
 	i = 0;
 	while (paths[i])
 	{
-		free(paths[i]);
+		if (paths[i] != NULL)
+		{
+			free(paths[i]);
+		}
 		i++;
 	}
 	free (paths);

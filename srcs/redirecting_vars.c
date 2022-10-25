@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirecting_vars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/25 19:08:40 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/25 20:55:50 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,26 @@ char **dollar_split, char *new_dollar)
 	if (ds == 1)
 	{
 		new_dollar = ft_strjoin(dollar_split[0], dollar_split[1]);
-		if (dollar_split[0])
-			free (dollar_split[0]);
-		if (dollar_split[1][0])
+		if (dollar_split[1])
+		{
+			dollar_split[1] = NULL;
 			free (dollar_split[1]);
+		}
+		if (dollar_split[0])
+		{
+			dollar_split[0] = NULL;
+			free (dollar_split[0]);
+		}
 	}
 	else
 	{
 		tmp = new_dollar;
 		new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
 		if (dollar_split[ds][0] != 0)
+		{
+			dollar_split[ds] = NULL;
 			free (dollar_split[ds]);
+		}
 		free (tmp);
 	}
 	return (new_dollar);

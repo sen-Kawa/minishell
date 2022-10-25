@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/25 19:04:32 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/25 20:26:57 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 				if (new_dollar)
 					space_split[i] = new_dollar;
 				freeing_paths(tmp);
-				if (i > 0)
+				if (i >= 0)
 					freeing_paths (dollar_split);
 				else
 					free (dollar_split);
