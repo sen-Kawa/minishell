@@ -6,11 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/25 17:59:32 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/25 18:35:49 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+t_ms_list	*old_token(char **new_space, t_ms_list *tmp);
 
 /*
 DESCRIPTION
@@ -54,7 +56,6 @@ void	dollar_double(t_ms_list *tokens, t_ms	*ms)
 	t_ms_list	*tmp;
 	char		**space_split;
 	char		*new_space;
-	char		*old_token;
 	char		**tmp_space_split;
 
 	tmp = tokens;
@@ -72,18 +73,25 @@ void	dollar_double(t_ms_list *tokens, t_ms	*ms)
 					free (tmp_space_split);
 				new_space = dollar_core(space_split, 0, ms);
 			}
-			if (new_space != NULL)
-			{
-				old_token = tmp->token;
-				tmp->token = new_space;
-				free (old_token);
-			}
-				
-			tmp = tmp->next;
+			tmp = old_token(&new_space, tmp);
 		}
 	}
 	if (space_split)
 		free (space_split);
+}
+
+t_ms_list	*old_token(char **new_space, t_ms_list *tmp)
+{
+	char	*old_token;
+
+	if (*new_space != NULL)
+	{
+		old_token = tmp->token;
+		tmp->token = *new_space;
+		free (old_token);
+	}
+	tmp = tmp->next;
+	return (tmp);
 }
 
 char	*all_dollar_splitting(int a, char **envp, \
@@ -143,15 +151,17 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 					free (dollar_split);
 					freeing_paths(tmp);
 					space_split[i] = NULL;
-					break;
+					break ;
 				}
 				new_dollar = all_dollar_splitting(a, tmp, \
 				dollar_split, new_dollar);
 				if (new_dollar)
 					space_split[i] = new_dollar;
-
 				freeing_paths(tmp);
-				freeing_paths(dollar_split);
+				if (i > 0)
+					freeing_paths (dollar_split);
+				else
+					free (dollar_split);
 				break ;
 			}
 			a++;

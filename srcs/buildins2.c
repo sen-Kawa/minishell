@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 13:37:42 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/25 18:12:35 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,8 @@ void	update_pwd(t_ms *ms)
 
 void	b_cd_tilde(char **token)
 {
-	char *tmp;
-	
-	
+	char	*tmp;
+
 	if (!ft_strncmp(*token, "~\0", 2))
 	{
 		tmp = *token;
