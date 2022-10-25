@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 16:02:06 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/25 18:05:48 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ int	multi_sections(t_ms	*ms)
 	{
 		if (pipesandforks(&out_pipe_fd, &in_pipe_fd, ms) == 1)
 			return (1);
-		close(ms->pipes_struct->fd_file[0]);
+		if( ms->pipes_struct->fd_file[0] != -1)
+			close(ms->pipes_struct->fd_file[0]);
 		ms->pipes_struct->fd_file[0] = -1;
-		close(ms->pipes_struct->fd_file[1]);
+		if( ms->pipes_struct->fd_file[1] != -1)
+			close(ms->pipes_struct->fd_file[1]);
 		ms->pipes_struct->fd_file[1] = -1;
 		ms->current_section++;
 		redirecting(ms);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollars.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 20:07:12 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/25 17:59:32 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 	char		*tmp_new_space;
 
 	new_space = NULL;
+	new_dollar = NULL;
 	while (space_split[i])
 	{
 		a = 0;
@@ -137,6 +138,13 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 			{
 				tmp = make_array_env(ms);
 				dollar_split = ft_split(space_split[i], '$');
+				if (*dollar_split == NULL)
+				{
+					free (dollar_split);
+					freeing_paths(tmp);
+					space_split[i] = NULL;
+					break;
+				}
 				new_dollar = all_dollar_splitting(a, tmp, \
 				dollar_split, new_dollar);
 				if (new_dollar)
@@ -149,10 +157,12 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 			a++;
 		}
 		tmp_new_space = new_space;
-		new_space = ft_strjoin(new_space, space_split[i]);
-		if (new_space != NULL)
+		if (space_split[i] != NULL)
+			new_space = ft_strjoin(new_space, space_split[i]);
+		if (tmp_new_space != NULL)
 			free (tmp_new_space);
-		free (space_split[i]);
+		if (new_dollar != NULL)
+			free (space_split[i]);
 		i++;
 	}
 	return (new_space);
