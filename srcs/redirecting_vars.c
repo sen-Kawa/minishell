@@ -6,7 +6,11 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/24 19:33:20 by kaheinz          ###   ########.fr       */
+=======
+/*   Updated: 2022/10/24 19:41:26 by ksura@student.42 ###   ########.fr       */
+>>>>>>> 26d94253e0931469f1845ce507ac849badf6476b
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +34,12 @@ static char	*get_vars(char **envp, char *var)
 		envp_var = ft_strnstr(envp[i], tmp, len_var);
 		if (envp_var)
 		{
+<<<<<<< HEAD
 			len_sub = ft_strlen(envp_var) - len_var;
 			envp_var = ft_substr(envp[i], len_var, len_sub);
+=======
+			envp_var = ft_substr(envp[i], ft_strlen(var) + 1, 200);
+>>>>>>> 26d94253e0931469f1845ce507ac849badf6476b
 			if (!envp_var)
 				return (0);
 			break ;
