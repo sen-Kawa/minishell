@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/25 17:12:31 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/25 18:53:43 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char **dollar_split, char *new_dollar)
 	else
 	{
 		new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
-		if (dollar_split[ds])
+		if (dollar_split[ds][0] != 0)
 			free (dollar_split[ds]);
 	}
 	return (new_dollar);
