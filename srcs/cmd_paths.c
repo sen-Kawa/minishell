@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:35:02 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/20 18:03:52 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 12:15:20 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 	if (envp_path == 0)
 		return (0);
 	paths = ft_split(envp_path, ':');
+	free (envp_path);
 	if (!paths)
 		return (0);
 	i = 0;

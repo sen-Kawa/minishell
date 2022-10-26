@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 10:40:38 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 11:34:03 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,11 @@ void	dollar_double(t_ms_list *tokens, t_ms	*ms)
 				new_space = dollar_core(space_split, 0, ms);
 			}
 			tmp = old_token(&new_space, tmp);
-			
 		}
 	}
 	if (space_split)
 	{
-		free(space_split);
+		freeing_paths(space_split);
 		free(tmp_space_split);
 	}
 }
@@ -184,8 +183,8 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 			tmp_new_space = NULL;
 			free (tmp_new_space);
 		}
-		if (new_dollar != NULL)
-			free (space_split[i]);
+		// if (new_dollar != NULL)
+		// 	free (space_split[i]);
 		i++;
 		// printf("%i", i);
 	}

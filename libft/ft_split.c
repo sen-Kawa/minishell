@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 10:26:16 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 12:14:26 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	make_word(char const	*s, char c, char **result, size_t wa)
 		i2++;
 		i = i + wordsize;
 	}
-	s = NULL;
-	free ((char *) s);
+	// s = NULL;
+	// free ((char *) s);
 	result[i2] = 0;
 }
