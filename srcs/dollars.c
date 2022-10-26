@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 11:34:03 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 12:24:54 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,11 +176,11 @@ char	*dollar_core(char **space_split, int i, t_ms *ms)
 			a++;
 		}
 		tmp_new_space = new_space;
-		if (space_split[i] != NULL)
+		// if (space_split[i] != NULL)
 			new_space = ft_strjoin(new_space, space_split[i]);
-		if (tmp_new_space != NULL)
+		// if (tmp_new_space != NULL)
 		{
-			tmp_new_space = NULL;
+			// tmp_new_space = NULL;
 			free (tmp_new_space);
 		}
 		// if (new_dollar != NULL)
