@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 20:17:51 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 21:03:50 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,12 @@ void	split_at_dollar(t_ms *ms, t_ms_list *node);
 char	*get_vars(char **envp, char *var);
 void	merge_splits(char **merged, char **splitted, int total, int i);
 void	split_in_quotes(t_ms *ms, t_ms_list *node);
-void    split_dollar_quotes(t_ms *ms, char **split);
+void	split_dollar_quotes(t_ms *ms, char **split);
 
+//dollarizing.c
 void	dollarizing(t_ms *ms);
+
+//prev_dollars.c
 void	dollar_double(t_ms_list *tokens, t_ms	*ms);
 char	*all_dollar_splitting(int a, char **envp \
 , char **dollar_split, char *new_dollar);
