@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 20:30:31 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 20:32:17 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	split_in_quotes(t_ms *ms, t_ms_list *node)
 {
 	char	**splitted;
 	char	*merged;
-	(void)ms;
-	
+	int		i;
+
+	i = 0;
 	splitted = ft_split_ssp(node->token, ' ');
-	int i = 0;
 	while (splitted[i])
 	{
 		split_dollar_quotes(ms, &splitted[i]);
@@ -61,7 +61,7 @@ void	split_dollar_quotes(t_ms *ms, char **split)
 	char	*merged;
 	char	*var;
 	int		i;
-	
+
 	i = 0;
 	if (!ft_strchr(*split, '$'))
 		return ;
@@ -111,6 +111,7 @@ void	split_at_dollar(t_ms *ms, t_ms_list *node)
 void	merge_splits(char	**merged, char **splitted, int total, int i)
 {
 	char	*prev_merge;
+
 	if (total == 0)
 		return ;
 	prev_merge = *merged;
