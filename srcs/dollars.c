@@ -6,12 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 13:07:58 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 18:43:04 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
+void	dollar_check(t_ms *ms);
 t_ms_list	*old_token(char **new_space, t_ms_list *tmp);
 
 /*
@@ -49,6 +50,79 @@ void	dollarizing(t_ms *ms)
 			tmp = tmp->next;
 		}
 	}
+}
+
+void	dollar_check(t_ms *ms)
+{
+	t_ms_list	*tmp;
+
+	tmp = ms->tokenlist;
+	if (!tmp)
+		return ;
+	while (tmp)
+	{
+		if (tmp->dollar == 1)
+		{
+			if (ft_strncmp(tmp->type, "double quotes", 14) == 0)
+				printf("call double quote function\n");
+			else
+			{
+				printf("split at dollar called\n");
+				split_at_dollar(ms, tmp);
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	split_at_dollar(t_ms *ms, t_ms_list *node)
+{
+	char	**splitted;
+	char	**env_array;
+	char	*var;
+	int		i;
+	char	*merged;
+
+	i = 0;
+	splitted = ft_split(node->token, '$');
+	while (splitted[i])
+	{
+		env_array = make_array_env(ms);
+		var = get_vars(env_array, splitted[i]);
+		free(splitted[i]);
+		splitted[i] = var;
+		i++;
+		freeing_paths(env_array);
+	}
+	merged = merge_splits(splitted, i, 0);
+	printf("merged: %s\n", merged);
+	free(merged);
+	freeing_paths(splitted);
+}
+
+char	*merge_splits(char **splitted, int total, int i)
+{
+	char	*merged;
+	char	*prev_merge;
+	
+/*	int	len;
+
+	len = 0;
+	while (i >= 0)
+	{
+		len += ft_strlen(splitted[i]);
+		i--;
+	}
+	merged = malloc(sizeof(char) * (len + 1));
+*/
+	if (total == 0)
+		return (merged);
+//	merged = NULL;
+	prev_merge = merged;
+	merged = ft_strjoin(merged, splitted[i]);
+	if (i != 0)
+		free(prev_merge);
+	merge_splits(splitted, total - 1, i + 1);
 }
 
 void	dollar_double(t_ms_list *tokens, t_ms	*ms)

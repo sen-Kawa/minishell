@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/25 20:55:50 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 17:23:11 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	delete_token(t_ms *ms);
 
-static char	*get_vars(char **envp, char *var)
+char	*get_vars(char **envp, char *var)
 {
 	char	*envp_var;
 	char	*tmp;
@@ -38,7 +38,6 @@ static char	*get_vars(char **envp, char *var)
 		}
 		i++;
 	}
-	free (var);
 	free (tmp);
 	return (envp_var);
 }
@@ -50,7 +49,11 @@ char **dollar_split, char *new_dollar)
 
 	var = get_vars(envp, dollar_split[ds]);
 	if (var == NULL)
+	{
 		var = "";
+		dollar_split[ds] = var;
+		return (new_dollar);
+	}
 	dollar_split[ds] = var;
 	new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
 	return (new_dollar);
