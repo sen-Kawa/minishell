@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/19 15:02:06 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 19:25:11 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	b_echo(t_ms	*ms)
 	if (tmp && tmp->next)
 	{
 		tmp = tmp->next;
-		while (tmp && !ft_strncmp(tmp->token, "-n\0", 3))
+		while (tmp && tmp->token != NULL && !ft_strncmp(tmp->token, "-n\0", 3))
 		{
 			flag++;
 			tmp = tmp->next;

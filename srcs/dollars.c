@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 19:03:47 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 19:13:09 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	dollar_check(t_ms *ms)
 				printf("call double quote function\n");
 			else
 			{
-				printf("split at dollar called\n");
 				split_at_dollar(ms, tmp);
 			}
 		}
@@ -98,7 +97,6 @@ void	split_at_dollar(t_ms *ms, t_ms_list *node)
 	merge_splits(&merged, splitted, i, 0);
 	free (node->token);
 	node->token = merged;
-	printing_tokens(ms->tokenlist);
 	freeing_paths(splitted);
 }
 

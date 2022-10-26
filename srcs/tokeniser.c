@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 16:52:13 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 19:13:48 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	lex_continue(t_ms *ms)
 {
 	sections(ms);
 	dollarizing(ms);
-	printing_tokens(ms->tokenlist);
+//	printing_tokens(ms->tokenlist);
 	dollar_check(ms);
 //	dollar_double(ms->tokenlist, ms);
 }
