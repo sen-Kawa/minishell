@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/25 20:44:14 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 09:26:34 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	freeing_paths(char **paths)
 	i = 0;
 	while (paths[i])
 	{
-		if (paths[i] != NULL)
+		if (paths[i] != NULL && ft_strncmp(paths[i], "", 1) != 0)
 		{
 			free(paths[i]);
 		}
