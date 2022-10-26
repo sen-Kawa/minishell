@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 19:50:08 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 20:26:10 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,33 +77,49 @@ void	dollar_check(t_ms *ms)
 void	split_in_quotes(t_ms *ms, t_ms_list *node)
 {
 	char	**splitted;
-	char	**splitted_dollars;
+	char	*merged;
 	(void)ms;
 	
 	splitted = ft_split_ssp(node->token, ' ');
 	int i = 0;
 	while (splitted[i])
 	{
-		printf("splitted: %s\n", splitted[i]);
-		
-		char	**env_array;
-		char	*var;
-		int i2 = 0;
-		splitted_dollars = ft_split(splitted[i], '$');
-		while (splitted_dollars[i2])
-		{
-			env_array = make_array_env(ms);
-			var = get_vars(env_array, splitted_dollars[i]);
-			printf("var: %s\n", var);
-			free(splitted_dollars[i]);
-			splitted_dollars[i] = var;
-			i2++;
-			freeing_paths(env_array);
-		}
-		freeing_paths(splitted_dollars);
+		split_dollar_quotes(ms, &splitted[i]);
 		i++;
 	}
+	merged = NULL;
+	merge_splits(&merged, splitted, i, 0);
+	free (node->token);
+	node->token = merged;
 	freeing_paths(splitted);
+}
+
+void	split_dollar_quotes(t_ms *ms, char **split)
+{
+	char	**split_dollar;
+	char	**env_array;
+	char	*merged;
+	char	*var;
+	int		i;
+	
+	i = 0;
+	if (!ft_strchr(*split, '$'))
+		return ;
+	split_dollar = ft_split(*split, '$');
+	while (split_dollar[i])
+	{
+		env_array = make_array_env(ms);
+		var = get_vars(env_array, split_dollar[i]);
+		free(split_dollar[i]);
+		split_dollar[i] = var;
+		i++;
+		freeing_paths(env_array);
+	}
+	merged = NULL;
+	merge_splits(&merged, split_dollar, i, 0);
+	free (*split);
+	*split = merged;
+	freeing_paths(split_dollar);
 }
 
 void	split_at_dollar(t_ms *ms, t_ms_list *node)
