@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 18:43:04 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 18:58:51 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,35 +94,23 @@ void	split_at_dollar(t_ms *ms, t_ms_list *node)
 		i++;
 		freeing_paths(env_array);
 	}
-	merged = merge_splits(splitted, i, 0);
+	merged = NULL;
+	merge_splits(&merged, splitted, i, 0);
 	printf("merged: %s\n", merged);
 	free(merged);
 	freeing_paths(splitted);
 }
 
-char	*merge_splits(char **splitted, int total, int i)
+void	merge_splits(char	**merged, char **splitted, int total, int i)
 {
-	char	*merged;
 	char	*prev_merge;
-	
-/*	int	len;
-
-	len = 0;
-	while (i >= 0)
-	{
-		len += ft_strlen(splitted[i]);
-		i--;
-	}
-	merged = malloc(sizeof(char) * (len + 1));
-*/
 	if (total == 0)
-		return (merged);
-//	merged = NULL;
-	prev_merge = merged;
-	merged = ft_strjoin(merged, splitted[i]);
+		return ;
+	prev_merge = *merged;
+	*merged = ft_strjoin(*merged, splitted[i]);
 	if (i != 0)
 		free(prev_merge);
-	merge_splits(splitted, total - 1, i + 1);
+	merge_splits(merged, splitted, total - 1, i + 1);
 }
 
 void	dollar_double(t_ms_list *tokens, t_ms	*ms)
