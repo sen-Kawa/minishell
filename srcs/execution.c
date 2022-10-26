@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/25 18:05:48 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 21:00:54 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,15 @@ int	pipesandforks(int *out_pipe_fd, int *in_pipe_fd, t_ms *ms)
 	return (0);
 }
 
+void	wait_loop(t_ms *ms)
+{
+	while (ms->current_section >= 0)
+	{
+		wait(&ms->exit_status);
+		ms->current_section--;
+	}
+}
+
 int	multi_sections(t_ms	*ms)
 {
 	int	in_pipe_fd;
@@ -69,25 +78,20 @@ int	multi_sections(t_ms	*ms)
 	{
 		if (pipesandforks(&out_pipe_fd, &in_pipe_fd, ms) == 1)
 			return (1);
-		if( ms->pipes_struct->fd_file[0] != -1)
+		if (ms->pipes_struct->fd_file[0] != -1)
 			close(ms->pipes_struct->fd_file[0]);
 		ms->pipes_struct->fd_file[0] = -1;
-		if( ms->pipes_struct->fd_file[1] != -1)
+		if (ms->pipes_struct->fd_file[1] != -1)
 			close(ms->pipes_struct->fd_file[1]);
 		ms->pipes_struct->fd_file[1] = -1;
 		ms->current_section++;
 		redirecting(ms);
-		// waitpid(ms->pipes_struct->child_pid[0], &ms->exit_status, WUNTRACED);
 		if (out_pipe_fd != -1)
 			close (out_pipe_fd);
 		if (in_pipe_fd != -1)
 			close (in_pipe_fd);
 	}
-	while(ms->current_section >= 0)
-	{
-		wait(&ms->exit_status);
-		ms->current_section--;
-	}
+	wait_loop(ms);
 	return (0);
 }
 

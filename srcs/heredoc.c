@@ -6,13 +6,16 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:19 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 15:14:43 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 20:57:49 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 #include <sys/types.h>
 #include <sys/wait.h>
+
+void	null_hereline(t_ms *ms, char *delim);
+void	free_hereline(char *hereline);
 
 void	heredoc(t_ms *ms, char	*delim)
 {
@@ -26,30 +29,39 @@ void	heredoc(t_ms *ms, char	*delim)
 		hereline = readline("> ");
 		if (hereline == NULL)
 		{
-			ft_printf("ksh: warning: \
-				here-document delimited by end-of-file(wanted `%s')\n", delim);
-			ms->exit_status = 1;
+			null_hereline(ms, delim);
 			break ;
 		}
 		if (!ft_strncmp(hereline, delim, sizeof(delim)))
 		{
-			if (hereline)
-				free (hereline);
+			free_hereline(hereline);
 			ms->pipes_struct->fd_file[0] = open(".tmp_heredoc",
 					O_RDONLY | O_CREAT | O_TRUNC, 0777);
 			break ;
 		}
 		here_command(hereline, &herecom);
-		if (hereline)
-			free (hereline);
+		free_hereline(hereline);
 	}
 	tmp_heredoc(ms, herecom);
 	free(herecom);
 }
 
+void	null_hereline(t_ms *ms, char *delim)
+{
+	ft_printf("ksh: warning: \
+		here-document delimited by end-of-file(wanted `%s')\n", delim);
+	ms->exit_status = 1;
+}
+
+void	free_hereline(char *hereline)
+{
+	if (hereline)
+		free (hereline);
+}
+
 void	here_command(char *hereline, char **herecom)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (herecom)
 	{

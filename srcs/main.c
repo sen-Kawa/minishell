@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/20 16:17:42 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 20:44:13 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	shell(char *command, t_ms *ms)
 	{
 		add_history(command);
 		tokenice(command, ms);
-//		printing_tokens(ms->tokenlist);
 		if (ms->lex->error == 0)
 			execution(ms);
 		freeing_tokens(ms);
