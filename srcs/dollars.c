@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 19:13:09 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 19:50:08 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	dollar_check(t_ms *ms)
 		if (tmp->dollar == 1)
 		{
 			if (ft_strncmp(tmp->type, "double quotes", 14) == 0)
-				printf("call double quote function\n");
+				split_in_quotes(ms, tmp);
 			else
 			{
 				split_at_dollar(ms, tmp);
@@ -72,6 +72,38 @@ void	dollar_check(t_ms *ms)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	split_in_quotes(t_ms *ms, t_ms_list *node)
+{
+	char	**splitted;
+	char	**splitted_dollars;
+	(void)ms;
+	
+	splitted = ft_split_ssp(node->token, ' ');
+	int i = 0;
+	while (splitted[i])
+	{
+		printf("splitted: %s\n", splitted[i]);
+		
+		char	**env_array;
+		char	*var;
+		int i2 = 0;
+		splitted_dollars = ft_split(splitted[i], '$');
+		while (splitted_dollars[i2])
+		{
+			env_array = make_array_env(ms);
+			var = get_vars(env_array, splitted_dollars[i]);
+			printf("var: %s\n", var);
+			free(splitted_dollars[i]);
+			splitted_dollars[i] = var;
+			i2++;
+			freeing_paths(env_array);
+		}
+		freeing_paths(splitted_dollars);
+		i++;
+	}
+	freeing_paths(splitted);
 }
 
 void	split_at_dollar(t_ms *ms, t_ms_list *node)
