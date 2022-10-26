@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 09:29:34 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 19:13:48 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 20:27:24 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ PARAMETERS
 EXTERNAL FUNCTIONS
 ft_substr(), ft_tokennew(), ft_tokenaddback(), ft_strlen()
 */
-
 void	tokenice(char *command, t_ms *ms)
 {
 	while (command[ms->lex->start] == ' ')
@@ -73,9 +72,7 @@ void	lex_continue(t_ms *ms)
 {
 	sections(ms);
 	dollarizing(ms);
-//	printing_tokens(ms->tokenlist);
 	dollar_check(ms);
-//	dollar_double(ms->tokenlist, ms);
 }
 
 void	pipe_token(char *command, t_ms *ms)

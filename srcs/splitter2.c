@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitter2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
+/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 19:56:58 by ksura@student.42 ###   ########.fr       */
+/*   Updated: 2022/10/26 21:11:59 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ static size_t	word_count(char const	*s, char c)
 	return (indexw);
 }
 
-static void	make_word(char const	*s, char c, char **result, size_t wa)
-{	
+static void	make_word(char const *s, char c, char **result, size_t wa)
+{
 	size_t	i;
 	size_t	i2;
 	size_t	wordsize;
@@ -90,29 +90,41 @@ static void	make_word(char const	*s, char c, char **result, size_t wa)
 	wordsize = 0;
 	while (i2 < wa && *s)
 	{
-		if (s[i + wordsize] == c && s[i + wordsize] != '\0')
+		// if (s[i + wordsize] == c && s[i + wordsize] != '\0')
+		// {
+		// 	while (s[i + wordsize] == c && s[i + wordsize] != '\0')
+		// 		wordsize++;
+		// 	result[i2] = ft_substr(s, i, wordsize);
+		// 	i2++;
+		// 	i = i + wordsize;
+		// 	wordsize = 0;
+		// }
+		if (s[i + wordsize] != '\0')
 		{
-			while (s[i + wordsize] == c && s[i + wordsize] != '\0')
+			if (s[i + wordsize] == c)
+			{
+				while (s[i + wordsize] == c && s[i + wordsize] != '\0')
 				wordsize++;
+			}
+			else
+			{
+				while (s[i + wordsize] != c && s[i + wordsize] != '\0')
+				wordsize++;
+			}
 			result[i2] = ft_substr(s, i, wordsize);
 			i2++;
 			i = i + wordsize;
 			wordsize = 0;
-		}	
-		else if (s[i + wordsize] != c && s[i + wordsize] != '\0')
-		{
-			while (s[i + wordsize] != c && s[i + wordsize] != '\0')
-				wordsize++;
-			result[i2] = ft_substr(s, i, wordsize);
-			i2++;
-			i = i + wordsize;
-			wordsize = 0;
-		}	
+		}
+		// else if (s[i + wordsize] != c && s[i + wordsize] != '\0')
+		// {
+		// 	while (s[i + wordsize] != c && s[i + wordsize] != '\0')
+		// 		wordsize++;
+		// 	result[i2] = ft_substr(s, i, wordsize);
+		// 	i2++;
+		// 	i = i + wordsize;
+		// 	wordsize = 0;
+		// }
 	}
 	result[i2] = 0;
 }
-/*
-int	word(int i2, char **result, char const *s, char c)
-{
-
-}	*/
