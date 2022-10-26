@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/12 19:09:25 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 19:11:01 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	redir1_4(t_ms_list *tmp, t_ms *ms, int outfd)
 
 int	redir1_0(t_ms_list *tmp, t_ms *ms, int infd, int outfd)
 {
+	if (tmp->token == NULL)
+		return (1);
 	if (tmp->token[0] == '<' && !tmp->token[1])
 	{
 		if (redir1_1(tmp, ms, infd) == 1)

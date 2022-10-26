@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 19:09:43 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 18:58:51 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 19:03:47 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,9 @@ void	split_at_dollar(t_ms *ms, t_ms_list *node)
 	}
 	merged = NULL;
 	merge_splits(&merged, splitted, i, 0);
-	printf("merged: %s\n", merged);
-	free(merged);
+	free (node->token);
+	node->token = merged;
+	printing_tokens(ms->tokenlist);
 	freeing_paths(splitted);
 }
 
