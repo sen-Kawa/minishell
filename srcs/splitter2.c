@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 11:00:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 21:11:59 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/26 21:28:08 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,41 +90,29 @@ static void	make_word(char const *s, char c, char **result, size_t wa)
 	wordsize = 0;
 	while (i2 < wa && *s)
 	{
-		// if (s[i + wordsize] == c && s[i + wordsize] != '\0')
-		// {
-		// 	while (s[i + wordsize] == c && s[i + wordsize] != '\0')
-		// 		wordsize++;
-		// 	result[i2] = ft_substr(s, i, wordsize);
-		// 	i2++;
-		// 	i = i + wordsize;
-		// 	wordsize = 0;
-		// }
 		if (s[i + wordsize] != '\0')
 		{
-			if (s[i + wordsize] == c)
-			{
-				while (s[i + wordsize] == c && s[i + wordsize] != '\0')
-				wordsize++;
-			}
-			else
-			{
-				while (s[i + wordsize] != c && s[i + wordsize] != '\0')
-				wordsize++;
-			}
+			wordsize = count_chars(s, c, i, wordsize);
 			result[i2] = ft_substr(s, i, wordsize);
 			i2++;
 			i = i + wordsize;
 			wordsize = 0;
 		}
-		// else if (s[i + wordsize] != c && s[i + wordsize] != '\0')
-		// {
-		// 	while (s[i + wordsize] != c && s[i + wordsize] != '\0')
-		// 		wordsize++;
-		// 	result[i2] = ft_substr(s, i, wordsize);
-		// 	i2++;
-		// 	i = i + wordsize;
-		// 	wordsize = 0;
-		// }
 	}
 	result[i2] = 0;
+}
+
+int	count_chars(char const *s, char c, size_t i, size_t wordsize)
+{
+	if (s[i + wordsize] == c)
+	{
+		while (s[i + wordsize] == c && s[i + wordsize] != '\0')
+			wordsize++;
+	}
+	else
+	{
+		while (s[i + wordsize] != c && s[i + wordsize] != '\0')
+			wordsize++;
+	}
+	return (wordsize);
 }

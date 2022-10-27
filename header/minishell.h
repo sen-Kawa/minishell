@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 21:03:50 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/27 08:13:09 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ t_lex	*afterquotes(char *command, t_lex *lex, t_ms_list *tokens);
 
 //splitter2.c
 char	**ft_split_ssp(char const *s, char c);
+int	count_chars(char const *s, char c, size_t i, size_t wordsize);
 
 //free.c
 void	freeing_paths(char **paths);
