@@ -6,11 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/27 10:33:29 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/27 11:03:45 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+void	replace_existing(char *token, t_env *tmp_env);
 
 int	b_export(t_ms	*ms)
 {
@@ -57,10 +59,7 @@ void	b_export_var(char *token, t_ms *ms)
 			&& ft_strncmp(token, tmp_env->content, ft_strlen(splitted[0])))
 			tmp_env = tmp_env->next;
 		if (!ft_strncmp(token, tmp_env->content, ft_strlen(splitted[0])))
-		{
-			free(tmp_env->content);
-			tmp_env->content = ft_strdup(token);
-		}
+			replace_existing(token, tmp_env);
 		else
 		{
 			new = ft_envvnew(token);
@@ -69,4 +68,10 @@ void	b_export_var(char *token, t_ms *ms)
 		}
 		freeing_paths(splitted);
 	}
+}
+
+void	replace_existing(char *token, t_env *tmp_env)
+{
+	free(tmp_env->content);
+	tmp_env->content = ft_strdup(token);
 }
