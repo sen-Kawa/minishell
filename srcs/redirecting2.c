@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirecting2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 19:11:01 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/27 12:17:34 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	redir1_3(t_ms_list *tmp, t_ms *ms, int outfd)
 			return (1);
 		}
 		ms->pipes_struct->fd_file[outfd] = \
-		open(tmp->next->token, O_WRONLY | O_CREAT, 0777);
+		open(tmp->next->token, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	}
 	return (0);
 }
@@ -73,10 +73,10 @@ int	redir1_4(t_ms_list *tmp, t_ms *ms, int outfd)
 {
 	tmp->type = "delete";
 	ms->pipes_struct->fd_file[outfd] = open(tmp->token + 1, \
-	O_CREAT | O_WRONLY, 0777);
+	O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (ms->pipes_struct->fd_file[outfd] == -1)
 	{
-		ft_printf("ksh: %s: No such file or directory1\n", \
+		ft_printf("ksh: %s: No such file or directory\n", \
 		tmp->token + 1);
 		ms->exit_status = 1;
 		ms->lex->error = 1;
