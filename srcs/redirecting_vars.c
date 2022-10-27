@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 17:23:11 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/26 21:11:14 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,61 +40,6 @@ char	*get_vars(char **envp, char *var)
 	}
 	free (tmp);
 	return (envp_var);
-}
-
-char	*replacing_vars(char **envp, int ds, \
-char **dollar_split, char *new_dollar)
-{
-	char	*var;
-
-	var = get_vars(envp, dollar_split[ds]);
-	if (var == NULL)
-	{
-		var = "";
-		dollar_split[ds] = var;
-		return (new_dollar);
-	}
-	dollar_split[ds] = var;
-	new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
-	return (new_dollar);
-}
-
-char	*replacing_vars_middle_dollar(char **envp, int ds, \
-char **dollar_split, char *new_dollar)
-{
-	char	*var;
-	char	*tmp;
-
-	var = get_vars(envp, dollar_split[ds]);
-	if (var == NULL)
-		var = "";
-	dollar_split[ds] = var;
-	if (ds == 1)
-	{
-		new_dollar = ft_strjoin(dollar_split[0], dollar_split[1]);
-		if (dollar_split[1])
-		{
-			dollar_split[1] = NULL;
-			free (dollar_split[1]);
-		}
-		if (dollar_split[0])
-		{
-			dollar_split[0] = NULL;
-			free (dollar_split[0]);
-		}
-	}
-	else
-	{
-		tmp = new_dollar;
-		new_dollar = ft_strjoin(new_dollar, dollar_split[ds]);
-		if (dollar_split[ds][0] != 0)
-		{
-			dollar_split[ds] = NULL;
-			free (dollar_split[ds]);
-		}
-		free (tmp);
-	}
-	return (new_dollar);
 }
 
 void	delete_token(t_ms *ms)
