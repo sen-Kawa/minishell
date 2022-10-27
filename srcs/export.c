@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:47:18 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/24 11:50:33 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/27 10:33:29 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,16 @@ void	b_export_var(char *token, t_ms *ms)
 	{
 		copy = ft_strdup(token);
 		splitted = ft_split(copy, '=');
+		free(copy);
 		tmp_env = ms->env_list;
 		while (tmp_env && tmp_env->next
 			&& ft_strncmp(token, tmp_env->content, ft_strlen(splitted[0])))
 			tmp_env = tmp_env->next;
 		if (!ft_strncmp(token, tmp_env->content, ft_strlen(splitted[0])))
-			tmp_env->content = token;
+		{
+			free(tmp_env->content);
+			tmp_env->content = ft_strdup(token);
+		}
 		else
 		{
 			new = ft_envvnew(token);

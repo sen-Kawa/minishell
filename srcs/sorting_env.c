@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:52:53 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/20 16:13:37 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/27 10:36:52 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	make_array(t_ms *ms, int nlines)
 		tmp = tmp->next;
 	}
 	bubblesorting(nlines, env_array);
+//	printf("list size %i", nlines);
 	i = -1;
 	while (++i < nlines)
 	{
