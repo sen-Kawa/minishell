@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 08:59:06 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/27 09:38:25 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/27 11:34:21 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,4 +199,5 @@ void	init(t_ms *ms, char *command);
 void	handler_quit(int sig);
 void	parent_signals(void);
 
+void	welcome_name(void);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:31:26 by kaheinz           #+#    #+#             */
-/*   Updated: 2022/10/26 20:44:13 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/27 11:32:50 by kaheinz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int argc, char **argv, char **envp)
 	parent_signals();
 	ms = struct_allocation();
 	creating_env_list(envp, ms);
+	welcome_name();
 	while (1)
 	{
 		command = readline("ksh >> ");
