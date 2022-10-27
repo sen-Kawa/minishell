@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   redirecting_vars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: ksura@student.42wolfsburg.de <ksura@studen +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/27 08:44:11 by ksura            ###   ########.fr       */
+/*   Updated: 2022/10/27 09:26:15 by ksura@student.42 ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
 void	delete_token(t_ms *ms);
-t_ms_list	*freeing_prev(t_ms *ms, t_ms_list	*tmp_prev, t_ms_list	*tmp);
+void	freeing_prev(t_ms *ms, t_ms_list	*tmp_prev, t_ms_list	*tmp);
 
 char	*get_vars(char **envp, char *var)
 {
@@ -105,60 +105,39 @@ void	delete_token(t_ms *ms)
 
 	tmp = ms->tokenlist;
 	tmp_prev = ms->tokenlist;
-	while (tmp)
-	{
-		tmp = freeing_prev(ms, tmp_prev, tmp);
-		// if (!ft_strncmp(tmp->type, "delete", 6))
-		// {
-		// 	if (tmp_prev == tmp)
-		// 	{
-		// 		ms->tokenlist = ms->tokenlist->next;
-		// 		tmp = tmp->next;
-		// 		free (tmp_prev->token);
-		// 		free(tmp_prev);
-		// 		tmp_prev = tmp;
-		// 	}
-		// 	else
-		// 	{
-		// 		tmp_prev->next = tmp_prev->next->next;
-		// 		free (tmp->token);
-		// 		free (tmp);
-		// 		tmp = tmp_prev->next;
-		// 	}
-		// }
-		// else
-		// {
-		// 	tmp_prev = tmp;
-		// 	tmp = tmp->next;
-		// }
-	}
+	freeing_prev(ms, tmp_prev, tmp);
+}
+
+void	freeing_node(t_ms_list *tmp)
+{
+	free(tmp->token);
+	free(tmp);
 }
 
 void	freeing_prev(t_ms *ms, t_ms_list *tmp_prev, t_ms_list *tmp)
 {
-		if (!ft_strncmp(tmp->type, "delete", 6))
+	if (!tmp)
+		return ;
+	if (!ft_strncmp(tmp->type, "delete", 6))
+	{
+		if (tmp_prev == tmp)
 		{
-			if (tmp_prev == tmp)
-			{
-				ms->tokenlist = ms->tokenlist->next;
-				tmp = tmp->next;
-				free (tmp_prev->token);
-				free(tmp_prev);
-				tmp_prev = tmp;
-			}
-			else
-			{
-				tmp_prev->next = tmp_prev->next->next;
-				free (tmp->token);
-				free (tmp);
-				tmp = tmp_prev->next;
-			}
+			ms->tokenlist = ms->tokenlist->next;
+			tmp = tmp->next;
+			freeing_node(tmp_prev);
+			tmp_prev = tmp;
 		}
 		else
 		{
-			tmp_prev = tmp;
-			tmp = tmp->next;
+			tmp_prev->next = tmp_prev->next->next;
+			freeing_node(tmp);
+			tmp = tmp_prev->next;
 		}
-		if (!tmp)
-			return ;
+	}
+	else
+	{
+		tmp_prev = tmp;
+		tmp = tmp->next;
+	}
+	freeing_prev(ms, tmp_prev, tmp);
 }
