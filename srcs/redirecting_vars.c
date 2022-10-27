@@ -6,13 +6,14 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 08:54:08 by ksura             #+#    #+#             */
-/*   Updated: 2022/10/26 17:23:11 by kaheinz          ###   ########.fr       */
+/*   Updated: 2022/10/27 08:44:11 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
 void	delete_token(t_ms *ms);
+t_ms_list	*freeing_prev(t_ms *ms, t_ms_list	*tmp_prev, t_ms_list	*tmp);
 
 char	*get_vars(char **envp, char *var)
 {
@@ -106,6 +107,35 @@ void	delete_token(t_ms *ms)
 	tmp_prev = ms->tokenlist;
 	while (tmp)
 	{
+		tmp = freeing_prev(ms, tmp_prev, tmp);
+		// if (!ft_strncmp(tmp->type, "delete", 6))
+		// {
+		// 	if (tmp_prev == tmp)
+		// 	{
+		// 		ms->tokenlist = ms->tokenlist->next;
+		// 		tmp = tmp->next;
+		// 		free (tmp_prev->token);
+		// 		free(tmp_prev);
+		// 		tmp_prev = tmp;
+		// 	}
+		// 	else
+		// 	{
+		// 		tmp_prev->next = tmp_prev->next->next;
+		// 		free (tmp->token);
+		// 		free (tmp);
+		// 		tmp = tmp_prev->next;
+		// 	}
+		// }
+		// else
+		// {
+		// 	tmp_prev = tmp;
+		// 	tmp = tmp->next;
+		// }
+	}
+}
+
+void	freeing_prev(t_ms *ms, t_ms_list *tmp_prev, t_ms_list *tmp)
+{
 		if (!ft_strncmp(tmp->type, "delete", 6))
 		{
 			if (tmp_prev == tmp)
@@ -129,5 +159,6 @@ void	delete_token(t_ms *ms)
 			tmp_prev = tmp;
 			tmp = tmp->next;
 		}
-	}
+		if (!tmp)
+			return ;
 }
