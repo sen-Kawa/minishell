@@ -21,4 +21,7 @@
 - Linux
 - macOS
 
+### Created by:
+- @ksura12  @sen-Kawa
+
 ![image](https://user-images.githubusercontent.com/71138634/215206663-29c163f7-2dfd-4718-8571-2460c170b429.png)
